@@ -31,7 +31,7 @@ export default {
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.getElementById("three-container").appendChild(renderer.domElement);
 
-    camera.position.z = 7;
+    camera.position.z = 8;
 
     const loader = new ColladaLoader();
     let model; // لتخزين النموذج بعد تحميله

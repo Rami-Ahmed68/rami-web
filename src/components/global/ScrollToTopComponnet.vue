@@ -24,7 +24,7 @@ export default {
   height: 30px;
   border-radius: 4px;
   border: 1px solid $border-color-dark;
-  background-color: $menu-dark;
+  background-color: $dark-scroll-top;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -55,7 +55,7 @@ export default {
   height: 30px;
   border-radius: 4px;
   border: 1px solid $border-color-light;
-  background-color: $menu-light;
+  background-color: $light-scroll-top;
   display: flex;
   justify-content: center;
   align-items: center;
