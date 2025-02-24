@@ -20,6 +20,9 @@ export default {
       this.deferredPrompt = event;
     });
   },
+  methods : {
+ 
+
   async install() {
     // start the loading
     this.$store.state.loading_status = "open";
@@ -33,7 +36,7 @@ export default {
         this.$store.state.loading_status = "open";
       }
     }
-  },
+  },}
 };
 </script>
 
