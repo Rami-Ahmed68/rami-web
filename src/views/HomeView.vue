@@ -73,6 +73,10 @@
           </li>
         </ul>
       </div>
+
+      <div class="email-button">
+        <a href="mailto:ramiahmet68@gmail.com">🚀Email : rami@gmail.com</a>
+      </div>
     </div>
   </div>
 </template>
@@ -88,6 +92,7 @@ export default {
 
 <style lang="scss">
 @import "../sass/varibels";
+// dark
 .home-dark {
   width: 100%;
   min-height: 100vh;
@@ -98,6 +103,7 @@ export default {
     width: 40%;
     min-height: 100vh;
     margin: auto;
+
     @media (max-width: $phone) {
       width: 96%;
       margin: 0px 2%;
@@ -189,12 +195,17 @@ export default {
         font-size: $small;
         margin: 10px 35%;
         cursor: pointer;
-        background-color: $blue-1-light;
+        background-color: $blue-1-dark;
         color: $font-dark;
+        transition-duration: 0.5s;
 
         svg {
           margin: 0px 5px;
         }
+      }
+
+      button:hover {
+        background-color: $blue-1-light;
       }
 
       .bio-cont {
@@ -249,9 +260,34 @@ export default {
         }
       }
     }
+
+    .email-button {
+      width: 100%;
+      height: auto;
+      margin: 10px 0px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      a {
+        text-decoration: none;
+        color: $font-dark;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        background-color: $blue-1-dark;
+        transition-duration: 0.5s;
+      }
+
+      a:hover {
+        background-color: $blue-1-light;
+      }
+    }
   }
 }
+// dark
 
+// light
 .home-light {
   width: 100%;
   min-height: 100vh;
@@ -354,12 +390,17 @@ export default {
         font-size: $small;
         margin: 10px 35%;
         cursor: pointer;
-        background-color: $blue-1-light;
+        background-color: $blue-1-dark;
+        transition-duration: 0.5s;
         color: $font-light;
 
         svg {
           margin: 0px 5px;
         }
+      }
+
+      button:hover {
+        background-color: $blue-1-light;
       }
 
       .bio-cont {
@@ -413,6 +454,30 @@ export default {
         }
       }
     }
+
+    .email-button {
+      width: 100%;
+      height: auto;
+      margin: 10px 0px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      a {
+        text-decoration: none;
+        color: $font-light;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        background-color: $blue-1-dark;
+        transition-duration: 0.5s;
+      }
+
+      a:hover {
+        background-color: $blue-1-light;
+      }
+    }
   }
 }
+// light
 </style>

@@ -13,6 +13,15 @@ export default createStore({
     ],
     menu_status: "close",
     scroll_top_status: "close",
+    lloading_status: "close",
+    loading_rate: 0,
+    message_statsu: "close",
+    message: {
+      type: "success",
+      message: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium
+      voluptatum modi `,
+      status_code: "400",
+    },
   },
   getters: {},
   mutations: {
@@ -25,6 +34,10 @@ export default createStore({
 
     ChangeMenuStatus(state) {
       state.menu_status = state.menu_status == "close" ? "open" : "close";
+    },
+
+    ChangeMessageStatus(state) {
+      state.message_statsu = state.message_statsu == "close" ? "open" : "close";
     },
   },
   actions: {},

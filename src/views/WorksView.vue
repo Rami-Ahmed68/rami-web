@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import WorkComponent from "@/components/works/WorksComponent.vue";
+import WorkComponent from "@/components/works/WorkComponent.vue";
 export default {
   data() {
     return {};
@@ -36,8 +36,8 @@ export default {
   color: $font-light;
 
   @media (max-width: $phone) {
-    width: 96%;
-    margin: 0px 2%;
+    width: 90%;
+    margin: 0px 5%;
   }
 
   h1 {
@@ -74,8 +74,8 @@ export default {
   color: $font-light;
 
   @media (max-width: $phone) {
-    width: 96%;
-    margin: 0px 2%;
+    width: 90%;
+    margin: 0px 5%;
   }
 
   h1 {

@@ -1,42 +1,40 @@
 <template>
-  <div :class="`skills-page-${this.$store.state.theme}`">
-    <h1>Skills</h1>
+  <div :class="`message-page-${this.$store.state.theme}`">
+    <h1>Messages Page</h1>
 
     <div class="container">
-      <SkillsComponent :skill_data="{ title: 'hello' }" />
-      <SkillsComponent :skill_data="{ title: 'hello' }" />
-      <SkillsComponent :skill_data="{ title: 'hello' }" />
-      <SkillsComponent :skill_data="{ title: 'hello' }" />
-      <SkillsComponent :skill_data="{ title: 'hello' }" />
+      <MessageComponent :message_data="{}" />
+      <MessageComponent :message_data="{}" />
+      <MessageComponent :message_data="{}" />
+      <MessageComponent :message_data="{}" />
     </div>
   </div>
 </template>
 
 <script>
-import SkillsComponent from "@/components/skills/SkillComponent.vue";
-
+import MessageComponent from "@/components/Messages/MessageComponent.vue";
 export default {
   data() {
     return {};
   },
   components: {
-    SkillsComponent,
+    MessageComponent,
   },
 };
 </script>
 
 <style lang="scss">
 @import "../sass/varibels";
+
 // dark
-.skills-page-dark {
+.message-page-dark {
   width: 40%;
   height: auto;
   margin: auto;
-  padding-bottom: 5px;
 
   @media (max-width: $phone) {
-    width: 90%;
-    margin: 0px 5%;
+    width: 96%;
+    margin: 5px 2%;
   }
 
   h1 {
@@ -50,20 +48,20 @@ export default {
   .container {
     width: 100%;
     height: auto;
+    padding: 5px;
   }
 }
 // dark
 
 // light
-.skills-page-light {
+.message-page-light {
   width: 40%;
   height: auto;
   margin: auto;
-  padding-bottom: 5px;
 
   @media (max-width: $phone) {
-    width: 90%;
-    margin: 0px 5%;
+    width: 96%;
+    margin: 5px 2%;
   }
 
   h1 {
@@ -77,6 +75,7 @@ export default {
   .container {
     width: 100%;
     height: auto;
+    padding: 5px;
   }
 }
 // light

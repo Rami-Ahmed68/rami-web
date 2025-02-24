@@ -21,7 +21,7 @@ export default {
   mounted() {
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(
-      40,
+      75,
       window.innerWidth / window.innerHeight,
       0.1,
       1000
@@ -31,7 +31,7 @@ export default {
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.getElementById("three-container").appendChild(renderer.domElement);
 
-    camera.position.z = 8;
+    camera.position.z = 4;
 
     const loader = new ColladaLoader();
     let model; // لتخزين النموذج بعد تحميله
@@ -48,9 +48,13 @@ export default {
         model.scale.set(1, 1, 1);
         model.position.set(0, 1, 0);
 
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-        directionalLight.position.set(1, 1, 1);
+        // إضافة الإضاءة هنا
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1); // زيادة شدة الإضاءة
+        directionalLight.position.set(1, 1, 1).normalize(); // توجيه الضوء
         scene.add(directionalLight);
+
+        const ambientLight = new THREE.AmbientLight(0x404040); // إضافة إضاءة محيطة
+        scene.add(ambientLight);
       },
       (xhr) => {
         console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
@@ -65,7 +69,7 @@ export default {
       controls.update();
 
       if (model) {
-        rotationAngle += 0.01; // تحديث زاوية الدوران في كل إطار
+        rotationAngle += 0.005; // تحديث زاوية الدوران في كل إطار
         model.rotation.y = rotationAngle; // تدوير النموذج حول المحور Y
       }
 
@@ -87,7 +91,6 @@ export default {
 @import "../../sass/_varibels.scss";
 .dark-model {
   width: 100%;
-  min-height: 300px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -95,8 +98,12 @@ export default {
   #three-container {
     background-color: none;
     width: 100%;
-    height: 400px;
+    height: 300px;
     overflow: hidden;
+
+    @media (max-width: $phone) {
+      height: 400px;
+    }
 
     @keyframes rotate {
       from {
@@ -165,8 +172,12 @@ export default {
   #three-container {
     background-color: none;
     width: 100%;
-    height: 400px;
+    height: 300px;
     overflow: hidden;
+
+    @media (max-width: $phone) {
+      height: 400px;
+    }
 
     @keyframes rotate {
       from {

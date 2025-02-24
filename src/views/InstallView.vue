@@ -39,7 +39,7 @@ export default {
 
 <style lang="scss">
 @import "../sass/_varibels";
-
+// dark
 .dark-install-page {
   width: 100%;
   height: auto;
@@ -66,7 +66,12 @@ export default {
       cursor: pointer;
       color: $font-dark;
       border-radius: 5px;
-      background-color: $blue;
+      background-color: $blue-1-dark;
+      transition-duration: 0.5s;
+    }
+
+    button:hover {
+      background-color: $blue-1-light;
     }
 
     p {
@@ -84,7 +89,9 @@ export default {
     }
   }
 }
+// dark
 
+// light
 .light-install-page {
   width: 100%;
   height: auto;
@@ -109,9 +116,14 @@ export default {
       outline: none;
       padding: 10px 20px;
       cursor: pointer;
-      color: $font-dark;
+      color: $font-light;
       border-radius: 5px;
-      background-color: $blue;
+      background-color: $blue-1-dark;
+      transition-duration: 0.5s;
+    }
+
+    button:hover {
+      background-color: $blue-1-light;
     }
 
     p {
@@ -129,4 +141,5 @@ export default {
     }
   }
 }
+// light
 </style>

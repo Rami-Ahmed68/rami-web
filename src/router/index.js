@@ -3,6 +3,9 @@ import HomeView from "../views/HomeView.vue";
 import WorksView from "../views/WorksView.vue";
 import InstallApp from "../views/InstallView.vue";
 import CvView from "@/views/CvView.vue";
+import SkillsView from "@/views/SkillsView.vue";
+import ContactView from "@/views/ContactView.vue";
+import MessagesView from "@/views/MessagesView.vue";
 
 const routes = [
   {
@@ -14,6 +17,21 @@ const routes = [
     path: "/works",
     name: "works",
     component: WorksView,
+  },
+  {
+    path: "/skills",
+    name: "skills",
+    component: SkillsView,
+  },
+  {
+    path: "/contact",
+    name: "contact",
+    component: ContactView,
+  },
+  {
+    path: "/messages",
+    name: "messages",
+    component: MessagesView,
   },
   {
     path: "/cv",

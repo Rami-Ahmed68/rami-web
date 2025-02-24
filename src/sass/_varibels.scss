@@ -10,6 +10,15 @@ $border-color-light:rgba(27, 27, 27, 0.733);
 $menu-dark:#2d3748;
 $menu-light:#fff;
 
+$loading-dark:#2d374862;
+$loading-light:#ffffff50;
+
+$loading-points-dark : #444444;
+$loading-points-light : rgb(226, 226, 226);
+
+$input-dark:#23252b;
+$input-light:rgb(209, 209, 209);
+
 $message-dark:#1d1f24;
 $message-light:rgb(253, 242, 222);
 
@@ -33,6 +42,14 @@ $light-icon-theme-color:#fbd38d;
 $font-light : #ffffff;
 $font-dark : #000000;
 
+$error-message-body:rgba(231, 63, 63, 0.719);
+$error-message-border:rgba(231, 63, 63, 0.719);
+
+
+$success-message-body:rgba(47, 177, 36, 0.555);
+$success-message-border:rgba(90, 241, 60, 0.719);
+
+
 $green : green;
 $red : rgba(255, 0, 0, 0.733);
 
@@ -45,6 +62,9 @@ $x4-large : 50px;
 $small : small;
 $x-small : x-small;
 $black : black;
+
+$shadow-black : black;
+$shadow-light : rgb(116, 116, 116);
 
 $phone : 700px;
 $tablet : 1300px;

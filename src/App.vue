@@ -6,6 +6,8 @@
       <router-view />
     </transition>
     <ScrollToTopComponnet @click="scrollToTop" />
+    <LoadingComponent />
+    <MessageComponent />
   </div>
 </template>
 
@@ -13,6 +15,8 @@
 import NavComponnet from "@/components/global/NavComponent.vue";
 import ModelComponent from "./components/global/ModelComponent.vue";
 import ScrollToTopComponnet from "./components/global/ScrollToTopComponnet.vue";
+import LoadingComponent from "./components/global/LoadingComponent.vue";
+import MessageComponent from "./components/global/MessageComponent.vue";
 export default {
   data() {
     return {
@@ -26,6 +30,8 @@ export default {
     NavComponnet,
     ModelComponent,
     ScrollToTopComponnet,
+    LoadingComponent,
+    MessageComponent,
   },
   methods: {
     scrollToTop() {
