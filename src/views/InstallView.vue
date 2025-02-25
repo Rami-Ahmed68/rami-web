@@ -20,23 +20,11 @@ export default {
       this.deferredPrompt = event;
     });
   },
-<<<<<<< HEAD
   methods: {
     async install() {
       console.log("cliked");
       // start the loading
       this.$store.state.loading_status = "open";
-=======
-  methods : {
- 
-
-  async install() {
-    // start the loading
-    this.$store.state.loading_status = "open";
-
-    if (this.deferredPrompt) {
-      await this.deferredPrompt.prompt();
->>>>>>> 68c0ac537a0ad7a2e1cca17895a6039659ea3225
 
       if (this.deferredPrompt) {
         await this.deferredPrompt.prompt();
@@ -47,13 +35,8 @@ export default {
           this.$store.state.loading_status = "open";
         }
       }
-<<<<<<< HEAD
     },
   },
-=======
-    }
-  },}
->>>>>>> 68c0ac537a0ad7a2e1cca17895a6039659ea3225
 };
 </script>
 
