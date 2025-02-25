@@ -20,19 +20,22 @@ export default {
       this.deferredPrompt = event;
     });
   },
-  async install() {
-    // start the loading
-    this.$store.state.loading_status = "open";
-
-    if (this.deferredPrompt) {
-      await this.deferredPrompt.prompt();
+  methods: {
+    async install() {
+      console.log("cliked");
+      // start the loading
+      this.$store.state.loading_status = "open";
 
       if (this.deferredPrompt) {
-        this.deferredPrompt = null;
-        // stop the loading
-        this.$store.state.loading_status = "open";
+        await this.deferredPrompt.prompt();
+
+        if (this.deferredPrompt) {
+          this.deferredPrompt = null;
+          // stop the loading
+          this.$store.state.loading_status = "open";
+        }
       }
-    }
+    },
   },
 };
 </script>

@@ -1,13 +1,15 @@
 <template>
   <div
-    :class="`laoding-${this.$store.state.theme}-${this.$store.state.lloading_status}`"
+    :class="`laoding-${this.$store.state.theme}-${this.$store.state.loading_status}`"
   >
     <div class="elements-cont">
       <span class="element"></span>
       <span class="element"></span>
       <span class="element"></span>
     </div>
-    <p class="message">loading⏳ : {{ this.$store.state.loading_rate }}%</p>
+    <p class="message" v-if="this.$store.state.loading_rate">
+      loading⏳ : {{ this.$store.state.loading_rate }}%
+    </p>
   </div>
 </template>
 
@@ -25,8 +27,8 @@ export default {
 .laoding-dark-open {
   overflow: hidden;
   width: 7%;
-  height: 40px;
-  padding: 4px;
+  max-height: 40px;
+  padding: 6px;
   border-radius: 5px;
   position: fixed;
   top: 10%;
@@ -99,8 +101,8 @@ export default {
 .laoding-light-open {
   overflow: hidden;
   width: 7%;
-  height: 40px;
-  padding: 4px;
+  max-height: 40px;
+  padding: 6px;
   border-radius: 5px;
   position: fixed;
   top: 10%;

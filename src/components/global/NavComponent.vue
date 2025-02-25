@@ -255,7 +255,7 @@ export default {
 
     .router-link-active {
       background-color: $blue;
-      color: $font-light;
+      color: $font-dark;
     }
 
     .theme-icon {

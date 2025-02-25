@@ -3,16 +3,17 @@
     <h1>Skills</h1>
 
     <div class="container">
-      <SkillsComponent :skill_data="{ title: 'hello' }" />
-      <SkillsComponent :skill_data="{ title: 'hello' }" />
-      <SkillsComponent :skill_data="{ title: 'hello' }" />
-      <SkillsComponent :skill_data="{ title: 'hello' }" />
-      <SkillsComponent :skill_data="{ title: 'hello' }" />
+      <SkillsComponent
+        v-for="(skill, index) in this.$store.state.geted_skills"
+        :key="index"
+        :skill_data="skill"
+      />
     </div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
 import SkillsComponent from "@/components/skills/SkillComponent.vue";
 
 export default {
@@ -21,6 +22,32 @@ export default {
   },
   components: {
     SkillsComponent,
+  },
+  mounted() {
+    // call to get skills method
+    this.getskills();
+  },
+  methods: {
+    async getskills() {
+      // start the loading
+      this.$store.state.loading_status = "open";
+
+      await axios
+        .get(this.$store.state.Apis.skills.get_all)
+        .then((response) => {
+          console.log(response);
+          // stop the loading
+          this.$store.state.loading_status = "close";
+
+          // set the skills of the resposne to geted_skills in store
+          this.$store.state.geted_skills = response.data.skills_data;
+        })
+        .catch((error) => {
+          this.$store.state.loading_status = "close";
+
+          console.log(error);
+        });
+    },
   },
 };
 </script>

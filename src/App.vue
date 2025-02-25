@@ -8,6 +8,7 @@
     <ScrollToTopComponnet @click="scrollToTop" />
     <LoadingComponent />
     <MessageComponent />
+    <ConfirmDeleteComponent />
   </div>
 </template>
 
@@ -17,6 +18,7 @@ import ModelComponent from "./components/global/ModelComponent.vue";
 import ScrollToTopComponnet from "./components/global/ScrollToTopComponnet.vue";
 import LoadingComponent from "./components/global/LoadingComponent.vue";
 import MessageComponent from "./components/global/MessageComponent.vue";
+import ConfirmDeleteComponent from "./components/global/forms/messages/ConfirmDeleteComponent.vue";
 export default {
   data() {
     return {
@@ -32,6 +34,7 @@ export default {
     ScrollToTopComponnet,
     LoadingComponent,
     MessageComponent,
+    ConfirmDeleteComponent,
   },
   methods: {
     scrollToTop() {

@@ -1,10 +1,10 @@
 <template>
   <div :class="`skill-component-${this.$store.state.theme}`">
     <router-link to="/skill">
-      <img src="../../assets/download.jpg" alt="skill icon" />
+      <img :src="this.skill_data.icon" alt="skill icon" />
 
       <div class="info">
-        <h3>Skill title</h3>
+        <h3>{{ this.skill_data.title }}</h3>
 
         <p>Lorem ipsum dolor, sit amet</p>
       </div>

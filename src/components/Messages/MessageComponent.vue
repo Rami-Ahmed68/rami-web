@@ -1,6 +1,11 @@
 <template>
   <div :class="`message-${this.$store.state.theme}`">
-    <h3>Full name <span>🗑️</span></h3>
+    <h3>
+      Full name
+      <span @click="this.$store.commit('ChangeconfirmDeleteMessageStatus')"
+        >🗑️</span
+      >
+    </h3>
 
     <div class="contact-info">
       <a href="">📞Phone</a>
@@ -74,7 +79,7 @@ export default {
       padding: 5px 10px;
       border-radius: 5px;
       text-decoration: none;
-      color: $font-light;
+      color: $font-dark;
       background-color: $blue-1-light;
       transition-duration: 0.5s;
       margin: 4px 4px 4px 0px;

@@ -13,7 +13,7 @@ export default createStore({
     ],
     menu_status: "close",
     scroll_top_status: "close",
-    lloading_status: "close",
+    loading_status: "close",
     loading_rate: 0,
     message_statsu: "close",
     message: {
@@ -21,6 +21,60 @@ export default createStore({
       message: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium
       voluptatum modi `,
       status_code: "400",
+    },
+    confirm_delete_message_status: "close",
+    geted_works: [],
+    geted_skills: [],
+    Apis: {
+      auth: {
+        log_in: `https://rami-web-seriver-v2.onrender.com/api/v1/rami_ahmed/admin/login`,
+      },
+      works: {
+        create:
+          "https://rami-web-seriver-v2.onrender.com/api/v1/rami_ahmed/work/create",
+        delete:
+          "https://rami-web-seriver-v2.onrender.com/api/v1/rami_ahmed/work/delete",
+        update:
+          "https://rami-web-seriver-v2.onrender.com/api/v1/rami_ahmed/work/update",
+        get_all:
+          "https://rami-web-seriver-v2.onrender.com/api/v1/rami_ahmed/work/get/all",
+        get_one:
+          "https://rami-web-seriver-v2.onrender.com/api/v1/rami_ahmed/work/get/one",
+        get_count:
+          "https://rami-web-seriver-v2.onrender.com/api/v1/rami_ahmed/work/get/count",
+        change_cover:
+          "https://rami-web-seriver-v2.onrender.com/api/v1/rami_ahmed/cover/change",
+        change_video:
+          "https://rami-web-seriver-v2.onrender.com/api/v1/rami_ahmed/work/video/change",
+      },
+      skills: {
+        create:
+          "https://rami-web-seriver-v2.onrender.com/api/v1/rami_ahmed/skill/create",
+        delete:
+          "https://rami-web-seriver-v2.onrender.com/api/v1/rami_ahmed/skill/delete",
+        update:
+          "https://rami-web-seriver-v2.onrender.com/api/v1/rami_ahmed/skill/update",
+        get_all:
+          "https://rami-web-seriver-v2.onrender.com/api/v1/rami_ahmed/skill/get/all",
+        get_one:
+          "https://rami-web-seriver-v2.onrender.com/api/v1/rami_ahmed/skill/get/one",
+        get_count:
+          "https://rami-web-seriver-v2.onrender.com/api/v1/rami_ahmed/skill/get/count",
+        change_icon:
+          "https://rami-web-seriver-v2.onrender.com/api/v1/rami_ahmed/change/icon",
+      },
+      messages: {
+        create:
+          "https://rami-web-seriver-v2.onrender.com/api/v1/rami_ahmed/message/create",
+        delete:
+          "https://rami-web-seriver-v2.onrender.com/api/v1/rami_ahmed/message/delete",
+        get_all:
+          "https://rami-web-seriver-v2.onrender.com/api/v1/rami_ahmed/message/get/all",
+        get_one:
+          "https://rami-web-seriver-v2.onrender.com/api/v1/rami_ahmed/message/get/one",
+        get_count:
+          "https://rami-web-seriver-v2.onrender.com/api/v1/rami_ahmed/message/get/count",
+      },
     },
   },
   getters: {},
@@ -39,7 +93,22 @@ export default createStore({
     ChangeMessageStatus(state) {
       state.message_statsu = state.message_statsu == "close" ? "open" : "close";
     },
+
+    ChangeconfirmDeleteMessageStatus(state) {
+      state.confirm_delete_message_status =
+        state.confirm_delete_message_status == "close" ? "open" : "close";
+    },
   },
-  actions: {},
+  actions: {
+    // generate a date like this format (dd-mm-yyy) method
+    generateDate() {
+      const today = new Date();
+      const day = String(today.getDate()).padStart(2, "0");
+      const month = String(today.getMonth() + 1).padStart(2, "0"); // الأشهر تبدأ من 0
+      const year = today.getFullYear();
+
+      return `${day}-${month}-${year}`;
+    },
+  },
   modules: {},
 });

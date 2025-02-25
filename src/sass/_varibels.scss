@@ -1,5 +1,5 @@
-$dark-theme : #121213;
-$light-theme : rgb(240, 231, 219);
+$dark-theme : #202020;
+$light-theme : rgb(247, 237, 224);
 
 $dark-scroll-top : #1212137c;
 $light-scroll-top : rgb(197, 179, 155);
@@ -13,6 +13,9 @@ $menu-light:#fff;
 $loading-dark:#2d374862;
 $loading-light:#ffffff50;
 
+$confirm-form-dark:#2d37482c;
+$confirm-form-light:#ffffff21;
+
 $loading-points-dark : #444444;
 $loading-points-light : rgb(226, 226, 226);
 
@@ -20,7 +23,7 @@ $input-dark:#23252b;
 $input-light:rgb(209, 209, 209);
 
 $message-dark:#1d1f24;
-$message-light:rgb(253, 242, 222);
+$message-light:rgb(255, 249, 238);
 
 $menu-item-dark:#2a303b;
 $menu-item-light:#f0e7db;
@@ -43,11 +46,20 @@ $font-light : #ffffff;
 $font-dark : #000000;
 
 $error-message-body:rgba(231, 63, 63, 0.719);
-$error-message-border:rgba(231, 63, 63, 0.719);
+$error-message-border:rgba(230, 48, 48, 0.829);
 
 
 $success-message-body:rgba(47, 177, 36, 0.555);
 $success-message-border:rgba(90, 241, 60, 0.719);
+
+// confirm form colors
+$confirm-form-red-body:rgba(231, 63, 63, 0.719);
+$confirm-form-red-border:rgba(230, 48, 48, 0.829);
+
+
+$confirm-form-green-body:rgba(47, 177, 36, 0.555);
+$confirm-form-green-border:rgba(53, 172, 29, 0.719);
+// confirm form colors
 
 
 $green : green;
