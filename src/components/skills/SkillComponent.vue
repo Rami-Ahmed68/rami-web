@@ -6,7 +6,7 @@
       <div class="info">
         <h3>{{ this.skill_data.title }}</h3>
 
-        <p>Lorem ipsum dolor, sit amet</p>
+        <p>Lorem ipsum dolor, sit amet ...</p>
       </div>
     </router-link>
   </div>
@@ -42,8 +42,8 @@ export default {
     padding: 3px;
 
     img {
-      max-width: 30%;
-      height: 100%;
+      max-width: 80px;
+      max-height: 80px;
       border-radius: 5px;
     }
 
@@ -76,13 +76,13 @@ export default {
     height: 100%;
     text-decoration: none;
     display: flex;
-    align-items: center;
+    // align-items: center;
     margin: 5px 0px;
     padding: 3px;
 
     img {
-      max-width: 30%;
-      height: 100%;
+      max-width: 80px;
+      max-height: 80px;
       border-radius: 5px;
     }
 

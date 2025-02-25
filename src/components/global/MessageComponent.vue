@@ -1,6 +1,6 @@
 <template>
   <div
-    :class="`message-${this.$store.state.theme}-${this.$store.state.message.type}-${this.$store.state.message_statsu}`"
+    :class="`message-${this.$store.state.theme}-${this.$store.state.message.type}-${this.$store.state.message_status}`"
   >
     <p>
       {{ this.$store.state.message.type == "error" ? "🚨" : "✅" }} :

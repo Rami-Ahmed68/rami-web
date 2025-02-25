@@ -26,11 +26,13 @@ export default {
 .work-dark {
   width: 48%;
   min-height: 100px;
+  max-height: 400px;
   margin: 10px 1%;
 
   @media (max-width: $phone) {
     width: 90%;
     min-height: 100px;
+    max-height: 300px;
     margin: 20px 5%;
   }
 
@@ -41,6 +43,7 @@ export default {
       height: auto;
       border-radius: 10px;
       margin: 5px 0%;
+      max-height: 250px;
     }
 
     h3 {
@@ -67,11 +70,13 @@ export default {
 .work-light {
   width: 48%;
   min-height: 100px;
+  max-height: 400px;
   margin: 10px 1%;
 
   @media (max-width: $phone) {
     width: 90%;
     min-height: 100px;
+    max-height: 300px;
     margin: 20px 5%;
   }
 
@@ -83,6 +88,7 @@ export default {
       height: auto;
       border-radius: 10px;
       margin: 5px 0%;
+      max-height: 250px;
     }
 
     h3 {

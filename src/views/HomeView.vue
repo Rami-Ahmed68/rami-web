@@ -8,21 +8,14 @@
           <h2>Rami Ahmed</h2>
           <h4>Digital Craftsman ( Artist / Developer / Designer )</h4>
         </div>
-        <img src="../assets/70b903b9-1da9-4732-9ef1-6616cdb43a8b.jpg" alt="" />
+        <img :src="this.$store.state.admin_info.avatar" alt="" />
       </div>
 
       <div class="data">
         <h3>work</h3>
 
         <p>
-          Takuya is a freelance and a full-stack developer based in Osaka with a
-          passion for building digital services/stuff he wants. He has a knack
-          for all things launching products, from planning and designing all the
-          way to solving real-life problems with code. When not online, he loves
-          hanging out with his camera. Currently, he is living off of his own
-          product called Inkdrop. He publishes content for marketing his
-          products and his YouTube channel called "Dev as Life" has more than
-          100k subscribers
+          {{ this.$store.state.admin_info.work }}
         </p>
 
         <button @click="this.$router.push('/works')">
@@ -32,16 +25,18 @@
         <h3>bio</h3>
 
         <div class="bio-cont">
-          <p>2002 : Lorem ipsum dolor sit amet consectetur.</p>
-          <p>2002 : Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-          <p>2002 : Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+          <p
+            v-for="(line, index) in this.$store.state.admin_info.bio"
+            :key="index"
+          >
+            {{ line }}
+          </p>
         </div>
 
         <h3>I love</h3>
 
         <p>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab qui
-          commodi quas amet esse ipsam molestiae modi et obcaecati facere.
+          {{ this.$store.state.admin_info.love }}
         </p>
       </div>
 
@@ -50,26 +45,46 @@
 
         <ul class="links-cont">
           <li>
-            <router-link to="/"> Phone number </router-link>
+            <a
+              target="_blank"
+              :href="`tel:${this.$store.state.admin_info.phone_number}`"
+            >
+              Phone number
+            </a>
           </li>
 
           <li>
-            <router-link to="/"> Whatsapp number </router-link>
+            <a
+              target="_blank"
+              :href="`https://wa.me/${this.$store.state.admin_info.whatsapp_number}`"
+            >
+              Whatsapp number
+            </a>
           </li>
           <li>
-            <router-link to="/"> Instagram </router-link>
+            <a target="_blank" :href="this.$store.state.admin_info.instagram">
+              Instagram
+            </a>
           </li>
           <li>
-            <router-link to="/"> facebook </router-link>
+            <a target="_blank" :href="this.$store.state.admin_info.facebook">
+              facebook
+            </a>
           </li>
           <li>
-            <router-link to="/"> gitHub </router-link>
+            <a :href="this.$store.state.admin_info.github" target="_blank">
+              gitHub
+            </a>
           </li>
           <li>
-            <router-link to="/"> LinkedIn </router-link>
+            <a target="_blank" :href="this.$store.state.admin_info.linked_in">
+              LinkedIn
+            </a>
           </li>
           <li>
-            <router-link to="/"> Code wars </router-link>
+            <a target="_blank" :href="this.$store.state.admin_info.code_wars">
+              Code wars
+            </a>
           </li>
         </ul>
       </div>
@@ -82,11 +97,50 @@
 </template>
 
 <script>
+import axios from "axios";
 // @ is an alias to /src
 
 export default {
   name: "HomeView",
   components: {},
+  mounted() {
+    this.GetAdminInfo();
+  },
+  methods: {
+    async GetAdminInfo() {
+      console.log("sendec ...");
+      // start the loading
+      this.$store.state.loading_status = "open";
+
+      await axios
+        .get(this.$store.state.Apis.admin.get_info)
+        .then((response) => {
+          // stop the loading
+          this.$store.state.loading_status = "close";
+
+          // set the admin's info in to store
+          this.$store.state.admin_info = response.data.admin_data;
+          console.log(response);
+        })
+        .catch((error) => {
+          // stop the loading
+          this.$store.state.loading_status = "close";
+
+          // set the messgae's type to error's object in store
+          this.$store.state.message.type = "error";
+
+          // set the error messgae to error in store
+          this.$store.state.message.message =
+            error.response.data.message.english;
+
+          // to open the message
+          this.$store.commit("OpenTheMessgae");
+
+          // to close the message after 500ms
+          this.$store.commit("CloseTheMessgaeAfter500ms");
+        });
+    },
+  },
 };
 </script>
 

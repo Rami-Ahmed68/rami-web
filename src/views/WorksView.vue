@@ -17,35 +17,82 @@ import axios from "axios";
 import WorkComponent from "@/components/works/WorkComponent.vue";
 export default {
   data() {
-    return {};
+    return {
+      page: 1,
+      limit: 20,
+    };
   },
   components: {
     WorkComponent,
   },
   mounted() {
+    // call to the handele scroll method on window scroll
+    window.addEventListener("scroll", this.HandelScroll);
+
     // call to get works method
     this.getWorks();
   },
   methods: {
     async getWorks() {
-      // start the loading
-      this.$store.state.loading_status = "open";
+      // check if the works data array in store is empty or not
+      if (this.$store.state.geted_works.length == 0) {
+        // start the loading
+        this.$store.state.loading_status = "open";
+      }
 
       await axios
-        .get(this.$store.state.Apis.works.get_all)
+        .get(this.$store.state.Apis.works.get_all, {
+          params: {
+            page: this.page,
+            limit: this.limit,
+          },
+        })
         .then((response) => {
-          console.log(response);
           // stop the loading
           this.$store.state.loading_status = "close";
 
-          // set the works of the resposne to geted_works in store
-          this.$store.state.geted_works = response.data.works_data;
+          if (this.$store.state.geted_works.length > 0) {
+            // set the works of the resposne to geted_works in store
+            this.$store.state.geted_works = [
+              ...this.$store.state.geted_works,
+              ...response.data.works_data,
+            ];
+          } else {
+            // set the works of the resposne to geted_works in store
+            this.$store.state.geted_works = response.data.works_data;
+          }
         })
         .catch((error) => {
+          // stop the loading
           this.$store.state.loading_status = "close";
 
-          console.log(error);
+          // set the messgae's type to error's object in store
+          this.$store.state.message.type = "error";
+
+          // set the error messgae to error in store
+          this.$store.state.message.message =
+            error.response.data.message.english;
+
+          // to open the message
+          this.$store.commit("OpenTheMessgae");
+
+          // to close the message after 500ms
+          this.$store.commit("CloseTheMessgaeAfter500ms");
         });
+    },
+
+    // handel scroll
+    async HandelScroll() {
+      // check if the window height is donw
+      if (
+        window.scrollY + window.innerHeight >=
+        document.body.scrollHeight - 600
+      ) {
+        // to change page
+        this.page += 1;
+        // call the getWorks method
+        await this.getWorks();
+      }
     },
   },
 };

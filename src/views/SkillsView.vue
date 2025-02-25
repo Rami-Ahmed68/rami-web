@@ -18,35 +18,77 @@ import SkillsComponent from "@/components/skills/SkillComponent.vue";
 
 export default {
   data() {
-    return {};
+    return {
+      page: 1,
+      limit: 20,
+    };
   },
   components: {
     SkillsComponent,
   },
   mounted() {
+    // call to the handele scroll method on window scroll
+    window.addEventListener("scroll", this.HandelScroll);
+
     // call to get skills method
-    this.getskills();
+    this.getSkills();
   },
   methods: {
-    async getskills() {
-      // start the loading
-      this.$store.state.loading_status = "open";
+    async getSkills() {
+      // check if the geted skills in store is empty
+      if (this.$store.state.geted_skills.length == 0) {
+        // start the loading
+        this.$store.state.loading_status = "open";
+      }
 
       await axios
         .get(this.$store.state.Apis.skills.get_all)
         .then((response) => {
-          console.log(response);
           // stop the loading
           this.$store.state.loading_status = "close";
 
           // set the skills of the resposne to geted_skills in store
-          this.$store.state.geted_skills = response.data.skills_data;
+          if (this.$store.state.geted_skills.length == 0) {
+            this.$store.state.geted_skills = [
+              ...this.$store.state.geted_skills,
+              ...response.data.skills_data,
+            ];
+          } else {
+            this.$store.state.geted_skills = response.data.skills_data;
+          }
         })
         .catch((error) => {
+          // stop the loading
           this.$store.state.loading_status = "close";
 
-          console.log(error);
+          // set the messgae's type to error's object in store
+          this.$store.state.message.type = "error";
+
+          // set the error messgae to error in store
+          this.$store.state.message.message =
+            error.response.data.message.english;
+
+          // to open the message
+          this.$store.commit("OpenTheMessgae");
+
+          // to close the message after 500ms
+          this.$store.commit("CloseTheMessgaeAfter500ms");
         });
+    },
+
+    // handel scroll
+    async HandelScroll() {
+      // check if the window height is donw
+      if (
+        window.scrollY + window.innerHeight >=
+        document.body.scrollHeight - 600
+      ) {
+        // to change page
+        this.page += 1;
+
+        // call the getSkills method
+        await this.getSkills();
+      }
     },
   },
 };

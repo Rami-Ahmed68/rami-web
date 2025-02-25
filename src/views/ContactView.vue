@@ -4,19 +4,23 @@
 
     <form action="">
       <label for="full_name">Full Name</label>
-      <input type="text" id="full_name" />
+      <input type="text" id="full_name" v-model="this.full_name" />
 
       <label for="email_address">Email Address</label>
-      <input type="email" id="email_address" />
+      <input type="email" id="email_address" v-model="this.email_address" />
 
       <label for="phone_number">Phone Number</label>
-      <input type="text" id="phone_number" />
+      <input type="text" id="phone_number" v-model="this.phone_number" />
 
       <label for="whatsapp_number">Whatsapp Number</label>
-      <input type="text" id="whatsapp_number" />
+      <input type="text" id="whatsapp_number" v-model="this.whatsapp_number" />
 
       <label for="custom_message">Custom Message</label>
-      <textarea name="custom message" id="custom_message"></textarea>
+      <textarea
+        name="custom message"
+        id="custom_message"
+        v-model="this.custom_message"
+      ></textarea>
 
       <button @click="sendMessage">Send</button>
     </form>

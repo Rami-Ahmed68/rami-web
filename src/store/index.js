@@ -15,19 +15,24 @@ export default createStore({
     scroll_top_status: "close",
     loading_status: "close",
     loading_rate: 0,
-    message_statsu: "close",
+    message_status: "close",
     message: {
       type: "success",
       message: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium
       voluptatum modi `,
-      status_code: "400",
     },
     confirm_delete_message_status: "close",
+    admin_info: "",
+    admin_cv: "",
     geted_works: [],
     geted_skills: [],
     Apis: {
       auth: {
         log_in: `https://rami-web-seriver-v2.onrender.com/api/v1/rami_ahmed/admin/login`,
+      },
+      admin: {
+        get_info: `https://rami-web-seriver-v2.onrender.com/api/v1/rami_ahmed/admin/get`,
+        get_cv: `https://rami-web-seriver-v2.onrender.com/api/v1/rami_ahmed/admin/get/cv`,
       },
       works: {
         create:
@@ -91,12 +96,22 @@ export default createStore({
     },
 
     ChangeMessageStatus(state) {
-      state.message_statsu = state.message_statsu == "close" ? "open" : "close";
+      state.message_status = state.message_status == "close" ? "open" : "close";
     },
 
     ChangeconfirmDeleteMessageStatus(state) {
       state.confirm_delete_message_status =
         state.confirm_delete_message_status == "close" ? "open" : "close";
+    },
+
+    OpenTheMessgae(state) {
+      state.message_status = state.message_status == "close" ? "open" : "close";
+    },
+
+    CloseTheMessgaeAfter500ms(state) {
+      setTimeout(() => {
+        state.message_status = "close";
+      }, 5000);
     },
   },
   actions: {
