@@ -72,7 +72,7 @@ export default {
           this.$store.commit("OpenTheMessgae");
 
           // to close the message after 500ms
-          this.$store.commit("CloseTheMessgaeAfter500ms");
+          this.$store.commit("CloseTheMessgaeAfter5s");
         });
     },
 

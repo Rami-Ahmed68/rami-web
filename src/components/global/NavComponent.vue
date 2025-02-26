@@ -43,12 +43,81 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "nav-component",
   data() {
-    return {};
+    return {
+      page: 1,
+      limit: 10,
+    };
   },
-  methods: {},
+  mounted() {
+    window.addEventListener("scroll", this.HandelScroll);
+    // call to get messages method
+    this.GetMesages();
+  },
+  methods: {
+    // get messages method
+    async GetMesages() {
+      // check if the messages's array in store s empty
+      if (this.$store.state.messages_array.length == 0) {
+        this.$store.state.loading_status = "open";
+      }
+
+      await axios
+        .get(this.$store.state.Apis.messages.get_all, {
+          params: {
+            page: this.page,
+            limit: this.limit,
+          },
+        })
+        .then((response) => {
+          // set the geted messages to messages array
+          if (this.$store.state.messages_array.length == 0) {
+            this.$store.state.messages_array = response.data.messages;
+          } else {
+            this.$store.state.messages_array = [
+              ...this.$store.state.messages_array,
+              ...response.data.messages,
+            ];
+          }
+          // stop the loading
+          this.$store.state.loading_status = "close";
+        })
+        .catch((error) => {
+          // set the messgae's type to error's object in store
+          this.$store.state.message.type = "error";
+
+          // set the error messgae to error in store
+          this.$store.state.message.message =
+            error.response.data.message.english;
+
+          // to open the message
+          this.$store.commit("OpenTheMessgae");
+
+          // stop the loading
+          this.$store.state.loading_status = "close";
+
+          // to close the message after 500ms
+          this.$store.commit("CloseTheMessgaeAfter5s");
+        });
+    },
+
+    // handel scroll
+    async HandelScroll() {
+      // check if the window height is donw
+      if (
+        window.scrollY + window.innerHeight >=
+        document.body.scrollHeight - 600
+      ) {
+        // to change page
+        this.page += 1;
+        // call the GetMesages method
+        await this.GetMesages();
+      }
+    },
+  },
 };
 </script>
 

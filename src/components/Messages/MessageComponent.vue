@@ -1,23 +1,26 @@
 <template>
   <div :class="`message-${this.$store.state.theme}`">
     <h3>
-      Full name
-      <span @click="this.$store.commit('ChangeconfirmDeleteMessageStatus')"
-        >🗑️</span
-      >
+      {{ this.message_data.full_name }}
+      <span @click="ConfirmDelete">🗑️</span>
     </h3>
 
     <div class="contact-info">
-      <a href="">📞Phone</a>
-      <a href="">💬whatsapp</a>
-      <a href="">📧email</a>
+      <a :href="`tel:${this.message_data.phone_number}`" target="_blank"
+        >📞 Phone</a
+      >
+      <a
+        :href="`https://wa.me/${this.message_data.whatsapp_number}`"
+        target="_blank"
+        >💬 Whatsapp</a
+      >
+      <a :href="`mailto:${this.message_data.whatsapp_number}`" target="_blank"
+        >📧 Email</a
+      >
     </div>
 
     <p>
-      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque eveniet,
-      nulla libero vitae odit similique nostrum molestiae. Natus nihil, nesciunt
-      dolorum iure, recusandae dolores laudantium debitis minima laborum quasi
-      labore!
+      {{ this.message_data.custom_message }}
     </p>
   </div>
 </template>
@@ -29,6 +32,15 @@ export default {
   },
   props: {
     message_data: Object,
+  },
+  methods: {
+    ConfirmDelete() {
+      // set the message's id into store
+      this.$store.state.message_id_for_delet = this.message_data._id;
+
+      // open the delet message confirm form
+      this.$store.commit("ChangeconfirmDeleteMessageStatus");
+    },
   },
 };
 </script>

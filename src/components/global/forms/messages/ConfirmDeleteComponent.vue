@@ -14,9 +14,53 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   data() {
     return {};
+  },
+  methods: {
+    async DeleteMessage() {
+      // start the loading
+      this.$store.state.loading_status = "open";
+
+      await axios
+        .delete(this.$store.state.Apis.messages.delete)
+        .then((response) => {
+          console.log(response);
+          // set the messgae's type to success's object in store
+          this.$store.state.message.type = "success";
+
+          // set the success messgae to success in store
+          this.$store.state.message.message = response.data.message.english;
+
+          // to open the message
+          this.$store.commit("OpenTheMessgae");
+
+          // stop the loading
+          this.$store.state.loading_status = "close";
+
+          // to close the message after 500ms
+          this.$store.commit("CloseTheMessgaeAfter5s");
+        })
+        .catch((error) => {
+          // set the messgae's type to error's object in store
+          this.$store.state.message.type = "error";
+
+          // set the error messgae to error in store
+          this.$store.state.message.message =
+            error.response.data.message.english;
+
+          // to open the message
+          this.$store.commit("OpenTheMessgae");
+
+          // stop the loading
+          this.$store.state.loading_status = "close";
+
+          // to close the message after 500ms
+          this.$store.commit("CloseTheMessgaeAfter5s");
+        });
+    },
   },
 };
 </script>

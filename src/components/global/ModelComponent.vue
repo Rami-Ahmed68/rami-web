@@ -7,84 +7,84 @@
 </template>
 
 <script>
-import * as THREE from "three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import modelPath from "../../../public/model/source/model/model.dae";
-import { ColladaLoader } from "three/examples/jsm/loaders/ColladaLoader";
+// import * as THREE from "three";
+// import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+// import modelPath from "../../../public/model/source/model/model.dae";
+// import { ColladaLoader } from "three/examples/jsm/loaders/ColladaLoader";
 
-export default {
-  data() {
-    return {
-      model_loaded: true,
-    };
-  },
-  mounted() {
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(
-      75,
-      window.innerWidth / window.innerHeight,
-      0.1,
-      1000
-    );
-    const renderer = new THREE.WebGLRenderer({ alpha: true });
-    const controls = new OrbitControls(camera, renderer.domElement);
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    document.getElementById("three-container").appendChild(renderer.domElement);
+// export default {
+//   data() {
+//     return {
+//       model_loaded: true,
+//     };
+//   },
+//   mounted() {
+//     const scene = new THREE.Scene();
+//     const camera = new THREE.PerspectiveCamera(
+//       75,
+//       window.innerWidth / window.innerHeight,
+//       0.1,
+//       1000
+//     );
+//     const renderer = new THREE.WebGLRenderer({ alpha: true });
+//     const controls = new OrbitControls(camera, renderer.domElement);
+//     renderer.setSize(window.innerWidth, window.innerHeight);
+//     document.getElementById("three-container").appendChild(renderer.domElement);
 
-    camera.position.z = 4;
+//     camera.position.z = 4;
 
-    const loader = new ColladaLoader();
-    let model; // لتخزين النموذج بعد تحميله
-    let rotationAngle = 0; // زاوية الدوران
+//     const loader = new ColladaLoader();
+//     let model; // لتخزين النموذج بعد تحميله
+//     let rotationAngle = 0; // زاوية الدوران
 
-    loader.load(
-      modelPath,
-      (collada) => {
-        model = collada.scene;
-        scene.add(model);
-        // update the model_loaded to close the loader animation
-        this.model_loaded = false;
+//     loader.load(
+//       modelPath,
+//       (collada) => {
+//         model = collada.scene;
+//         scene.add(model);
+//         // update the model_loaded to close the loader animation
+//         this.model_loaded = false;
 
-        model.scale.set(1, 1, 1);
-        model.position.set(0, 1, 0);
+//         model.scale.set(1, 1, 1);
+//         model.position.set(0, 1, 0);
 
-        // إضافة الإضاءة هنا
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 1); // زيادة شدة الإضاءة
-        directionalLight.position.set(1, 1, 1).normalize(); // توجيه الضوء
-        scene.add(directionalLight);
+//         // إضافة الإضاءة هنا
+//         const directionalLight = new THREE.DirectionalLight(0xffffff, 1); // زيادة شدة الإضاءة
+//         directionalLight.position.set(1, 1, 1).normalize(); // توجيه الضوء
+//         scene.add(directionalLight);
 
-        const ambientLight = new THREE.AmbientLight(0x404040); // إضافة إضاءة محيطة
-        scene.add(ambientLight);
-      },
-      (xhr) => {
-        console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
-      },
-      (error) => {
-        console.error("An error happened while loading the model:", error);
-      }
-    );
+//         const ambientLight = new THREE.AmbientLight(0x404040); // إضافة إضاءة محيطة
+//         scene.add(ambientLight);
+//       },
+//       (xhr) => {
+//         console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
+//       },
+//       (error) => {
+//         console.error("An error happened while loading the model:", error);
+//       }
+//     );
 
-    function animate() {
-      requestAnimationFrame(animate);
-      controls.update();
+//     function animate() {
+//       requestAnimationFrame(animate);
+//       controls.update();
 
-      if (model) {
-        rotationAngle += 0.005; // تحديث زاوية الدوران في كل إطار
-        model.rotation.y = rotationAngle; // تدوير النموذج حول المحور Y
-      }
+//       if (model) {
+//         rotationAngle += 0.005; // تحديث زاوية الدوران في كل إطار
+//         model.rotation.y = rotationAngle; // تدوير النموذج حول المحور Y
+//       }
 
-      renderer.render(scene, camera);
-    }
+//       renderer.render(scene, camera);
+//     }
 
-    animate();
+//     animate();
 
-    window.addEventListener("resize", () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    });
-  },
-};
+//     window.addEventListener("resize", () => {
+//       camera.aspect = window.innerWidth / window.innerHeight;
+//       camera.updateProjectionMatrix();
+//       renderer.setSize(window.innerWidth, window.innerHeight);
+//     });
+//   },
+// };
 </script>
 
 <style lang="scss">

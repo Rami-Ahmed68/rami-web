@@ -9,6 +9,7 @@ export default createStore({
       { title: "Skills", path: "/skills" },
       { title: "Contact", path: "/contact" },
       { title: "Cv", path: "/cv" },
+      { title: "Messages", path: "/messages" },
       { title: "Install App", path: "/install" },
     ],
     menu_status: "close",
@@ -26,6 +27,8 @@ export default createStore({
     admin_cv: "",
     geted_works: [],
     geted_skills: [],
+    messages_array: [],
+    message_id_for_delet: "",
     Apis: {
       auth: {
         log_in: `https://rami-web-seriver-v2.onrender.com/api/v1/rami_ahmed/admin/login`,
@@ -75,8 +78,6 @@ export default createStore({
           "https://rami-web-seriver-v2.onrender.com/api/v1/rami_ahmed/message/delete",
         get_all:
           "https://rami-web-seriver-v2.onrender.com/api/v1/rami_ahmed/message/get/all",
-        get_one:
-          "https://rami-web-seriver-v2.onrender.com/api/v1/rami_ahmed/message/get/one",
         get_count:
           "https://rami-web-seriver-v2.onrender.com/api/v1/rami_ahmed/message/get/count",
       },
@@ -108,7 +109,7 @@ export default createStore({
       state.message_status = state.message_status == "close" ? "open" : "close";
     },
 
-    CloseTheMessgaeAfter500ms(state) {
+    CloseTheMessgaeAfter5s(state) {
       setTimeout(() => {
         state.message_status = "close";
       }, 5000);

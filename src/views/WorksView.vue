@@ -63,9 +63,6 @@ export default {
           }
         })
         .catch((error) => {
-          // stop the loading
-          this.$store.state.loading_status = "close";
-
           // set the messgae's type to error's object in store
           this.$store.state.message.type = "error";
 
@@ -76,8 +73,11 @@ export default {
           // to open the message
           this.$store.commit("OpenTheMessgae");
 
+          // stop the loading
+          this.$store.state.loading_status = "close";
+
           // to close the message after 500ms
-          this.$store.commit("CloseTheMessgaeAfter500ms");
+          this.$store.commit("CloseTheMessgaeAfter5s");
         });
     },
 

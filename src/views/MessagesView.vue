@@ -3,10 +3,11 @@
     <h1>Messages Page</h1>
 
     <div class="container">
-      <MessageComponent :message_data="{}" />
-      <MessageComponent :message_data="{}" />
-      <MessageComponent :message_data="{}" />
-      <MessageComponent :message_data="{}" />
+      <MessageComponent
+        v-for="(message, index) in this.$store.state.messages_array"
+        :key="index"
+        :message_data="message"
+      />
     </div>
   </div>
 </template>

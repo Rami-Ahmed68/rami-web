@@ -2,32 +2,33 @@
   <div :class="`contact-page-${this.$store.state.theme}`">
     <h1>contact page</h1>
 
-    <form action="">
-      <label for="full_name">Full Name</label>
+    <div action="">
+      <label for="full_name">Full Name *</label>
       <input type="text" id="full_name" v-model="this.full_name" />
 
-      <label for="email_address">Email Address</label>
+      <label for="email_address">Email Address *</label>
       <input type="email" id="email_address" v-model="this.email_address" />
 
-      <label for="phone_number">Phone Number</label>
+      <label for="phone_number">Phone Number *</label>
       <input type="text" id="phone_number" v-model="this.phone_number" />
 
-      <label for="whatsapp_number">Whatsapp Number</label>
+      <label for="whatsapp_number">Whatsapp Number *</label>
       <input type="text" id="whatsapp_number" v-model="this.whatsapp_number" />
 
-      <label for="custom_message">Custom Message</label>
+      <label for="custom_message">Custom Message *</label>
       <textarea
         name="custom message"
         id="custom_message"
         v-model="this.custom_message"
       ></textarea>
 
-      <button @click="sendMessage">Send</button>
-    </form>
+      <button @click="SendMessage">Send</button>
+    </div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
@@ -39,8 +40,63 @@ export default {
     };
   },
   methods: {
-    sendMessage() {
-      console.log("sended");
+    // send a message
+    async SendMessage() {
+      // start the loading
+      this.$store.state.loading_status = "open";
+
+      // create teh body_data
+      const body_data = {
+        full_name: this.full_name,
+        email_address: this.email_address,
+        phone_number: this.phone_number,
+        whatsapp_number: this.whatsapp_number,
+        custom_message: this.custom_message,
+        created_at: await this.$store.dispatch("generateDate"),
+      };
+
+      await axios
+        .post(this.$store.state.Apis.messages.create, body_data)
+        .then((response) => {
+          // emptying the inputs data
+          this.full_name = "";
+          this.email_address = "";
+          this.phone_number = "";
+          this.whatsapp_number = "";
+          this.custom_message = "";
+
+          // stop the loading
+          this.$store.state.loading_status = "close";
+
+          // set the messgae's type to success's object in store
+          this.$store.state.message.type = "success";
+
+          // set the success messgae to success in store
+          this.$store.state.message.message = response.data.message.english;
+
+          // to open the message
+          this.$store.commit("OpenTheMessgae");
+
+          // to close the message after 500ms
+          this.$store.commit("CloseTheMessgaeAfter5s");
+        })
+        .catch((error) => {
+          // stop the loading
+          this.$store.state.loading_status = "close";
+
+          // set the messgae's type to error's object in store
+          this.$store.state.message.type = "error";
+
+          // set the error messgae to error in store
+          this.$store.state.message.message =
+            error.response.data.message.english;
+
+          // to open the message
+          this.$store.commit("OpenTheMessgae");
+
+          // to close the message after 500ms
+          this.$store.commit("CloseTheMessgaeAfter5s");
+        });
     },
   },
 };
@@ -68,7 +124,7 @@ export default {
     border-color: transparent transparent $font-light transparent;
   }
 
-  form {
+  div {
     width: 100%;
     height: auto;
     margin: 10px 0px;
@@ -142,7 +198,7 @@ export default {
     border-color: transparent transparent $font-dark transparent;
   }
 
-  form {
+  div {
     width: 100%;
     height: auto;
     margin: 10px 0px;
