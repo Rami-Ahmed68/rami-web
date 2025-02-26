@@ -4,22 +4,43 @@
 
     <div action="">
       <label for="full_name">Full Name *</label>
-      <input type="text" id="full_name" v-model="this.full_name" />
+      <input
+        type="text"
+        id="full_name"
+        v-model="this.full_name"
+        placeholder="Type you'r name here 🙎🏻‍♂️/🙎🏻‍♀️"
+      />
 
       <label for="email_address">Email Address *</label>
-      <input type="email" id="email_address" v-model="this.email_address" />
+      <input
+        type="email"
+        id="email_address"
+        v-model="this.email_address"
+        placeholder="Type you'r email address here 📧"
+      />
 
       <label for="phone_number">Phone Number *</label>
-      <input type="text" id="phone_number" v-model="this.phone_number" />
+      <input
+        type="text"
+        id="phone_number"
+        v-model="this.phone_number"
+        placeholder="type you'r phone number here 📞"
+      />
 
       <label for="whatsapp_number">Whatsapp Number *</label>
-      <input type="text" id="whatsapp_number" v-model="this.whatsapp_number" />
+      <input
+        type="text"
+        id="whatsapp_number"
+        v-model="this.whatsapp_number"
+        placeholder="Type you'r whatsapp number here 💬"
+      />
 
-      <label for="custom_message">Custom Message *</label>
+      <label for="custom_message">Message *</label>
       <textarea
         name="custom message"
         id="custom_message"
         v-model="this.custom_message"
+        placeholder="type you'r message here 📝"
       ></textarea>
 
       <button @click="SendMessage">Send</button>
@@ -65,9 +86,6 @@ export default {
           this.whatsapp_number = "";
           this.custom_message = "";
 
-          // stop the loading
-          this.$store.state.loading_status = "close";
-
           // set the messgae's type to success's object in store
           this.$store.state.message.type = "success";
 
@@ -77,13 +95,13 @@ export default {
           // to open the message
           this.$store.commit("OpenTheMessgae");
 
+          // stop the loading
+          this.$store.state.loading_status = "close";
+
           // to close the message after 500ms
           this.$store.commit("CloseTheMessgaeAfter5s");
         })
         .catch((error) => {
-          // stop the loading
-          this.$store.state.loading_status = "close";
-
           // set the messgae's type to error's object in store
           this.$store.state.message.type = "error";
 
@@ -93,6 +111,9 @@ export default {
 
           // to open the message
           this.$store.commit("OpenTheMessgae");
+
+          // stop the loading
+          this.$store.state.loading_status = "close";
 
           // to close the message after 500ms
           this.$store.commit("CloseTheMessgaeAfter5s");

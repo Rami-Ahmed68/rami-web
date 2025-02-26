@@ -12,6 +12,9 @@ export default createStore({
       { title: "Messages", path: "/messages" },
       { title: "Install App", path: "/install" },
     ],
+    // admin_data: window.localStorage.getItem("rami_admin")
+    //   ? JSON.parse(window.localStorage.getItem("rami_admin"))
+    //   : "",
     menu_status: "close",
     scroll_top_status: "close",
     loading_status: "close",
@@ -26,7 +29,10 @@ export default createStore({
     admin_info: "",
     admin_cv: "",
     geted_works: [],
+    current_work: "",
     geted_skills: [],
+    current_skill: "",
+    work_id: "",
     messages_array: [],
     message_id_for_delet: "",
     Apis: {

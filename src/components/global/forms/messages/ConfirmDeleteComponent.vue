@@ -3,7 +3,7 @@
     :class="`confirm-delete-message-${this.$store.state.confirm_delete_message_status}-${this.$store.state.theme}`"
   >
     <h4>Delete the message</h4>
-    <button class="delete">Delete</button>
+    <button class="delete" @click="DeleteMessage">Delete</button>
     <button
       class="cancel"
       @click="this.$store.commit('ChangeconfirmDeleteMessageStatus')"
@@ -23,16 +23,34 @@ export default {
     async DeleteMessage() {
       // start the loading
       this.$store.state.loading_status = "open";
+      // create headers
+      const headers = {
+        Authorization: `Bearer ${this.$store.state.admin_data.token}`,
+      };
+
+      // create teh body data
+      const data = {
+        admin_id: this.$store.state.admin_data._id,
+        message_id: this.$store.state.message_id_for_delet,
+      };
 
       await axios
-        .delete(this.$store.state.Apis.messages.delete)
+        .delete(this.$store.state.Apis.messages.delete, { headers, data })
         .then((response) => {
-          console.log(response);
+          // filter the message
+          this.$store.state.messages_array =
+            this.$store.state.messages_array.filter(
+              (message) => message._id != this.$store.state.message_id_for_delet
+            );
+
           // set the messgae's type to success's object in store
           this.$store.state.message.type = "success";
 
           // set the success messgae to success in store
           this.$store.state.message.message = response.data.message.english;
+
+          // to close the confirm delete form
+          this.$store.commit("ChangeconfirmDeleteMessageStatus");
 
           // to open the message
           this.$store.commit("OpenTheMessgae");
@@ -50,6 +68,9 @@ export default {
           // set the error messgae to error in store
           this.$store.state.message.message =
             error.response.data.message.english;
+
+          // to close the confirm delete form
+          this.$store.commit("ChangeconfirmDeleteMessageStatus");
 
           // to open the message
           this.$store.commit("OpenTheMessgae");
