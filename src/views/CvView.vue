@@ -60,6 +60,7 @@ export default {
 .cv-dark {
   width: 40%;
   min-height: 100vh;
+  padding: 0px 0px 20px 0px;
   margin: auto;
 
   @media (max-width: $phone) {
@@ -89,6 +90,7 @@ export default {
 .cv-light {
   width: 40%;
   min-height: 100vh;
+  padding: 0px 0px 20px 0px;
   margin: auto;
 
   @media (max-width: $phone) {

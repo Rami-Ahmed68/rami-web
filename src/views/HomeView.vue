@@ -1,7 +1,7 @@
 <template>
   <div :class="`home-${this.$store.state.theme}`">
     <div class="container">
-      <h1>Hello, I'm an indie app developer based in Japan!</h1>
+      <h1>Hi, I'm a freelance (web/app) developer based in Syria!</h1>
 
       <div class="header">
         <div class="info">

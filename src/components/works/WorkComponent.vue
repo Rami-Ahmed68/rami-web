@@ -33,6 +33,7 @@ export default {
   min-height: 100px;
   max-height: 400px;
   margin: 10px 1%;
+  cursor: pointer;
 
   @media (max-width: $phone) {
     width: 90%;
@@ -75,6 +76,7 @@ export default {
   min-height: 100px;
   max-height: 400px;
   margin: 10px 1%;
+  cursor: pointer;
 
   @media (max-width: $phone) {
     width: 90%;

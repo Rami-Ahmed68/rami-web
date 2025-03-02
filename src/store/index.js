@@ -9,12 +9,12 @@ export default createStore({
       { title: "Skills", path: "/skills" },
       { title: "Contact", path: "/contact" },
       { title: "Cv", path: "/cv" },
-      { title: "Messages", path: "/messages" },
+      // { title: "Messages", path: "/messages" },
       { title: "Install App", path: "/install" },
     ],
-    // admin_data: window.localStorage.getItem("rami_admin")
-    //   ? JSON.parse(window.localStorage.getItem("rami_admin"))
-    //   : "",
+    admin_data: window.localStorage.getItem("rami_admin")
+      ? JSON.parse(window.localStorage.getItem("rami_admin"))
+      : "",
     menu_status: "close",
     scroll_top_status: "close",
     loading_status: "close",

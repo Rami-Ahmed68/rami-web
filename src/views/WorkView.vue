@@ -1,5 +1,8 @@
 <template>
-  <div :class="`work-page-${this.$store.state.theme}`">
+  <div
+    :class="`work-page-${this.$store.state.theme}`"
+    v-if="this.$store.state.current_work"
+  >
     <div class="head">
       <router-link to="/works"> Works <icon icon="arrow-right" /></router-link>
 
@@ -9,28 +12,28 @@
       </h3>
     </div>
 
-    <p>
-      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut cum
-      voluptatibus blanditiis labore, deserunt quasi. Maxime molestiae neque
-      ullam aut rerum! Temporibus fuga ad corrupti iusto quaerat provident
-      praesentium eligendi.
+    <p class="description">
+      {{ this.$store.state.current_work.description }}
     </p>
 
     <div class="front-end">
       <p>Front end</p>
 
       <span
-        v-for="(front_end_tag, index) in this.$store.state.current_work
-          .front_end"
+        v-for="(line, index) in this.$store.state.current_work.front_end"
         :key="index"
-        >{{ front_end_tag }}</span
+        >{{ line }}</span
       >
     </div>
 
     <div class="back-end">
       <p>Back end</p>
 
-      <span>{{ this.$store.state.current_work.back_end }}</span>
+      <span
+        v-for="(line, index) in this.$store.state.current_work.back_end"
+        :key="index"
+        >{{ line }}</span
+      >
     </div>
 
     <div class="type">
@@ -39,23 +42,27 @@
       <span>{{ this.$store.state.current_work.type }}</span>
     </div>
 
-    <div class="links">
+    <div class="link">
       <p v-if="this.$store.state.current_work.web">Web</p>
 
       <a :href="this.$store.state.current_work.web" target="_blank">{{
-        this.$store.state.current_work.web
+        this.$store.state.current_work.web.split("/")[2]
       }}</a>
+    </div>
 
+    <div class="link">
       <p v-if="this.$store.state.current_work.android">Android</p>
 
       <a :href="this.$store.state.current_work.android" target="_blank">{{
-        this.$store.state.current_work.android
+        this.$store.state.current_work.android.split("/")[2]
       }}</a>
+    </div>
 
+    <div class="link">
       <p v-if="this.$store.state.current_work.ios">Ios</p>
 
       <a :href="this.$store.state.current_work.ios" target="_blank">{{
-        this.$store.state.current_work.ios
+        this.$store.state.current_work.ios.split("/")[2]
       }}</a>
     </div>
 
@@ -134,8 +141,8 @@ export default {
   margin: auto;
 
   @media (max-width: $phone) {
-    width: 98%;
-    margin: 0px 1%;
+    width: 96%;
+    margin: 0px 2%;
   }
 
   .head {
@@ -146,8 +153,10 @@ export default {
     align-items: center;
 
     a {
+      width: auto;
       text-decoration: none;
       color: $links-dark;
+      font-size: $medium;
     }
 
     a:hover {
@@ -162,9 +171,19 @@ export default {
         padding: 3px;
         border-radius: 3px;
         font-size: $x-small;
-        background-color: green;
+        background-color: $chips-dark-green-body;
+        color: $chips-dark-green-text;
+        border: 1px solid $chips-dark-green-border;
       }
     }
+  }
+
+  .description {
+    width: 100%;
+    height: auto;
+    color: $font-light;
+    font-size: $small;
+    margin: 5px 0px;
   }
 
   .front-end,
@@ -178,7 +197,6 @@ export default {
     flex-wrap: wrap;
     justify-content: start;
     align-items: center;
-    background-color: red;
 
     p {
       padding: 2px;
@@ -186,14 +204,20 @@ export default {
       font-size: $small;
       font-weight: 800;
       margin-right: 5px;
-      background-color: $chips-green-body;
-      color: $chips-green-text;
+      background-color: $chips-dark-green-body;
+      color: $chips-dark-green-text;
+      border: 1px solid $chips-dark-green-border;
     }
 
     span {
       font-size: $medium;
-      background-color: rebeccapurple;
-      margin: 4px;
+      margin: 2px;
+      padding: 2px;
+      border-radius: 3px;
+      font-size: $small;
+      background-color: $chips-dark-gray-body;
+      border: 1px solid $chips-dark-gray-border;
+      color: $chips-dark-gray-text;
 
       @media (max-width: $phone) {
         font-size: $small;
@@ -201,9 +225,10 @@ export default {
     }
   }
 
-  .links {
+  .link {
     width: 100%;
     height: auto;
+    margin: 5px 0px;
     display: flex;
     flex-wrap: wrap;
     justify-content: start;
@@ -215,8 +240,9 @@ export default {
       font-size: $small;
       font-weight: 800;
       margin-right: 5px;
-      background-color: $chips-green-body;
-      color: $chips-green-text;
+      background-color: $chips-dark-green-body;
+      color: $chips-dark-green-text;
+      border: 1px solid $chips-dark-green-border;
     }
 
     a {
@@ -228,6 +254,7 @@ export default {
       text-decoration: underline;
     }
   }
+
   .images {
     width: 100%;
     height: auto;
@@ -243,5 +270,137 @@ export default {
 // dark
 
 // light
+.work-page-light {
+  width: 40%;
+  min-height: 100vh;
+  margin: auto;
+
+  @media (max-width: $phone) {
+    width: 96%;
+    margin: 0px 2%;
+  }
+
+  .head {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+
+    a {
+      width: auto;
+      text-decoration: none;
+      color: $links-light;
+      font-size: $medium;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    h3 {
+      color: $font-dark;
+      margin-left: 10px;
+
+      span {
+        padding: 3px;
+        border-radius: 3px;
+        font-size: $x-small;
+        background-color: $chips-light-green-body;
+        color: $chips-light-green-text;
+        border: 1px solid $chips-light-green-border;
+      }
+    }
+  }
+
+  .description {
+    width: 100%;
+    height: auto;
+    color: $font-dark;
+    font-size: $small;
+    margin: 5px 0px;
+  }
+
+  .front-end,
+  .back-end,
+  .type {
+    width: 100%;
+    height: auto;
+    margin: 5px 0px;
+    color: $font-dark;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+    align-items: center;
+
+    p {
+      padding: 2px;
+      border-radius: 2px;
+      font-size: $small;
+      font-weight: 800;
+      margin-right: 5px;
+      background-color: $chips-light-green-body;
+      color: $chips-light-green-text;
+      border: 1px solid $chips-light-green-border;
+    }
+
+    span {
+      font-size: $medium;
+      margin: 2px;
+      padding: 2px;
+      border-radius: 3px;
+      font-size: $small;
+      background-color: $chips-light-gray-body;
+      border: 1px solid $chips-light-gray-border;
+      color: $chips-light-gray-text;
+
+      @media (max-width: $phone) {
+        font-size: $small;
+      }
+    }
+  }
+
+  .link {
+    width: 100%;
+    height: auto;
+    margin: 5px 0px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+    align-items: center;
+
+    p {
+      padding: 2px;
+      border-radius: 2px;
+      font-size: $small;
+      font-weight: 800;
+      margin-right: 5px;
+      background-color: $chips-light-green-body;
+      color: $chips-light-green-text;
+      border: 1px solid $chips-light-green-border;
+    }
+
+    a {
+      color: $links-light;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .images {
+    width: 100%;
+    height: auto;
+
+    img {
+      width: 98%;
+      height: auto;
+      margin: 5px 1%;
+      border-radius: 5px;
+    }
+  }
+}
 // light
 </style>
