@@ -1,6 +1,5 @@
 import { createStore } from "vuex";
 
-
 export default createStore({
   state: {
     theme: window.localStorage.getItem("rami_theme") || "dark",
