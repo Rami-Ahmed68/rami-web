@@ -21,6 +21,7 @@ import MessageComponent from "./components/global/MessageComponent.vue";
 import ConfirmDeleteComponent from "./components/global/forms/messages/ConfirmDeleteComponent.vue";
 import { computed } from "vue";
 import { useHead } from "@vueuse/head";
+
 import { useRoute } from "vue-router";
 
 export default {
