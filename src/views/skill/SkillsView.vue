@@ -1,12 +1,12 @@
 <template>
-  <div :class="`works-${this.$store.state.theme}`">
-    <h1>Works {{ this.$store.state.loading_status }}</h1>
+  <div :class="`skills-page-${this.$store.state.theme}`">
+    <h1>Skills</h1>
 
-    <div class="conatiner" v-if="this.$store.state.geted_works.length > 0">
-      <WorkComponent
-        v-for="(work, index) in this.$store.state.geted_works"
-        :work_data="work"
+    <div class="container">
+      <SkillsComponent
+        v-for="(skill, index) in this.$store.state.geted_skills"
         :key="index"
+        :skill_data="skill"
       />
     </div>
   </div>
@@ -14,7 +14,8 @@
 
 <script>
 import axios from "axios";
-import WorkComponent from "@/components/works/WorkComponent.vue";
+import SkillsComponent from "@/components/skills/SkillComponent.vue";
+
 export default {
   data() {
     return {
@@ -23,46 +24,43 @@ export default {
     };
   },
   components: {
-    WorkComponent,
+    SkillsComponent,
   },
   mounted() {
     // call to the handele scroll method on window scroll
     window.addEventListener("scroll", this.HandelScroll);
 
-    // call to get works method
-    this.getWorks();
+    // call to get skills method
+    this.getSkills();
   },
   methods: {
-    async getWorks() {
-      // check if the works data array in store is empty or not
-      if (this.$store.state.geted_works.length == 0) {
+    async getSkills() {
+      // check if the geted skills in store is empty
+      if (this.$store.state.geted_skills.length == 0) {
         // start the loading
         this.$store.state.loading_status = "open";
       }
 
       await axios
-        .get(this.$store.state.Apis.works.get_all, {
-          params: {
-            page: this.page,
-            limit: this.limit,
-          },
-        })
+        .get(this.$store.state.Apis.skills.get_all)
         .then((response) => {
           // stop the loading
           this.$store.state.loading_status = "close";
 
-          if (this.$store.state.geted_works.length > 0) {
-            // set the works of the resposne to geted_works in store
-            this.$store.state.geted_works = [
-              ...this.$store.state.geted_works,
-              ...response.data.works_data,
+          // set the skills of the resposne to geted_skills in store
+          if (this.$store.state.geted_skills.length == 0) {
+            this.$store.state.geted_skills = [
+              ...this.$store.state.geted_skills,
+              ...response.data.skills_data,
             ];
           } else {
-            // set the works of the resposne to geted_works in store
-            this.$store.state.geted_works = response.data.works_data;
+            this.$store.state.geted_skills = response.data.skills_data;
           }
         })
         .catch((error) => {
+          // stop the loading
+          this.$store.state.loading_status = "close";
+
           // set the messgae's type to error's object in store
           this.$store.state.message.type = "error";
 
@@ -72,9 +70,6 @@ export default {
 
           // to open the message
           this.$store.commit("OpenTheMessgae");
-
-          // stop the loading
-          this.$store.state.loading_status = "close";
 
           // to close the message after 500ms
           this.$store.commit("CloseTheMessgaeAfter5s");
@@ -90,8 +85,9 @@ export default {
       ) {
         // to change page
         this.page += 1;
-        // call the getWorks method
-        await this.getWorks();
+
+        // call the getSkills method
+        await this.getSkills();
       }
     },
   },
@@ -99,79 +95,57 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../sass/varibels";
+@import "../../sass/varibels";
 // dark
-.works-dark {
+.skills-page-dark {
   width: 40%;
-  min-height: 100vh;
+  height: auto;
   margin: auto;
-  color: $font-light;
+  padding-bottom: 5px;
 
   @media (max-width: $phone) {
-    width: 98%;
-    margin: 0px 1%;
+    width: 90%;
+    margin: 0px 5%;
   }
 
   h1 {
     width: 100%;
     height: auto;
-    margin: 10px 0%;
-    font-size: $x-large;
     color: $font-light;
     border: 1px solid;
     border-color: transparent transparent $font-light transparent;
-
-    @media (max-width: $phone) {
-      width: 90%;
-      margin: 5px 5%;
-    }
   }
 
-  .conatiner {
+  .container {
     width: 100%;
     height: auto;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: start;
-    align-items: center;
   }
 }
 // dark
 
 // light
-.works-light {
+.skills-page-light {
   width: 40%;
-  min-height: 100vh;
+  height: auto;
   margin: auto;
-  color: $font-light;
+  padding-bottom: 5px;
 
   @media (max-width: $phone) {
-    width: 98%;
-    margin: 0px 1%;
+    width: 90%;
+    margin: 0px 5%;
   }
 
   h1 {
     width: 100%;
     height: auto;
-    margin: 10px 0%;
-    font-size: $x-large;
     color: $font-dark;
     border: 1px solid;
     border-color: transparent transparent $font-dark transparent;
-
-    @media (max-width: $phone) {
-      width: 90%;
-      margin: 5px 5%;
-    }
   }
 
-  .conatiner {
+  .container {
     width: 100%;
     height: auto;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: start;
-    align-items: center;
   }
 }
 // light

@@ -9,9 +9,18 @@ export default createStore({
       { title: "Skills", path: "/skills" },
       { title: "Contact", path: "/contact" },
       { title: "Cv", path: "/cv" },
-      // { title: "Messages", path: "/messages" },
       { title: "Install App", path: "/install" },
     ],
+
+    dash_links: [
+      { title: "Home", path: "/dashboard" },
+      { title: "Works", path: "/dashboard/works" },
+      { title: "Skills", path: "/dashboard/skills" },
+      { title: "Contact", path: "/dashboard/contact" },
+      { title: "Cv", path: "/dashboard/cv" },
+      { title: "Install App", path: "/dashboard/install" },
+    ],
+    messages: { title: "Messages", path: "/messages" },
     admin_data: window.localStorage.getItem("rami_admin")
       ? JSON.parse(window.localStorage.getItem("rami_admin"))
       : "",

@@ -133,7 +133,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../sass/varibels";
+@import "../../sass/varibels";
 // dark
 .work-page-dark {
   width: 40%;

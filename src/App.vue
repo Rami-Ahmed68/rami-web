@@ -1,5 +1,5 @@
 <template>
-  <div :class="`app-${this.$store.state.theme}`">
+  <div :class="`app-${$store.state.theme}`">
     <NavComponnet />
     <ModelComponent />
     <transition name="slide">

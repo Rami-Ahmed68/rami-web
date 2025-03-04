@@ -11,13 +11,45 @@
         src="../../assets/black_logo.png"
       />
     </a>
-    <ul>
+    <ul v-if="!isDashboardRoute">
       <router-link
         v-for="(link, index) in this.$store.state.links"
         :key="index"
         :to="link.path"
       >
         {{ link.title }}
+      </router-link>
+
+      <router-link
+        :to="this.$store.state.messages.path"
+        v-if="this.$store.state.admin_data"
+      >
+        {{ this.$store.state.messages.title }}
+      </router-link>
+
+      <div class="theme-icon" @click="this.$store.commit('ChangeTheme')">
+        <icon :icon="this.$store.state.theme == 'dark' ? 'sun' : 'moon'" />
+      </div>
+
+      <div class="bars-icon" @click="this.$store.commit('ChangeMenuStatus')">
+        <icon icon="bars" />
+      </div>
+    </ul>
+
+    <ul v-if="isDashboardRoute">
+      <router-link
+        v-for="(link, index) in this.$store.state.dash_links"
+        :key="index"
+        :to="link.path"
+      >
+        {{ link.title }}
+      </router-link>
+
+      <router-link
+        :to="this.$store.state.messages.path"
+        v-if="this.$store.state.admin_data"
+      >
+        {{ this.$store.state.messages.title }}
       </router-link>
 
       <div class="theme-icon" @click="this.$store.commit('ChangeTheme')">
@@ -37,6 +69,13 @@
         :to="link.path"
       >
         {{ link.title }}
+      </router-link>
+
+      <router-link
+        :to="this.$store.state.messages.path"
+        v-if="this.$store.state.admin_data"
+      >
+        {{ this.$store.state.messages.title }}
       </router-link>
     </div>
   </nav>
@@ -116,6 +155,11 @@ export default {
         // call the GetMesages method
         await this.GetMesages();
       }
+    },
+  },
+  computed: {
+    isDashboardRoute() {
+      return this.$route.name && this.$route.name.includes("dashboard");
     },
   },
 };

@@ -30,7 +30,7 @@ export default {
   display: flex;
   justify-content: start;
   align-items: center;
-  padding: 10px;
+  padding: 5px;
   background-color: $error-message-body;
   border: 1px solid $error-message-border;
   position: fixed;

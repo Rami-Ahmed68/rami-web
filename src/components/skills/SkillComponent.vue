@@ -1,6 +1,6 @@
 <template>
   <div :class="`skill-component-${this.$store.state.theme}`">
-    <router-link to="/skill">
+    <router-link :to="`/skill/${this.skill_data.title}`">
       <img :src="this.skill_data.icon" alt="skill icon" />
 
       <div class="info">

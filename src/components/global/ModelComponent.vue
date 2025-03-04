@@ -45,7 +45,7 @@ export default {
         // update the model_loaded to close the loader animation
         this.model_loaded = false;
 
-        model.scale.set(1, 1, 1);
+        model.scale.set(0.8, 0.8, 0.8);
         model.position.set(0, 1, 0);
 
         // إضافة الإضاءة هنا
