@@ -448,6 +448,7 @@ Aesthetics`;
 
 <style lang="scss">
 @import "./sass/varibels";
+
 .app-dark {
   background-color: $dark-theme;
   width: 100%;
@@ -461,21 +462,28 @@ Aesthetics`;
 }
 
 .slide-enter-active {
-  animation: slideIn 0.5s ease-out; /* مدة وسرعة التأثير */
+  animation: slideIn 0.5s ease-out;
+  /* مدة وسرعة التأثير */
 }
 
 .slide-leave-active {
-  animation: slideOut 0.5s ease-in; /* تأثير معاكس عند إخفاء المحتوى */
+  animation: slideOut 0.5s ease-in;
+  /* تأثير معاكس عند إخفاء المحتوى */
 }
 
 @keyframes slideIn {
   from {
-    transform: translateY(40px); /* يبدأ من أسفل قليلاً */
-    opacity: 0; /* يبدأ بتلاشي */
+    transform: translateY(40px);
+    /* يبدأ من أسفل قليلاً */
+    opacity: 0;
+    /* يبدأ بتلاشي */
   }
+
   to {
-    transform: translateY(0); /* يصل إلى مكانه الطبيعي */
-    opacity: 1; /* يظهر بشكل كامل */
+    transform: translateY(0);
+    /* يصل إلى مكانه الطبيعي */
+    opacity: 1;
+    /* يظهر بشكل كامل */
   }
 }
 
@@ -484,8 +492,10 @@ Aesthetics`;
     transform: translateY(0);
     opacity: 1;
   }
+
   to {
-    transform: translateY(-40px); /* ينزلق للأعلى قليلاً */
+    transform: translateY(-40px);
+    /* ينزلق للأعلى قليلاً */
     opacity: 0;
   }
 }
