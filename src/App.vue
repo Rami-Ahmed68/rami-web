@@ -45,6 +45,8 @@ export default {
             return "Rami Ahmed-skills";
           case "skill":
             return "Rami Ahmed-skill";
+          case "contact":
+            return "Rami Ahmed-contact";
           case "cv":
             return "Rami Ahmed-cv";
           case "login":
@@ -453,50 +455,128 @@ Aesthetics`;
   background-color: $dark-theme;
   width: 100%;
   min-height: 100vh;
+
+  .slide-enter-active {
+    animation: slideIn 0.5s ease-out;
+    /* مدة وسرعة التأثير */
+  }
+
+  .slide-leave-active {
+    animation: slideOut 0.5s ease-in;
+    /* تأثير معاكس عند إخفاء المحتوى */
+  }
+
+  @keyframes slideIn {
+    from {
+      transform: translateY(40px);
+      /* يبدأ من أسفل قليلاً */
+      opacity: 0;
+      /* يبدأ بتلاشي */
+    }
+
+    to {
+      transform: translateY(0);
+      /* يصل إلى مكانه الطبيعي */
+      opacity: 1;
+      /* يظهر بشكل كامل */
+    }
+  }
+
+  @keyframes slideOut {
+    from {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    to {
+      transform: translateY(-40px);
+      /* ينزلق للأعلى قليلاً */
+      opacity: 0;
+    }
+  }
 }
 
 .app-light {
   background-color: $light-theme;
   width: 100%;
   min-height: 100vh;
-}
 
-.slide-enter-active {
-  animation: slideIn 0.5s ease-out;
-  /* مدة وسرعة التأثير */
-}
-
-.slide-leave-active {
-  animation: slideOut 0.5s ease-in;
-  /* تأثير معاكس عند إخفاء المحتوى */
-}
-
-@keyframes slideIn {
-  from {
-    transform: translateY(40px);
-    /* يبدأ من أسفل قليلاً */
-    opacity: 0;
-    /* يبدأ بتلاشي */
+  .slide-enter-active {
+    animation: slideIn 0.5s ease-out;
+    /* مدة وسرعة التأثير */
   }
 
-  to {
-    transform: translateY(0);
-    /* يصل إلى مكانه الطبيعي */
-    opacity: 1;
-    /* يظهر بشكل كامل */
+  .slide-leave-active {
+    animation: slideOut 0.5s ease-in;
+    /* تأثير معاكس عند إخفاء المحتوى */
+  }
+
+  @keyframes slideIn {
+    from {
+      transform: translateY(40px);
+      /* يبدأ من أسفل قليلاً */
+      opacity: 0;
+      /* يبدأ بتلاشي */
+    }
+
+    to {
+      transform: translateY(0);
+      /* يصل إلى مكانه الطبيعي */
+      opacity: 1;
+      /* يظهر بشكل كامل */
+    }
+  }
+
+  @keyframes slideOut {
+    from {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    to {
+      transform: translateY(-40px);
+      /* ينزلق للأعلى قليلاً */
+      opacity: 0;
+    }
   }
 }
 
-@keyframes slideOut {
-  from {
-    transform: translateY(0);
-    opacity: 1;
-  }
+// .slide-enter-active {
+//   animation: slideIn 0.5s ease-out;
+//   /* مدة وسرعة التأثير */
+// }
 
-  to {
-    transform: translateY(-40px);
-    /* ينزلق للأعلى قليلاً */
-    opacity: 0;
-  }
-}
+// .slide-leave-active {
+//   animation: slideOut 0.5s ease-in;
+//   /* تأثير معاكس عند إخفاء المحتوى */
+// }
+
+// @keyframes slideIn {
+//   from {
+//     transform: translateY(40px);
+//     /* يبدأ من أسفل قليلاً */
+//     opacity: 0;
+//     /* يبدأ بتلاشي */
+//   }
+
+//   to {
+//     transform: translateY(0);
+//     /* يصل إلى مكانه الطبيعي */
+//     opacity: 1;
+//     /* يظهر بشكل كامل */
+//   }
+// }
+
+// @keyframes slideOut {
+//   from {
+//     transform: translateY(0);
+//     opacity: 1;
+//   }
+
+//   to {
+//     transform: translateY(-40px);
+//     /* ينزلق للأعلى قليلاً */
+//     opacity: 0;
+//   }
+// }
 </style>
