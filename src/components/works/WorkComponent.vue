@@ -1,8 +1,8 @@
 <template>
   <div :class="`work-${this.$store.state.theme}`" @click="GetToWorkPage">
     <img :src="this.work_data.images[0]" alt="work's cover" />
-    <h3>Work's title</h3>
-    <p>Lorem, ipsum dolor sit amet consectetur adipisicing</p>
+    <h3>{{ this.work_data.title }}</h3>
+    <p>{{ this.work_data.description.slice(0, 60) }}...</p>
   </div>
 </template>
 
