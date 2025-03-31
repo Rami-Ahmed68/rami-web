@@ -24,7 +24,7 @@ export default {
 // dark
 // error
 .message-dark-error-open {
-  width: 70%;
+  max-width: 70%;
   height: 60px;
   border-radius: 5px;
   display: flex;
@@ -71,7 +71,7 @@ export default {
 
 // success
 .message-dark-success-open {
-  width: 70%;
+  max-width: 70%;
   height: 60px;
   border-radius: 5px;
   display: flex;
@@ -120,7 +120,7 @@ export default {
 // light
 // error
 .message-light-error-open {
-  width: 70%;
+  max-width: 70%;
   height: 60px;
   border-radius: 5px;
   display: flex;
@@ -166,7 +166,7 @@ export default {
 
 // success
 .message-light-success-open {
-  width: 70%;
+  max-width: 70%;
   height: 60px;
   border-radius: 5px;
   display: flex;

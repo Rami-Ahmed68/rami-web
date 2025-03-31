@@ -1,6 +1,8 @@
 <template>
   <div :class="`skill-page-${this.$store.state.theme}`">
-    <div class="header">
+    <div
+      :class="`header-${this.$store.state.current_skill ? 'open' : 'close'}`"
+    >
       <img :src="this.$store.state.current_skill.icon" alt="skill icon" />
       <div class="info">
         <h2>{{ this.$store.state.current_skill.title }}</h2>
@@ -76,10 +78,13 @@ export default {
     margin: 0px 2%;
   }
 
-  .header {
+  .header-open {
     width: 100%;
     display: flex;
     justify-content: start;
+    padding-top: 0px;
+    transition-duration: 0.5s;
+    opacity: 1;
 
     img {
       width: 100px;
@@ -105,6 +110,13 @@ export default {
     }
   }
 
+  .header-close {
+    @extend .header-open;
+    padding-top: 20px;
+    transition-duration: 0.5s;
+    opacity: 0;
+  }
+
   p {
     width: 100%;
     height: auto;
@@ -127,10 +139,13 @@ export default {
     margin: 0px 2%;
   }
 
-  .header {
+  .header-open {
     width: 100%;
     display: flex;
     justify-content: start;
+    padding-top: 0px;
+    transition-duration: 0.5s;
+    opacity: 1;
 
     img {
       width: 100px;
@@ -154,6 +169,13 @@ export default {
         font-size: $x-small;
       }
     }
+  }
+
+  .header-close {
+    @extend .header-open;
+    padding-top: 20px;
+    transition-duration: 0.5s;
+    opacity: 0;
   }
 
   p {

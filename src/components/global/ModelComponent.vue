@@ -34,8 +34,8 @@ export default {
     camera.position.z = 4;
 
     const loader = new ColladaLoader();
-    let model; // لتخزين النموذج بعد تحميله
-    let rotationAngle = 0; // زاوية الدوران
+    let model;
+    let rotationAngle = 0;
 
     loader.load(
       modelPath,
@@ -49,11 +49,11 @@ export default {
         model.position.set(0, 1, 0);
 
         // إضافة الإضاءة هنا
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 1); // زيادة شدة الإضاءة
-        directionalLight.position.set(1, 1, 1).normalize(); // توجيه الضوء
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+        directionalLight.position.set(1, 1, 1).normalize();
         scene.add(directionalLight);
 
-        const ambientLight = new THREE.AmbientLight(0x404040); // إضافة إضاءة محيطة
+        const ambientLight = new THREE.AmbientLight(0x404040);
         scene.add(ambientLight);
       },
       (xhr) => {
@@ -69,8 +69,8 @@ export default {
       controls.update();
 
       if (model) {
-        rotationAngle += 0.005; // تحديث زاوية الدوران في كل إطار
-        model.rotation.y = rotationAngle; // تدوير النموذج حول المحور Y
+        rotationAngle += 0.005;
+        model.rotation.y = rotationAngle;
       }
 
       renderer.render(scene, camera);

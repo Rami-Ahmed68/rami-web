@@ -1,8 +1,11 @@
 $dark-theme : #202020;
 $light-theme : rgb(247, 237, 224);
 
+$dash-dark-theme : #2c2c2c;
+$dash-light-theme : rgb(235, 222, 206);
+
 $dark-scroll-top : #1212137c;
-$light-scroll-top : rgb(197, 179, 155);
+$light-scroll-top : rgba(197, 179, 155, 0.918);
 
 $border-color-dark:rgba(168, 168, 168, 0.548);
 $border-color-light:rgba(27, 27, 27, 0.733);
@@ -13,17 +16,21 @@ $menu-light:#fff;
 $log-in-dark:#202225;
 $log-in-light:#f7f7f7;
 
-$loading-dark:#2d374862;
+$loading-dark:#343a4462;
 $loading-light:#ffffff50;
+
+$loading-lin: #805ad5;
+$loading-lin-bg-dark: #4d4d4d;
+$loading-lin-bg-light: #ddd;
 
 $confirm-form-dark:#2d37482c;
 $confirm-form-light:#ffffff21;
 
-$loading-points-dark : #444444;
-$loading-points-light : rgb(226, 226, 226);
+$card-dark:#3d414946;
+$card-light:#ffffff71;
 
-$input-dark:#3b3b3b;
-$input-light:rgb(223, 223, 223);
+$input-dark:#1a1919ec;
+$input-light:rgba(223, 223, 223, 0.411);
 
 $message-dark:#1d1f24;
 $message-light:rgb(202, 202, 202);

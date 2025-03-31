@@ -1,74 +1,78 @@
 <template>
-  <div
-    :class="`work-page-${this.$store.state.theme}`"
-    v-if="this.$store.state.current_work"
-  >
+  <div :class="`work-page-${this.$store.state.theme}`" v-if="this.current_work">
+    <video
+      v-if="this.current_work && this.current_work.video"
+      class="video"
+      type="video/mp4"
+      :poster="this.current_work.cover"
+      @loadedmetadata="onVideoLoaded"
+      controls
+    >
+      <source play :src="this.current_work.video" type="video/mp4" />
+      <source play :src="this.current_work.video" type="video/ogg" />
+    </video>
     <div class="head">
       <router-link to="/works"> Works <icon icon="arrow-right" /></router-link>
 
       <h3>
-        {{ this.$store.state.current_work.title }}
-        <span>{{ this.$store.state.current_work.created_at }}</span>
+        {{ this.current_work.title }}
+        <span>{{ this.current_work.created_at }}</span>
       </h3>
     </div>
 
     <p class="description">
-      {{ this.$store.state.current_work.description }}
+      {{ this.current_work.description }}
     </p>
 
     <div class="front-end">
       <p>Front end</p>
 
-      <span
-        v-for="(line, index) in this.$store.state.current_work.front_end"
-        :key="index"
-        >{{ line }}</span
-      >
+      <span v-for="(line, index) in this.current_work.front_end" :key="index">{{
+        line
+      }}</span>
     </div>
 
     <div class="back-end">
       <p>Back end</p>
 
-      <span
-        v-for="(line, index) in this.$store.state.current_work.back_end"
-        :key="index"
-        >{{ line }}</span
-      >
+      <span v-for="(line, index) in this.current_work.back_end" :key="index">{{
+        line
+      }}</span>
     </div>
 
     <div class="type">
       <p>Type</p>
 
-      <span>{{ this.$store.state.current_work.type }}</span>
+      <span>{{ this.current_work.type }}</span>
     </div>
 
     <div class="link">
-      <p v-if="this.$store.state.current_work.web">Web</p>
+      <p v-if="this.current_work.web">Web</p>
 
-      <a :href="this.$store.state.current_work.web" target="_blank">{{
-        this.$store.state.current_work.web.split("/")[2]
+      <a :href="this.current_work.web" target="_blank">{{
+        this.current_work.web.split("/")[2]
       }}</a>
     </div>
 
     <div class="link">
-      <p v-if="this.$store.state.current_work.android">Android</p>
+      <p v-if="this.current_work.android">Android</p>
 
-      <a :href="this.$store.state.current_work.android" target="_blank">{{
-        this.$store.state.current_work.android.split("/")[2]
+      <a :href="this.current_work.android" target="_blank">{{
+        this.current_work.android.split("/")[2]
       }}</a>
     </div>
 
     <div class="link">
-      <p v-if="this.$store.state.current_work.ios">Ios</p>
+      <p v-if="this.current_work.ios">Ios</p>
 
-      <a :href="this.$store.state.current_work.ios" target="_blank">{{
-        this.$store.state.current_work.ios.split("/")[2]
+      <a :href="this.current_work.ios" target="_blank">{{
+        this.current_work.ios.split("/")[2]
       }}</a>
     </div>
 
     <div class="images">
       <img
-        v-for="(url, index) in this.$store.state.current_work.images"
+        v-for="(url, index) in this.current_work.images"
         :key="index"
         :src="url"
         alt="work's image"
@@ -82,13 +86,15 @@ import axios from "axios";
 export default {
   name: "work-page",
   data() {
-    return {};
+    return {
+      current_work: "",
+    };
   },
   mounted() {
     // call to GetWork method
     this.GetWork();
 
-    console.log(this.$store.state.current_work);
+    console.log(this.current_work);
   },
   methods: {
     // get the work
@@ -105,7 +111,7 @@ export default {
         .then((response) => {
           console.log(response);
           // set the work's data in to store
-          this.$store.state.current_work = response.data.work_data;
+          this.current_work = response.data.work_data;
 
           // stop the loading
           this.$store.state.loading_status = "close";
@@ -143,6 +149,12 @@ export default {
   @media (max-width: $phone) {
     width: 96%;
     margin: 0px 2%;
+  }
+
+  .video {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
   }
 
   .head {
@@ -278,6 +290,12 @@ export default {
   @media (max-width: $phone) {
     width: 96%;
     margin: 0px 2%;
+  }
+
+  .video {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
   }
 
   .head {

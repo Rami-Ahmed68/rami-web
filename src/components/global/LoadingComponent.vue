@@ -2,14 +2,14 @@
   <div
     :class="`laoding-${this.$store.state.theme}-${this.$store.state.loading_status}`"
   >
-    <div class="elements-cont">
-      <span class="element"></span>
-      <span class="element"></span>
-      <span class="element"></span>
-    </div>
-    <p class="message" v-if="this.$store.state.loading_rate">
-      loading⏳ : {{ this.$store.state.loading_rate }}%
+    <p>
+      loading⏳
+      <span v-if="this.$store.state.loading_rate > 0">
+        {{ this.$store.state.loading_rate }}%
+      </span>
     </p>
+
+    <div class="loader-line"></div>
   </div>
 </template>
 
@@ -26,14 +26,14 @@ export default {
 // dark
 .laoding-dark-open {
   overflow: hidden;
-  width: 7%;
-  max-height: 40px;
+  width: 40%;
+  height: auto;
   padding: 6px;
   border-radius: 5px;
   position: fixed;
   top: 10%;
-  left: 46.5%;
-  z-index: 20;
+  left: 30%;
+  z-index: 10;
   opacity: 1;
   transition-duration: 0.5s;
   background-color: $loading-dark;
@@ -41,52 +41,63 @@ export default {
   box-shadow: 0 0 10px $shadow-black;
 
   @media (max-width: $phone) {
-    width: 20%;
-    left: 40%;
+    width: 90%;
+    left: 5%;
   }
 
-  .elements-cont {
-    width: 100%;
-    height: 60%;
-    display: flex;
-    align-items: center;
-    align-content: center;
-    justify-content: space-around;
-
-    .element {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background-color: $loading-points-light;
-    }
-
-    .element:nth-child(1) {
-      animation: preloader 0.6s ease-in-out alternate infinite;
-    }
-
-    .element:nth-child(2) {
-      animation: preloader 0.6s ease-in-out alternate 0.2s infinite;
-    }
-
-    .element:nth-child(3) {
-      animation: preloader 0.6s ease-in-out alternate 0.4s infinite;
-    }
-
-    @keyframes preloader {
-      100% {
-        transform: scale(1.3);
-      }
-    }
-  }
-
-  .message {
+  P {
     width: 100%;
     color: $font-light;
-    font-size: $x-small;
-    text-align: center;
+    font-size: $small;
+    text-align: start;
     overflow: hidden;
-    border: 1px solid;
-    border-color: $border-color-dark transparent transparent transparent;
+    margin: 5px 0px;
+    display: flex;
+    justify-content: space-between;
+
+    @media (max-width: $phone) {
+      font-size: $x-small;
+    }
+  }
+
+  .loader-line {
+    width: 100%;
+    height: 5px;
+    position: relative;
+    overflow: hidden;
+    background-color: $loading-lin-bg-dark;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+  }
+
+  .loader-line:before {
+    content: "";
+    position: absolute;
+    left: -50%;
+    height: 5px;
+    width: 40%;
+    background-color: $loading-lin;
+    -webkit-animation: lineAnim 1s linear infinite;
+    -moz-animation: lineAnim 1s linear infinite;
+    animation: lineAnim 1s linear infinite;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+  }
+
+  @keyframes lineAnim {
+    0% {
+      left: -40%;
+    }
+    50% {
+      left: 20%;
+      width: 80%;
+    }
+    100% {
+      left: 100%;
+      width: 100%;
+    }
   }
 }
 
@@ -100,66 +111,78 @@ export default {
 // light
 .laoding-light-open {
   overflow: hidden;
-  width: 7%;
-  max-height: 40px;
+  width: 40%;
+  height: auto;
   padding: 6px;
   border-radius: 5px;
   position: fixed;
   top: 10%;
-  left: 46.5%;
-  z-index: 20;
+  left: 30%;
+  z-index: 10;
+  opacity: 1;
   transition-duration: 0.5s;
   background-color: $loading-light;
   backdrop-filter: blur(20px);
-  box-shadow: 0 0 10px $shadow-light;
+  box-shadow: 0 0 10px $shadow-black;
 
   @media (max-width: $phone) {
-    width: 20%;
-    left: 40%;
+    width: 90%;
+    left: 5%;
   }
 
-  .elements-cont {
-    width: 100%;
-    height: 60%;
-    display: flex;
-    align-items: center;
-    align-content: center;
-    justify-content: space-around;
-
-    .element {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background-color: $loading-points-dark;
-    }
-
-    .element:nth-child(1) {
-      animation: preloader 0.6s ease-in-out alternate infinite;
-    }
-
-    .element:nth-child(2) {
-      animation: preloader 0.6s ease-in-out alternate 0.2s infinite;
-    }
-
-    .element:nth-child(3) {
-      animation: preloader 0.6s ease-in-out alternate 0.4s infinite;
-    }
-
-    @keyframes preloader {
-      100% {
-        transform: scale(1.3);
-      }
-    }
-  }
-
-  .message {
+  P {
     width: 100%;
     color: $font-dark;
-    font-size: $x-small;
-    text-align: center;
+    font-size: $small;
+    text-align: start;
     overflow: hidden;
-    border: 1px solid;
-    border-color: $border-color-light transparent transparent transparent;
+    margin: 5px 0px;
+    display: flex;
+    justify-content: space-between;
+
+    @media (max-width: $phone) {
+      font-size: $x-small;
+    }
+  }
+
+  .loader-line {
+    width: 100%;
+    height: 5px;
+    position: relative;
+    overflow: hidden;
+    background-color: $loading-lin-bg-light;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+  }
+
+  .loader-line:before {
+    content: "";
+    position: absolute;
+    left: -50%;
+    height: 5px;
+    width: 40%;
+    background-color: $loading-lin;
+    -webkit-animation: lineAnim 1s linear infinite;
+    -moz-animation: lineAnim 1s linear infinite;
+    animation: lineAnim 1s linear infinite;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+  }
+
+  @keyframes lineAnim {
+    0% {
+      left: -40%;
+    }
+    50% {
+      left: 20%;
+      width: 80%;
+    }
+    100% {
+      left: 100%;
+      width: 100%;
+    }
   }
 }
 

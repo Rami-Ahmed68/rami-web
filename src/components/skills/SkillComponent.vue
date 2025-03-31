@@ -31,6 +31,7 @@ export default {
   width: 100%;
   height: auto;
   border-radius: 5px;
+  background-color: $card-dark;
 
   a {
     width: 100%;
@@ -70,6 +71,7 @@ export default {
   width: 100%;
   height: auto;
   border-radius: 5px;
+  background-color: $card-light;
 
   a {
     width: 100%;

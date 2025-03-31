@@ -11,72 +11,44 @@
         src="../../assets/black_logo.png"
       />
     </a>
-    <ul v-if="!isDashboardRoute">
-      <router-link
+
+    <ul class="center-list">
+      <li
         v-for="(link, index) in this.$store.state.links"
         :key="index"
-        :to="link.path"
+        @click="this.$store.commit('ChangeMenuStatus')"
       >
-        {{ link.title }}
-      </router-link>
+        <router-link
+          :to="link.path"
+          v-if="
+            (link.condition && this.$store.state.admin_data) || !link.condition
+          "
+        >
+          {{ link.title }}
+        </router-link>
+      </li>
 
-      <router-link
-        :to="this.$store.state.messages.path"
-        v-if="this.$store.state.admin_data"
-      >
-        {{ this.$store.state.messages.title }}
-      </router-link>
-
-      <div class="theme-icon" @click="this.$store.commit('ChangeTheme')">
-        <icon :icon="this.$store.state.theme == 'dark' ? 'sun' : 'moon'" />
+      <div class="theme-icon" @click="$store.commit('ChangeTheme')">
+        <icon :icon="$store.state.theme == 'dark' ? 'sun' : 'moon'" />
       </div>
 
-      <div class="bars-icon" @click="this.$store.commit('ChangeMenuStatus')">
-        <icon icon="bars" />
-      </div>
-    </ul>
-
-    <ul v-if="isDashboardRoute">
-      <router-link
-        v-for="(link, index) in this.$store.state.dash_links"
-        :key="index"
-        :to="link.path"
-      >
-        {{ link.title }}
-      </router-link>
-
-      <router-link
-        :to="this.$store.state.messages.path"
-        v-if="this.$store.state.admin_data"
-      >
-        {{ this.$store.state.messages.title }}
-      </router-link>
-
-      <div class="theme-icon" @click="this.$store.commit('ChangeTheme')">
-        <icon :icon="this.$store.state.theme == 'dark' ? 'sun' : 'moon'" />
-      </div>
-
-      <div class="bars-icon" @click="this.$store.commit('ChangeMenuStatus')">
+      <div class="bars-icon" @click="$store.commit('ChangeMenuStatus')">
         <icon icon="bars" />
       </div>
     </ul>
 
     <div :class="`menu-${this.$store.state.menu_status}`">
-      <router-link
-        @click="this.$store.commit('ChangeMenuStatus')"
-        v-for="(link, index) in this.$store.state.links"
-        :key="index"
-        :to="link.path"
-      >
-        {{ link.title }}
-      </router-link>
-
-      <router-link
-        :to="this.$store.state.messages.path"
-        v-if="this.$store.state.admin_data"
-      >
-        {{ this.$store.state.messages.title }}
-      </router-link>
+      <ul>
+        <li
+          v-for="(link, index) in this.$store.state.links"
+          :key="index"
+          @click="this.$store.commit('ChangeMenuStatus')"
+        >
+          <router-link :to="link.path">
+            {{ link.title }}
+          </router-link>
+        </li>
+      </ul>
     </div>
   </nav>
 </template>
@@ -157,10 +129,8 @@ export default {
       }
     },
   },
-  computed: {
-    isDashboardRoute() {
-      return this.$route.name && this.$route.name.includes("dashboard");
-    },
+  isDashboardRoute() {
+    return this.$route.name && this.$route.name.includes("dashboard");
   },
 };
 </script>
@@ -178,7 +148,7 @@ export default {
   align-items: center;
   padding: 0px 15%;
   position: fixed;
-  z-index: 10;
+  z-index: 20;
   @media (max-width: $phone) {
     padding: 0px 5px;
   }
@@ -196,7 +166,7 @@ export default {
     }
   }
 
-  ul {
+  .center-list {
     width: auto;
     height: 100%;
     display: flex;
@@ -204,26 +174,30 @@ export default {
     align-items: center;
     padding: 10px 0px;
 
-    a {
-      padding: 10px;
-      margin: 3px;
-      cursor: pointer;
-      text-decoration: none;
-      color: $font-light;
-      font-weight: 400;
+    li {
+      list-style-type: none;
 
-      @media (max-width: $phone) {
-        display: none;
+      a {
+        padding: 10px;
+        margin: 3px;
+        cursor: pointer;
+        text-decoration: none;
+        color: $font-light;
+        font-weight: 400;
+
+        @media (max-width: $phone) {
+          display: none;
+        }
       }
-    }
 
-    a:hover {
-      text-decoration: underline;
-    }
+      a:hover {
+        text-decoration: underline;
+      }
 
-    .router-link-active {
-      background-color: $blue;
-      color: $font-dark;
+      .router-link-active {
+        background-color: $blue;
+        color: $font-dark;
+      }
     }
 
     .theme-icon {
@@ -265,7 +239,7 @@ export default {
 
   .menu-open {
     width: 200px;
-    height: auto;
+    height: 250px;
     overflow: hidden;
     background-color: $menu-dark;
     border-radius: 5px;
@@ -277,6 +251,10 @@ export default {
 
     @media (min-width: $phone) {
       display: none;
+    }
+
+    li {
+      list-style-type: none;
     }
 
     a {
@@ -322,8 +300,7 @@ export default {
   align-items: center;
   padding: 0px 15%;
   position: fixed;
-  z-index: 10;
-
+  z-index: 20;
   @media (max-width: $phone) {
     padding: 0px 5px;
   }
@@ -341,7 +318,7 @@ export default {
     }
   }
 
-  ul {
+  .center-list {
     width: auto;
     height: 100%;
     display: flex;
@@ -349,26 +326,30 @@ export default {
     align-items: center;
     padding: 10px 0px;
 
-    a {
-      padding: 10px;
-      margin: 3px;
-      cursor: pointer;
-      text-decoration: none;
-      color: $font-dark;
-      font-weight: 400;
+    li {
+      list-style-type: none;
 
-      @media (max-width: $phone) {
-        display: none;
+      a {
+        padding: 10px;
+        margin: 3px;
+        cursor: pointer;
+        text-decoration: none;
+        color: $font-dark;
+        font-weight: 400;
+
+        @media (max-width: $phone) {
+          display: none;
+        }
       }
-    }
 
-    a:hover {
-      text-decoration: underline;
-    }
+      a:hover {
+        text-decoration: underline;
+      }
 
-    .router-link-active {
-      background-color: $blue;
-      color: $font-dark;
+      .router-link-active {
+        background-color: $blue;
+        color: $font-dark;
+      }
     }
 
     .theme-icon {
@@ -401,6 +382,7 @@ export default {
       color: $font-dark;
       border: 1px solid $border-color-light;
       margin: 0px 5px;
+
       @media (min-width: $phone) {
         display: none;
       }
@@ -409,7 +391,7 @@ export default {
 
   .menu-open {
     width: 200px;
-    height: auto;
+    height: 250px;
     overflow: hidden;
     background-color: $menu-light;
     border-radius: 5px;
@@ -421,6 +403,10 @@ export default {
 
     @media (min-width: $phone) {
       display: none;
+    }
+
+    li {
+      list-style-type: none;
     }
 
     a {

@@ -4,7 +4,7 @@
 
     <div class="container">
       <SkillsComponent
-        v-for="(skill, index) in this.$store.state.geted_skills"
+        v-for="(skill, index) in this.geted_skills"
         :key="index"
         :skill_data="skill"
       />
@@ -21,6 +21,7 @@ export default {
     return {
       page: 1,
       limit: 20,
+      geted_skills: [],
     };
   },
   components: {
@@ -36,7 +37,7 @@ export default {
   methods: {
     async getSkills() {
       // check if the geted skills in store is empty
-      if (this.$store.state.geted_skills.length == 0) {
+      if (this.geted_skills && this.geted_skills.length === 0) {
         // start the loading
         this.$store.state.loading_status = "open";
       }
@@ -48,13 +49,13 @@ export default {
           this.$store.state.loading_status = "close";
 
           // set the skills of the resposne to geted_skills in store
-          if (this.$store.state.geted_skills.length == 0) {
-            this.$store.state.geted_skills = [
-              ...this.$store.state.geted_skills,
+          if (this.geted_skills.length == 0) {
+            this.geted_skills = [
+              ...this.geted_skills,
               ...response.data.skills_data,
             ];
           } else {
-            this.$store.state.geted_skills = response.data.skills_data;
+            this.geted_skills = response.data.skills_data;
           }
         })
         .catch((error) => {
@@ -99,7 +100,7 @@ export default {
 // dark
 .skills-page-dark {
   width: 40%;
-  height: auto;
+  min-height: 100vh;
   margin: auto;
   padding-bottom: 5px;
 

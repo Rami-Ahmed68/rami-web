@@ -1,15 +1,21 @@
 <template>
   <div :class="`dash-board-page-${this.$store.state.theme}`">
-    <router-view />
+    <SidBarComponent />
+    <div class="section">
+      <router-view />
+    </div>
   </div>
 </template>
 
 <script>
+import SidBarComponent from "@/components/dash/SidBarComponent.vue";
 export default {
   data() {
     return {};
   },
-  components: {},
+  components: {
+    SidBarComponent,
+  },
   mounted() {
     // check if the user is loged in or not
     if (!this.$store.state.admin_data) {
@@ -25,28 +31,68 @@ export default {
 @import "../../sass/_varibels.scss";
 // dark
 .dash-board-page-dark {
-  width: 40%;
-  min-height: 100vh;
+  width: 100%;
+  height: 100%;
   margin: auto;
-  background-color: red;
+  background-color: $dark-theme;
+  display: flex;
 
   @media (max-width: $phone) {
     width: 96%;
     margin: 0px 2%;
+  }
+
+  .section {
+    width: 80%;
+    height: 96vh;
+    background-color: $dash-dark-theme;
+    border-radius: 5px;
+    margin: 10px 5px 5px 5px;
+    overflow-y: scroll;
+    padding: 5px;
+
+    @media (max-width: $phone) {
+      width: 60%;
+      margin: 2px;
+    }
+  }
+
+  .section::-webkit-scrollbar {
+    width: 0px;
   }
 }
 // dark
 
 // light
 .dash-board-page-light {
-  width: 40%;
-  min-height: 100vh;
+  width: 100%;
+  height: 100%;
   margin: auto;
-  background-color: red;
+  background-color: $light-theme;
+  display: flex;
 
   @media (max-width: $phone) {
     width: 96%;
     margin: 0px 2%;
+  }
+
+  .section {
+    width: 80%;
+    height: 96vh;
+    background-color: $dash-light-theme;
+    border-radius: 5px;
+    margin: 10px 5px 5px 5px;
+    overflow-y: scroll;
+    padding: 5px;
+
+    @media (max-width: $phone) {
+      width: 60%;
+      margin: 2px;
+    }
+  }
+
+  .section::-webkit-scrollbar {
+    width: 0px;
   }
 }
 // light

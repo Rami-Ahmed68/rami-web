@@ -4,21 +4,22 @@ export default createStore({
   state: {
     theme: window.localStorage.getItem("rami_theme") || "dark",
     links: [
-      { title: "Home", path: "/" },
-      { title: "Works", path: "/works" },
-      { title: "Skills", path: "/skills" },
-      { title: "Contact", path: "/contact" },
-      { title: "Cv", path: "/cv" },
-      { title: "Install App", path: "/install" },
+      { title: "Home", path: "/", condition: false },
+      { title: "Works", path: "/works", condition: false },
+      { title: "Skills", path: "/skills", condition: false },
+      { title: "Contact", path: "/contact", condition: false },
+      { title: "Cv", path: "/cv", condition: false },
+      { title: "Install App", path: "/install", condition: false },
+      { title: "Dash Board", path: "/dashboard", condition: true },
     ],
-
-    dash_links: [
-      { title: "Home", path: "/dashboard" },
-      { title: "Works", path: "/dashboard/works" },
-      { title: "Skills", path: "/dashboard/skills" },
-      { title: "Contact", path: "/dashboard/contact" },
-      { title: "Cv", path: "/dashboard/cv" },
-      { title: "Install App", path: "/dashboard/install" },
+    dash_board_links: [
+      { title: "Info", path: "/dashboard" },
+      { title: "Works", path: "works" },
+      { title: "Skills", path: "skills" },
+      { title: "Contact", path: "contact" },
+      { title: "Cv", path: "cv" },
+      { title: "Install App", path: "install" },
+      { title: "Dash Board", path: "/dashboard" },
     ],
     messages: { title: "Messages", path: "/messages" },
     admin_data: window.localStorage.getItem("rami_admin")
@@ -26,7 +27,7 @@ export default createStore({
       : "",
     menu_status: "close",
     scroll_top_status: "close",
-    loading_status: "close",
+    // loading_status: "close",
     loading_rate: 0,
     message_status: "close",
     message: {
@@ -37,7 +38,6 @@ export default createStore({
     confirm_delete_message_status: "close",
     admin_info: "",
     admin_cv: "",
-    geted_works: [],
     current_work: "",
     geted_skills: [],
     current_skill: "",
@@ -51,6 +51,9 @@ export default createStore({
       admin: {
         get_info: `https://rami-web-seriver-v2.onrender.com/api/v1/rami_ahmed/admin/get`,
         get_cv: `https://rami-web-seriver-v2.onrender.com/api/v1/rami_ahmed/admin/get/cv`,
+        change_avatar: `https://rami-web-seriver-v2.onrender.com/api/v1/rami_ahmed/admin/change/avatar`,
+        change_cv: `https://rami-web-seriver-v2.onrender.com/api/v1/rami_ahmed/admin/change/cv`,
+        update: `https://rami-web-seriver-v2.onrender.com/api/v1/rami_ahmed/admin/update`,
       },
       works: {
         create:

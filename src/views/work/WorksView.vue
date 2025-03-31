@@ -2,9 +2,9 @@
   <div :class="`works-${this.$store.state.theme}`">
     <h1>Works</h1>
 
-    <div class="conatiner" v-if="this.$store.state.geted_works.length > 0">
+    <div class="conatiner" v-if="this.geted_works.length > 0">
       <WorkComponent
-        v-for="(work, index) in this.$store.state.geted_works"
+        v-for="(work, index) in this.geted_works"
         :work_data="work"
         :key="index"
       />
@@ -20,6 +20,7 @@ export default {
     return {
       page: 1,
       limit: 20,
+      geted_works: [],
     };
   },
   components: {
@@ -35,7 +36,7 @@ export default {
   methods: {
     async getWorks() {
       // check if the works data array in store is empty or not
-      if (this.$store.state.geted_works.length == 0) {
+      if (this.geted_works.length == 0) {
         // start the loading
         this.$store.state.loading_status = "open";
       }
@@ -51,15 +52,15 @@ export default {
           // stop the loading
           this.$store.state.loading_status = "close";
 
-          if (this.$store.state.geted_works.length > 0) {
+          if (this.geted_works.length > 0) {
             // set the works of the resposne to geted_works in store
-            this.$store.state.geted_works = [
-              ...this.$store.state.geted_works,
+            this.geted_works = [
+              ...this.geted_works,
               ...response.data.works_data,
             ];
           } else {
             // set the works of the resposne to geted_works in store
-            this.$store.state.geted_works = response.data.works_data;
+            this.geted_works = response.data.works_data;
           }
         })
         .catch((error) => {

@@ -1,6 +1,6 @@
 <template>
   <div :class="`home-${this.$store.state.theme}`">
-    <div class="container">
+    <div class="container" v-if="this.$store.state.admin_info">
       <h1>Hi, I'm a freelance (web/app) developer based in Syria!</h1>
 
       <div class="header">
@@ -108,7 +108,6 @@ export default {
   },
   methods: {
     async GetAdminInfo() {
-      console.log("sendec ...");
       // start the loading
       this.$store.state.loading_status = "open";
 
@@ -120,7 +119,6 @@ export default {
 
           // set the admin's info in to store
           this.$store.state.admin_info = response.data.admin_data;
-          console.log(response);
         })
         .catch((error) => {
           // stop the loading
