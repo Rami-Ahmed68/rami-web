@@ -38,15 +38,15 @@ export default {
     async getSkills() {
       // check if the geted skills in store is empty
       if (this.geted_skills && this.geted_skills.length === 0) {
-        // start the loading
-        this.$store.state.loading_status = "open";
+        // start the loader
+        this.$store.state.loader_status = "open";
       }
 
       await axios
         .get(this.$store.state.Apis.skills.get_all)
         .then((response) => {
-          // stop the loading
-          this.$store.state.loading_status = "close";
+          // stop the loader
+          this.$store.state.loader_status = "close";
 
           // set the skills of the resposne to geted_skills in store
           if (this.geted_skills.length == 0) {
@@ -59,8 +59,8 @@ export default {
           }
         })
         .catch((error) => {
-          // stop the loading
-          this.$store.state.loading_status = "close";
+          // stop the loader
+          this.$store.state.loader_status = "close";
 
           // set the messgae's type to error's object in store
           this.$store.state.message.type = "error";

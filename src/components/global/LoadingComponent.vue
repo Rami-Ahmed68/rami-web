@@ -1,6 +1,6 @@
 <template>
   <div
-    :class="`laoding-${this.$store.state.theme}-${this.$store.state.loading_status}`"
+    :class="`laoding-${this.$store.state.theme}-${this.$store.state.loader_status}`"
   >
     <p>
       loading⏳

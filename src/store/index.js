@@ -14,7 +14,7 @@ export default createStore({
     ],
     dash_board_links: [
       { title: "Info", path: "/dashboard" },
-      { title: "Works", path: "works" },
+      { title: "Works", path: "/dashboard/works" },
       { title: "Skills", path: "skills" },
       { title: "Contact", path: "contact" },
       { title: "Cv", path: "cv" },
@@ -27,7 +27,7 @@ export default createStore({
       : "",
     menu_status: "close",
     scroll_top_status: "close",
-    // loading_status: "close",
+    loader_status: "close",
     loading_rate: 0,
     message_status: "close",
     message: {

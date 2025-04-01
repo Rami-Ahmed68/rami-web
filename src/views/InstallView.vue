@@ -23,16 +23,16 @@ export default {
   methods: {
     async install() {
       console.log("cliked");
-      // start the loading
-      this.$store.state.loading_status = "open";
+      // start the loader
+      this.$store.state.loader_status = "open";
 
       if (this.deferredPrompt) {
         await this.deferredPrompt.prompt();
 
         if (this.deferredPrompt) {
           this.deferredPrompt = null;
-          // stop the loading
-          this.$store.state.loading_status = "open";
+          // stop the loader
+          this.$store.state.loader_status = "open";
         }
       }
     },

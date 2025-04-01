@@ -21,8 +21,8 @@ export default {
   },
   methods: {
     async DeleteMessage() {
-      // start the loading
-      this.$store.state.loading_status = "open";
+      // start the loader
+      this.$store.state.loader_status = "open";
       // create headers
       const headers = {
         Authorization: `Bearer ${this.$store.state.admin_data.token}`,
@@ -55,8 +55,8 @@ export default {
           // to open the message
           this.$store.commit("OpenTheMessgae");
 
-          // stop the loading
-          this.$store.state.loading_status = "close";
+          // stop the loader
+          this.$store.state.loader_status = "close";
 
           // to close the message after 500ms
           this.$store.commit("CloseTheMessgaeAfter5s");
@@ -75,8 +75,8 @@ export default {
           // to open the message
           this.$store.commit("OpenTheMessgae");
 
-          // stop the loading
-          this.$store.state.loading_status = "close";
+          // stop the loader
+          this.$store.state.loader_status = "close";
 
           // to close the message after 500ms
           this.$store.commit("CloseTheMessgaeAfter5s");

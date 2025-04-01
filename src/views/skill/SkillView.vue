@@ -27,8 +27,8 @@ export default {
   methods: {
     async GetSkill() {
       console.log("sended the req ...");
-      // start the loading
-      this.$store.state.loading = "open";
+      // start the loader
+      this.$store.state.loader = "open";
 
       await axios
         .get(this.$store.state.Apis.skills.get_one, {
@@ -37,8 +37,8 @@ export default {
           },
         })
         .then((response) => {
-          // stop the loading
-          this.$store.state.loading_status = "close";
+          // stop the loader
+          this.$store.state.loader_status = "close";
 
           // set the skill's data of the response in to store
           this.$store.state.current_skill = response.data.skill_data;
@@ -54,8 +54,8 @@ export default {
           // to open the message
           this.$store.commit("OpenTheMessgae");
 
-          // stop the loading
-          this.$store.state.loading_status = "close";
+          // stop the loader
+          this.$store.state.loader_status = "close";
 
           // to close the message after 500ms
           this.$store.commit("CloseTheMessgaeAfter5s");

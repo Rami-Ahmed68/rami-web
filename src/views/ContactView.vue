@@ -63,8 +63,8 @@ export default {
   methods: {
     // send a message
     async SendMessage() {
-      // start the loading
-      this.$store.state.loading_status = "open";
+      // start the loader
+      this.$store.state.loader_status = "open";
 
       // create teh body_data
       const body_data = {
@@ -95,8 +95,8 @@ export default {
           // to open the message
           this.$store.commit("OpenTheMessgae");
 
-          // stop the loading
-          this.$store.state.loading_status = "close";
+          // stop the loader
+          this.$store.state.loader_status = "close";
 
           // to close the message after 500ms
           this.$store.commit("CloseTheMessgaeAfter5s");
@@ -112,8 +112,8 @@ export default {
           // to open the message
           this.$store.commit("OpenTheMessgae");
 
-          // stop the loading
-          this.$store.state.loading_status = "close";
+          // stop the loader
+          this.$store.state.loader_status = "close";
 
           // to close the message after 500ms
           this.$store.commit("CloseTheMessgaeAfter5s");

@@ -48,6 +48,18 @@
         v-model="bio"
       ></textarea>
 
+      <div class="bio_lines">
+        <span
+          v-for="(line, index) in this.bio_list"
+          :key="index"
+          @dblclick="moveToUpdateMode(line)"
+        >
+          <icon icon="xmark" @click="removeLine(line)" />
+          {{ line }}</span
+        >
+        <icon icon="plus" @click="addNewLine" id="plus" />
+      </div>
+
       <label for="love"
         >Love <span>{{ love.length }}</span></label
       >
@@ -57,6 +69,76 @@
         id="love"
         v-model="love"
       ></textarea>
+
+      <label for="facebook"
+        >Facebook <span>{{ facebook.length }}</span></label
+      >
+      <input
+        type="text"
+        placeholder="Type your facebook here ..."
+        id="facebook"
+        v-model="facebook"
+      />
+
+      <label for="instagram"
+        >Instagram <span>{{ instagram.length }}</span></label
+      >
+      <input
+        type="text"
+        placeholder="Type your instagram here ..."
+        id="instagram"
+        v-model="instagram"
+      />
+
+      <label for="linked_in"
+        >Linked In <span>{{ linked_in.length }}</span></label
+      >
+      <input
+        type="text"
+        placeholder="Type your linked_in here ..."
+        id="linked_in"
+        v-model="linked_in"
+      />
+
+      <label for="github"
+        >Github <span>{{ github.length }}</span></label
+      >
+      <input
+        type="text"
+        placeholder="Type your github here ..."
+        id="github"
+        v-model="github"
+      />
+
+      <label for="code_wars"
+        >Codewars <span>{{ code_wars.length }}</span></label
+      >
+      <input
+        type="text"
+        placeholder="Type your code_wars here ..."
+        id="code_wars"
+        v-model="code_wars"
+      />
+
+      <label for="whatsapp_number"
+        >Whatsapp Number <span>{{ whatsapp_number.length }}</span></label
+      >
+      <input
+        type="text"
+        placeholder="Type your whatsapp_number here ..."
+        id="whatsapp_number"
+        v-model="whatsapp_number"
+      />
+
+      <label for="phone_number"
+        >Phone Number <span>{{ phone_number.length }}</span></label
+      >
+      <input
+        type="text"
+        placeholder="Type your Phone Number here ..."
+        id="phone_number"
+        v-model="phone_number"
+      />
 
       <button @click="UpdateInfo">Update</button>
     </div>
@@ -70,6 +152,7 @@ export default {
   data() {
     return {
       selected_avatar: "",
+      selected_avatar_to_send: [],
       name: "",
       work: "",
       bio: "",
@@ -78,10 +161,10 @@ export default {
       github: "",
       facebook: "",
       instagram: "",
-      web: "",
       linked_in: "",
       phone_number: "",
       whatsapp_number: "",
+      bio_list: [],
     };
   },
   mounted() {
@@ -90,15 +173,15 @@ export default {
   },
   methods: {
     async GetAdminInfo() {
-      this.$store.state.loading_status = "open";
+      this.$store.state.loader_status = "open";
 
       await axios
         .get(this.$store.state.Apis.admin.get_info)
         .then((response) => {
-          this.$store.state.loading_status = "close";
+          this.$store.state.loader_status = "close";
           this.name = response.data.admin_data.name;
           this.work = response.data.admin_data.work;
-          this.bio = response.data.admin_data.bio;
+          this.bio_list = response.data.admin_data.bio;
           this.love = response.data.admin_data.love;
           this.code_wars = response.data.admin_data.code_wars;
           this.github = response.data.admin_data.github;
@@ -106,54 +189,69 @@ export default {
           this.instagram = response.data.admin_data.instagram;
           this.whatsapp_number = response.data.admin_data.whatsapp_number;
           this.phone_number = response.data.admin_data.phone_number;
-          this.web = response.data.admin_data.web;
+          this.linked_in = response.data.admin_data.linked_in;
         })
         .catch((error) => {
           this.$store.state.message.type = "error";
           this.$store.state.message.message =
             error.response.data.message.english;
           this.$store.commit("OpenTheMessgae");
-          this.$store.state.loading_status = "close";
+          this.$store.state.loader_status = "close";
           this.$store.commit("CloseTheMessgaeAfter5s");
         });
     },
 
     async ChangeAvatar() {
-      this.$store.state.loading_status = "open";
+      this.$store.state.loader_status = "open";
 
       const headers = {
         Authorization: `Bearer ${this.$store.state.admin_data.token}`,
       };
 
       let formData = new FormData();
+
       formData.append("admin_id", this.$store.state.admin_data._id);
-      formData.append(
-        "files",
-        this.$refs.avatar.files[0],
-        this.$refs.avatar.files[0].name
-      );
+      for (const file of this.selected_avatar_to_send) {
+        formData.append("files", file, file.name);
+      }
 
       await axios
         .put(this.$store.state.Apis.admin.change_avatar, formData, {
           headers,
+          onUploadProgress: (progressEvent) => {
+            this.$store.state.loading_rate = Math.round(
+              (progressEvent.loaded * 100) / progressEvent.total
+            );
+          },
         })
         .then((res) => {
-          this.$store.state.admin_data.avatar = res.data.new_avatar_url;
+          let originalData = JSON.parse(
+            window.localStorage.getItem("rami_admin")
+          );
+          originalData.avatar = res.data.new_avatar;
+          window.localStorage.setItem(
+            "rami_admin",
+            JSON.stringify(originalData)
+          );
+          this.$store.state.admin_data = JSON.parse(
+            window.localStorage.getItem("rami_admin")
+          );
           this.selected_avatar = "";
-          this.$store.state.loading_status = "close";
+          this.$store.state.loader_status = "close";
+          this.$store.state.loading_rate = 0;
         })
         .catch((err) => {
-          // console.log(err);
+          this.$store.state.loading_rate = 0;
           this.$store.state.message.type = "error";
           this.$store.state.message.message = err.response.data.message.english;
           this.$store.commit("OpenTheMessgae");
-          this.$store.state.loading_status = "close";
+          this.$store.state.loader_status = "close";
           this.$store.commit("CloseTheMessgaeAfter5s");
         });
     },
 
     async UpdateInfo() {
-      this.$store.state.loading_status = "open";
+      this.$store.state.loader_status = "open";
 
       const headers = {
         Authorization: `Bearer ${this.$store.state.admin_data.token}`,
@@ -167,7 +265,8 @@ export default {
 
       if (this.name !== originalData.name) changedData.name = this.name;
       if (this.work !== originalData.work) changedData.work = this.work;
-      // if (this.bio !== originalData.bio) changedData.bio = this.bio.join(",");
+      if (this.bio !== originalData.bio)
+        changedData.bio = this.bio_list.join("split_here");
       if (this.love !== originalData.love) changedData.love = this.love;
       if (this.code_wars !== originalData.code_wars)
         changedData.code_wars = this.code_wars;
@@ -176,7 +275,8 @@ export default {
         changedData.facebook = this.facebook;
       if (this.instagram !== originalData.instagram)
         changedData.instagram = this.instagram;
-      if (this.web !== originalData.web) changedData.web = this.web;
+      if (this.linked_in !== originalData.linked_in)
+        changedData.linked_in = this.linked_in;
       if (this.linked_in !== originalData.linked_in)
         changedData.linked_in = this.linked_in;
       if (this.phone_number !== originalData.phone_number)
@@ -185,25 +285,35 @@ export default {
         changedData.whatsapp_number = this.whatsapp_number;
 
       await axios
-        .put(this.$store.state.Apis.admin.update, changedData, { headers })
+        .put(this.$store.state.Apis.admin.update, changedData, {
+          headers,
+          onUploadProgress: (progressEvent) => {
+            this.$store.state.loading_rate = Math.round(
+              (progressEvent.loaded * 100) / progressEvent.total
+            );
+          },
+        })
         .then((res) => {
+          this.$store.state.loading_rate = 0;
           this.$store.state.message.type = "success";
-          this.$store.state.message.message = res.response.data.message.english;
+          this.$store.state.message.message = res.data.message.english;
           this.$store.commit("OpenTheMessgae");
-          this.$store.state.loading_status = "close";
+          this.$store.state.loader_status = "close";
           this.$store.commit("CloseTheMessgaeAfter5s");
         })
         .catch((err) => {
+          this.$store.state.loading_rate = 0;
           this.$store.state.message.type = "error";
           this.$store.state.message.message = err.response.data.message.english;
           this.$store.commit("OpenTheMessgae");
-          this.$store.state.loading_status = "close";
+          this.$store.state.loader_status = "close";
           this.$store.commit("CloseTheMessgaeAfter5s");
         });
     },
 
     handleFileChange(event) {
       if (event.target.files && event.target.files[0]) {
+        this.selected_avatar_to_send.push(event.target.files[0]);
         this.readerFile(event.target.files[0]);
       }
     },
@@ -214,6 +324,19 @@ export default {
         this.selected_avatar = e.target.result;
       };
       reader.readAsDataURL(file);
+    },
+
+    addNewLine() {
+      this.bio_list.push(this.bio);
+      this.bio = "";
+    },
+
+    moveToUpdateMode(line) {
+      this.bio = line;
+    },
+
+    removeLine(line) {
+      this.bio_list = this.bio_list.filter((ele) => ele !== line);
     },
   },
 };
@@ -326,6 +449,47 @@ export default {
       padding: 10px;
       background-color: $input-dark;
       color: $font-light;
+      border: none;
+    }
+
+    .bio_lines {
+      width: 100%;
+      min-height: 100px;
+      border-radius: 5px;
+      background-color: $input-dark;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: start;
+      align-items: start;
+      padding: 5px;
+      margin-top: 10px;
+      position: relative;
+
+      span {
+        padding: 3px;
+        border-radius: 3px;
+        margin: 3px;
+        color: $font-light;
+        background-color: #333;
+        cursor: pointer;
+
+        svg {
+          padding: 5px;
+          border-radius: 3px;
+          background-color: $dark-icon-theme-color;
+        }
+      }
+
+      #plus {
+        padding: 10px;
+        border-radius: 3px;
+        color: $font-light;
+        border: 1px solid $border-color-dark;
+        cursor: pointer;
+        position: absolute;
+        right: 3px;
+        bottom: 3px;
+      }
     }
 
     button {

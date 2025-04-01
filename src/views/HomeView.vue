@@ -108,21 +108,21 @@ export default {
   },
   methods: {
     async GetAdminInfo() {
-      // start the loading
-      this.$store.state.loading_status = "open";
+      // start the loader
+      this.$store.state.loader_status = "open";
 
       await axios
         .get(this.$store.state.Apis.admin.get_info)
         .then((response) => {
-          // stop the loading
-          this.$store.state.loading_status = "close";
+          // stop the loader
+          this.$store.state.loader_status = "close";
 
           // set the admin's info in to store
           this.$store.state.admin_info = response.data.admin_data;
         })
         .catch((error) => {
-          // stop the loading
-          this.$store.state.loading_status = "close";
+          // stop the loader
+          this.$store.state.loader_status = "close";
 
           // set the messgae's type to error's object in store
           this.$store.state.message.type = "error";

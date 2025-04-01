@@ -10,7 +10,10 @@
         v-for="(link, index) in this.$store.state.dash_board_links"
         :key="index"
       >
-        <router-link :to="link.path">
+        <router-link
+          :to="link.path"
+          :id="this.$route.path == link.path ? 'active' : 'un_active'"
+        >
           {{ link.title }}
         </router-link>
       </li>
@@ -121,7 +124,7 @@ export default {
       font-weight: 400;
     }
 
-    .router-link-active {
+    #active {
       background-color: $menu-item-dark;
     }
 
@@ -215,7 +218,7 @@ export default {
       font-weight: 400;
     }
 
-    .router-link-active {
+    #active {
       background-color: $menu-item-light;
     }
 

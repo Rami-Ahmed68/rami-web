@@ -2,7 +2,9 @@
   <div :class="`dash-board-page-${this.$store.state.theme}`">
     <SidBarComponent />
     <div class="section">
-      <router-view />
+      <transition name="slide">
+        <router-view />
+      </transition>
     </div>
   </div>
 </template>
@@ -49,11 +51,44 @@ export default {
     border-radius: 5px;
     margin: 10px 5px 5px 5px;
     overflow-y: scroll;
-    padding: 5px;
+    padding: 5px 10px;
+    transition-duration: 0.5s;
 
     @media (max-width: $phone) {
       width: 60%;
       margin: 2px;
+    }
+
+    .slide-enter-active {
+      animation: slideIn 0.5s ease-out;
+    }
+
+    .slide-leave-active {
+      animation: slideOut 0.5s ease-in;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateY(40px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideOut {
+      from {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      to {
+        transform: translateY(-40px);
+        opacity: 0;
+      }
     }
   }
 
@@ -83,11 +118,44 @@ export default {
     border-radius: 5px;
     margin: 10px 5px 5px 5px;
     overflow-y: scroll;
-    padding: 5px;
+    padding: 5px 10px;
+    transition-duration: 0.5s;
 
     @media (max-width: $phone) {
       width: 60%;
       margin: 2px;
+    }
+
+    .slide-enter-active {
+      animation: slideIn 0.5s ease-out;
+    }
+
+    .slide-leave-active {
+      animation: slideOut 0.5s ease-in;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateY(40px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideOut {
+      from {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      to {
+        transform: translateY(-40px);
+        opacity: 0;
+      }
     }
   }
 

@@ -37,8 +37,8 @@ export default {
     async getWorks() {
       // check if the works data array in store is empty or not
       if (this.geted_works.length == 0) {
-        // start the loading
-        this.$store.state.loading_status = "open";
+        // start the loader
+        this.$store.state.loader_status = "open";
       }
 
       await axios
@@ -49,8 +49,8 @@ export default {
           },
         })
         .then((response) => {
-          // stop the loading
-          this.$store.state.loading_status = "close";
+          // stop the loader
+          this.$store.state.loader_status = "close";
 
           if (this.geted_works.length > 0) {
             // set the works of the resposne to geted_works in store
@@ -74,8 +74,8 @@ export default {
           // to open the message
           this.$store.commit("OpenTheMessgae");
 
-          // stop the loading
-          this.$store.state.loading_status = "close";
+          // stop the loader
+          this.$store.state.loader_status = "close";
 
           // to close the message after 500ms
           this.$store.commit("CloseTheMessgaeAfter5s");

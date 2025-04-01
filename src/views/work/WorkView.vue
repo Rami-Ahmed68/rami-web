@@ -99,8 +99,8 @@ export default {
   methods: {
     // get the work
     async GetWork() {
-      // start the loading
-      this.$store.state.loading_status = "open";
+      // start the loader
+      this.$store.state.loader_status = "open";
 
       await axios
         .get(this.$store.state.Apis.works.get_one, {
@@ -113,8 +113,8 @@ export default {
           // set the work's data in to store
           this.current_work = response.data.work_data;
 
-          // stop the loading
-          this.$store.state.loading_status = "close";
+          // stop the loader
+          this.$store.state.loader_status = "close";
         })
         .catch((error) => {
           // set the messgae's type to error's object in store
@@ -127,8 +127,8 @@ export default {
           // to open the message
           this.$store.commit("OpenTheMessgae");
 
-          // stop the loading
-          this.$store.state.loading_status = "close";
+          // stop the loader
+          this.$store.state.loader_status = "close";
 
           // to close the message after 500ms
           this.$store.commit("CloseTheMessgaeAfter5s");

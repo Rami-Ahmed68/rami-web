@@ -10,6 +10,7 @@ import LoginView from "@/views/LogInView.vue";
 import WorkView from "@/views/work/WorkView.vue";
 import SkillView from "@/views/skill/SkillView.vue";
 import dashboardView from "../views/dash/dashboardView.vue";
+import dashboardWorskview from "@/views/dash/dashboardWorksview.vue";
 import DashInfoView from "@/views/dash/DashInfoView.vue";
 import NotFoundView from "@/views/NotFoundView.vue";
 
@@ -132,7 +133,7 @@ const routes = [
       {
         path: "works",
         name: "dashboard-works",
-        component: dashboardView,
+        component: dashboardWorskview,
       },
     ],
   },
