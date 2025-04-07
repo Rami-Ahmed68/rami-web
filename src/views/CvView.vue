@@ -1,5 +1,5 @@
 <template>
-  <div :class="`cv-${this.$store.state.theme}`">
+  <div class="cv">
     <h1>My Cv</h1>
     <img
       v-if="this.$store.state.admin_cv"
@@ -56,8 +56,7 @@ export default {
 
 <style lang="scss">
 @import "../sass/varibels";
-// dark
-.cv-dark {
+.cv {
   width: 40%;
   min-height: 100vh;
   padding: 0px 0px 20px 0px;
@@ -72,9 +71,9 @@ export default {
   h1 {
     width: 100%;
     height: auto;
-    color: $font-light;
+    color: var(--theme-text);
     border: 1px solid;
-    border-color: transparent transparent $font-light transparent;
+    border-color: transparent transparent var(--theme-text) transparent;
   }
 
   img {
@@ -84,35 +83,4 @@ export default {
     margin: 10px 0px;
   }
 }
-// dark
-
-// light
-.cv-light {
-  width: 40%;
-  min-height: 100vh;
-  padding: 0px 0px 20px 0px;
-  margin: auto;
-
-  @media (max-width: $phone) {
-    width: 90%;
-    min-height: 100px;
-    margin: 20px 5%;
-  }
-
-  h1 {
-    width: 100%;
-    height: auto;
-    color: $font-dark;
-    border: 1px solid;
-    border-color: transparent transparent $font-dark transparent;
-  }
-
-  img {
-    width: 100%;
-    height: auto;
-    border-radius: 5px;
-    margin: 10px 0px;
-  }
-}
-// light
 </style>

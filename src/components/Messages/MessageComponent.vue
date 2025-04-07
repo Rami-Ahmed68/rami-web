@@ -1,5 +1,5 @@
 <template>
-  <div :class="`message-${this.$store.state.theme}`">
+  <div class="message">
     <h3>
       {{ this.message_data.full_name }}
       <span @click="ConfirmDelete">🗑️</span>
@@ -47,23 +47,22 @@ export default {
 
 <style lang="scss">
 @import "../../sass/varibels";
-// dark
-.message-dark {
+.message {
   width: 100%;
   height: auto;
   margin: 5px 0%;
   padding: 5px;
   border-radius: 5px;
   margin: 10px 0px;
-  background-color: $message-dark;
+  background-color: var(--message-bg);
 
   h3 {
     width: 100%;
     height: auto;
     padding: 3px 0px;
     border: 1px solid;
-    color: $font-light;
-    border-color: transparent transparent $font-light transparent;
+    color: var(--theme-text);
+    border-color: transparent transparent var(--theme-text) transparent;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -91,8 +90,8 @@ export default {
       padding: 5px 10px;
       border-radius: 5px;
       text-decoration: none;
-      color: $font-dark;
-      background-color: $blue-1-light;
+      color: var(--button-color);
+      background-color: var(--blue-1);
       transition-duration: 0.5s;
       margin: 4px 4px 4px 0px;
     }
@@ -101,69 +100,8 @@ export default {
   p {
     width: 100%;
     height: auto;
-    color: $font-light;
+    color: var(--theme-text);
     font-size: $small;
   }
 }
-// dark
-
-// light
-.message-light {
-  width: 100%;
-  height: auto;
-  margin: 5px 0%;
-  padding: 5px;
-  border-radius: 5px;
-  margin: 10px 0px;
-  background-color: $message-light;
-
-  h3 {
-    width: 100%;
-    height: auto;
-    padding: 3px 0px;
-    border: 1px solid;
-    color: $font-dark;
-    border-color: transparent transparent $font-dark transparent;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    span {
-      padding: 5px;
-      border-radius: 4px;
-      user-select: none;
-      background-color: $error-message-body;
-      border: $error-message-border;
-      cursor: pointer;
-      font-size: $small;
-    }
-  }
-
-  .contact-info {
-    width: 100%;
-    height: auto;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: start;
-    align-items: center;
-
-    a {
-      padding: 5px 10px;
-      border-radius: 5px;
-      text-decoration: none;
-      color: $font-dark;
-      background-color: $blue-1-dark;
-      transition-duration: 0.5s;
-      margin: 4px 4px 4px 0px;
-    }
-  }
-
-  p {
-    width: 100%;
-    height: auto;
-    color: $font-dark;
-    font-size: $small;
-  }
-}
-// light
 </style>

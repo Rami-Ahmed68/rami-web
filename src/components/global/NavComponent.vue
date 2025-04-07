@@ -1,35 +1,26 @@
 <template>
-  <nav :class="`nav-${this.$store.state.theme}`">
+  <nav class="nav">
     <a href="/">
       <img
-        v-if="this.$store.state.theme == 'dark'"
         src="../../assets/light_logopng.png"
-        alt=""
+        alt="Website Logo"
+        v-if="$store.state.theme === 'dark'"
       />
-      <img
-        v-if="this.$store.state.theme == 'light'"
-        src="../../assets/black_logo.png"
-      />
+      <img src="../../assets/black_logo.png" alt="Website Logo" v-else />
     </a>
 
     <ul class="center-list">
-      <li
-        v-for="(link, index) in this.$store.state.links"
-        :key="index"
-        @click="this.$store.commit('ChangeMenuStatus')"
-      >
+      <li v-for="(link, index) in $store.state.links" :key="index">
         <router-link
           :to="link.path"
-          v-if="
-            (link.condition && this.$store.state.admin_data) || !link.condition
-          "
+          v-if="(link.condition && $store.state.admin_data) || !link.condition"
         >
           {{ link.title }}
         </router-link>
       </li>
 
       <div class="theme-icon" @click="$store.commit('ChangeTheme')">
-        <icon :icon="$store.state.theme == 'dark' ? 'sun' : 'moon'" />
+        <icon :icon="$store.state.theme === 'dark' ? 'sun' : 'moon'" />
       </div>
 
       <div class="bars-icon" @click="$store.commit('ChangeMenuStatus')">
@@ -37,14 +28,19 @@
       </div>
     </ul>
 
-    <div :class="`menu-${this.$store.state.menu_status}`">
+    <div :class="`menu-${$store.state.menu_status}`">
       <ul>
         <li
-          v-for="(link, index) in this.$store.state.links"
+          v-for="(link, index) in $store.state.links"
           :key="index"
-          @click="this.$store.commit('ChangeMenuStatus')"
+          @click="$store.commit('ChangeMenuStatus')"
         >
-          <router-link :to="link.path">
+          <router-link
+            :to="link.path"
+            v-if="
+              (link.condition && $store.state.admin_data) || !link.condition
+            "
+          >
             {{ link.title }}
           </router-link>
         </li>
@@ -56,7 +52,7 @@
 <script>
 import axios from "axios";
 export default {
-  name: "nav-component",
+  name: "NavComponent",
   data() {
     return {
       page: 1,
@@ -65,72 +61,49 @@ export default {
   },
   mounted() {
     window.addEventListener("scroll", this.HandelScroll);
-    // call to get messages method
     this.GetMesages();
   },
   methods: {
-    // get messages method
     async GetMesages() {
-      // check if the messages's array in store s empty
-      if (this.$store.state.messages_array.length == 0) {
+      if (this.$store.state.messages_array.length === 0) {
         this.$store.state.loading_status = "open";
       }
 
-      await axios
-        .get(this.$store.state.Apis.messages.get_all, {
-          params: {
-            page: this.page,
-            limit: this.limit,
-          },
-        })
-        .then((response) => {
-          // set the geted messages to messages array
-          if (this.$store.state.messages_array.length == 0) {
-            this.$store.state.messages_array = response.data.messages;
-          } else {
-            this.$store.state.messages_array = [
-              ...this.$store.state.messages_array,
-              ...response.data.messages,
-            ];
+      try {
+        const response = await axios.get(
+          this.$store.state.Apis.messages.get_all,
+          {
+            params: { page: this.page, limit: this.limit },
           }
-          // stop the loading
-          this.$store.state.loading_status = "close";
-        })
-        .catch((error) => {
-          // set the messgae's type to error's object in store
-          this.$store.state.message.type = "error";
+        );
 
-          // set the error messgae to error in store
-          this.$store.state.message.message =
-            error.response.data.message.english;
+        this.$store.state.messages_array =
+          this.$store.state.messages_array.length === 0
+            ? response.data.messages
+            : [...this.$store.state.messages_array, ...response.data.messages];
 
-          // to open the message
-          this.$store.commit("OpenTheMessgae");
-
-          // stop the loading
-          this.$store.state.loading_status = "close";
-
-          // to close the message after 500ms
-          this.$store.commit("CloseTheMessgaeAfter5s");
-        });
+        this.$store.state.loading_status = "close";
+      } catch (error) {
+        this.$store.state.message = {
+          type: "error",
+          message:
+            error.response?.data?.message?.english || "An error occurred",
+        };
+        this.$store.commit("OpenTheMessgae");
+        this.$store.state.loading_status = "close";
+        this.$store.commit("CloseTheMessgaeAfter5s");
+      }
     },
 
-    // handel scroll
     async HandelScroll() {
-      // check if the window height is donw
       if (
         window.scrollY + window.innerHeight >=
         document.body.scrollHeight - 600
       ) {
-        // to change page
         this.page += 1;
-        // call the GetMesages method
         await this.GetMesages();
       }
     },
-  },
-  isDashboardRoute() {
-    return this.$route.name && this.$route.name.includes("dashboard");
   },
 };
 </script>
@@ -138,27 +111,26 @@ export default {
 <style lang="scss">
 @import "../../sass/varibels";
 
-// dark style
-.nav-dark {
+.nav {
   width: 100%;
   height: 60px;
-  backdrop-filter: blur(40px);
+  backdrop-filter: blur(20px);
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0px 15%;
   position: fixed;
   z-index: 20;
+  background-color: var(--nav-bg);
+
   @media (max-width: $phone) {
     padding: 0px 5px;
   }
 
   a {
-    width: auto;
-    height: 100%;
     display: flex;
-    justify-content: center;
     align-items: center;
+    height: 100%;
 
     img {
       width: 50px;
@@ -167,36 +139,37 @@ export default {
   }
 
   .center-list {
-    width: auto;
-    height: 100%;
     display: flex;
-    justify-content: space-around;
     align-items: center;
+    height: 100%;
     padding: 10px 0px;
 
     li {
       list-style-type: none;
+      @media (max-width: $phone) {
+        display: none;
+      }
 
       a {
         padding: 10px;
         margin: 3px;
         cursor: pointer;
         text-decoration: none;
-        color: $font-light;
+        color: var(--theme-text);
         font-weight: 400;
 
         @media (max-width: $phone) {
           display: none;
         }
-      }
 
-      a:hover {
-        text-decoration: underline;
-      }
+        &:hover {
+          text-decoration: underline;
+        }
 
-      .router-link-active {
-        background-color: $blue;
-        color: $font-dark;
+        &.router-link-active {
+          background-color: var(--blue);
+          color: var(--button-text);
+        }
       }
     }
 
@@ -206,15 +179,16 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: $dark-icon-theme-color;
-      color: $light-theme;
+      background-color: var(--icon-theme-color);
+      color: var(--theme-inverse);
       border-radius: 5px;
       cursor: pointer;
-      transition-duration: 0.5s;
+      transition: all 0.5s;
       margin: 0px 5px;
 
       svg {
-        font-size: medium;
+        font-size: var(--medium);
+        color: var(--theme-text);
       }
     }
 
@@ -227,9 +201,10 @@ export default {
       justify-content: center;
       align-items: center;
       padding: 10px;
-      color: $font-light;
-      border: 1px solid $border-color-dark;
+      color: var(--theme-text);
+      border: 1px solid var(--border-color);
       margin: 0px 5px;
+      position: relative;
 
       @media (min-width: $phone) {
         display: none;
@@ -237,17 +212,17 @@ export default {
     }
   }
 
-  .menu-open {
+  .menu-open,
+  .menu-close {
     width: 200px;
-    height: 250px;
+    min-height: 250px;
     overflow: hidden;
-    background-color: $menu-dark;
+    background-color: var(--menu-bg);
     border-radius: 5px;
     position: absolute;
     top: 90%;
     right: 10px;
-    opacity: 1;
-    transition-duration: 0.5s;
+    transition: all 0.5s;
 
     @media (min-width: $phone) {
       display: none;
@@ -261,186 +236,29 @@ export default {
       width: 96%;
       height: 35px;
       margin: 5px 2%;
-      cursor: pointer;
       display: flex;
-      justify-content: start;
+      align-items: center;
       padding: 0px 10px;
       text-decoration: none;
       border-radius: 5px;
-      color: $font-light;
+      color: var(--theme-text);
       font-weight: 400;
-    }
 
-    .router-link-active {
-      background-color: $menu-item-dark;
-    }
-
-    a:hover {
-      background-color: $menu-item-dark;
-      text-decoration: underline;
-    }
-  }
-
-  .menu-close {
-    @extend .menu-open;
-    width: 0px;
-    height: 0px;
-    overflow: hidden;
-    opacity: 0;
-    transition-duration: 0.5s;
-  }
-}
-
-.nav-light {
-  width: 100%;
-  height: 60px;
-  backdrop-filter: blur(40px);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0px 15%;
-  position: fixed;
-  z-index: 20;
-  @media (max-width: $phone) {
-    padding: 0px 5px;
-  }
-
-  a {
-    width: auto;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    img {
-      width: 50px;
-      height: 50px;
-    }
-  }
-
-  .center-list {
-    width: auto;
-    height: 100%;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 10px 0px;
-
-    li {
-      list-style-type: none;
-
-      a {
-        padding: 10px;
-        margin: 3px;
-        cursor: pointer;
-        text-decoration: none;
-        color: $font-dark;
-        font-weight: 400;
-
-        @media (max-width: $phone) {
-          display: none;
-        }
-      }
-
-      a:hover {
+      &:hover {
+        background-color: var(--menu-item-bg);
         text-decoration: underline;
       }
 
-      .router-link-active {
-        background-color: $blue;
-        color: $font-dark;
+      &.router-link-active {
+        background-color: var(--menu-item-bg);
       }
-    }
-
-    .theme-icon {
-      width: 40px;
-      height: 40px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: $light-icon-theme-color;
-      color: $dark-theme;
-      border-radius: 5px;
-      cursor: pointer;
-      transition-duration: 0.5s;
-      margin: 0px 5px;
-
-      svg {
-        font-size: medium;
-      }
-    }
-
-    .bars-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 5px;
-      cursor: pointer;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 10px;
-      color: $font-dark;
-      border: 1px solid $border-color-light;
-      margin: 0px 5px;
-
-      @media (min-width: $phone) {
-        display: none;
-      }
-    }
-  }
-
-  .menu-open {
-    width: 200px;
-    height: 250px;
-    overflow: hidden;
-    background-color: $menu-light;
-    border-radius: 5px;
-    position: absolute;
-    top: 90%;
-    right: 10px;
-    opacity: 1;
-    transition-duration: 0.5s;
-
-    @media (min-width: $phone) {
-      display: none;
-    }
-
-    li {
-      list-style-type: none;
-    }
-
-    a {
-      width: 96%;
-      height: 35px;
-      margin: 5px 2%;
-      cursor: pointer;
-      display: flex;
-      justify-content: start;
-      padding: 0px 10px;
-      text-decoration: none;
-      border-radius: 5px;
-      color: $font-dark;
-      font-weight: 400;
-    }
-
-    .router-link-active {
-      background-color: $menu-item-light;
-    }
-
-    a:hover {
-      background-color: $menu-item-light;
-      text-decoration: underline;
     }
   }
 
   .menu-close {
-    @extend .menu-open;
-    width: 0px;
-    height: 0px;
-    overflow: hidden;
+    width: 0;
+    height: 0;
     opacity: 0;
-    transition-duration: 0.5s;
   }
 }
-// light style
 </style>

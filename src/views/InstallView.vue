@@ -1,5 +1,5 @@
 <template>
-  <div :class="`${this.$store.state.theme}-install-page`">
+  <div class="install-page">
     <div class="container">
       <p>👋Hi, You can install the web as a mobile app</p>
       <button @click="install">Install App</button>
@@ -42,11 +42,10 @@ export default {
 
 <style lang="scss">
 @import "../sass/_varibels";
-// dark
-.dark-install-page {
+.install-page {
   width: 100%;
   height: auto;
-  background-color: $dark-theme;
+  background-color: var(--theme-bg);
 
   .container {
     width: 40%;
@@ -67,14 +66,14 @@ export default {
       outline: none;
       padding: 10px 20px;
       cursor: pointer;
-      color: $font-dark;
       border-radius: 5px;
-      background-color: $blue-1-dark;
+      background-color: var(--blue-1);
+      color: var(--button-text);
       transition-duration: 0.5s;
     }
 
     button:hover {
-      background-color: $blue-1-light;
+      background-color: var(--blue);
     }
 
     p {
@@ -82,9 +81,9 @@ export default {
       height: auto;
       padding: 10px;
       border-radius: 5px;
-      background-color: $message-dark;
+      background-color: var(--message-bg);
       margin: 30px 5%;
-      color: $font-light;
+      color: var(--theme-text);
       font-size: $medium;
       text-align: justify;
       position: relative;
@@ -92,57 +91,4 @@ export default {
     }
   }
 }
-// dark
-
-// light
-.light-install-page {
-  width: 100%;
-  height: auto;
-  background-color: $light-theme;
-
-  .container {
-    width: 40%;
-    height: auto;
-    margin: auto;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-
-    @media (max-width: $phone) {
-      width: 96%;
-      margin: 0px 2%;
-    }
-
-    button {
-      border: none;
-      outline: none;
-      padding: 10px 20px;
-      cursor: pointer;
-      color: $font-light;
-      border-radius: 5px;
-      background-color: $blue-1-dark;
-      transition-duration: 0.5s;
-    }
-
-    button:hover {
-      background-color: $blue-1-light;
-    }
-
-    p {
-      width: 90%;
-      height: auto;
-      padding: 10px;
-      border-radius: 5px;
-      background-color: $message-light;
-      margin: 30px 5%;
-      color: $font-dark;
-      font-size: $medium;
-      text-align: justify;
-      position: relative;
-      text-align: center;
-    }
-  }
-}
-// light
 </style>

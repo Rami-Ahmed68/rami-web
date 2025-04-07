@@ -1,5 +1,5 @@
 <template>
-  <div :class="`contact-page-${this.$store.state.theme}`">
+  <div class="contact-page">
     <h1>contact page</h1>
 
     <div action="">
@@ -125,8 +125,7 @@ export default {
 
 <style lang="scss">
 @import "../sass/varibels";
-// dark
-.contact-page-dark {
+.contact-page {
   width: 40%;
   height: auto;
   margin: auto;
@@ -140,9 +139,9 @@ export default {
   h1 {
     width: 100%;
     height: auto;
-    color: $font-light;
+    color: var(--theme-text);
     border: 1px solid;
-    border-color: transparent transparent $font-light transparent;
+    border-color: transparent transparent var(--theme-text) transparent;
   }
 
   div {
@@ -157,9 +156,9 @@ export default {
     label {
       width: 100%;
       height: auto;
-      color: $font-light;
+      color: var(--theme-text);
       border: 1px solid;
-      border-color: transparent transparent $border-color-dark transparent;
+      border-color: transparent transparent var(--border-color) transparent;
     }
 
     input {
@@ -170,8 +169,8 @@ export default {
       outline: none;
       margin: 5px 0px;
       padding: 0px 10px;
-      background-color: $input-dark;
-      color: $font-light;
+      background-color: var(--input-bg);
+      color: var(--theme-text);
     }
 
     textarea {
@@ -188,88 +187,13 @@ export default {
       outline: none;
       border-radius: 5px;
       cursor: pointer;
-      background-color: $blue-1-dark;
+      background-color: var(--blue-1);
       transition-duration: 0.5s;
     }
 
     button:hover {
-      background-color: $blue-1-light;
+      background-color: var(--blue-2);
     }
   }
 }
-// dark
-
-// light
-.contact-page-light {
-  width: 40%;
-  height: auto;
-  margin: auto;
-  padding-bottom: 10px;
-
-  @media (max-width: $phone) {
-    width: 96%;
-    margin: 5px 2%;
-  }
-
-  h1 {
-    width: 100%;
-    height: auto;
-    color: $font-dark;
-    border: 1px solid;
-    border-color: transparent transparent $font-dark transparent;
-  }
-
-  div {
-    width: 100%;
-    height: auto;
-    margin: 10px 0px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: 10px 0px;
-
-    label {
-      width: 100%;
-      height: auto;
-      color: $font-dark;
-      border: 1px solid;
-      border-color: transparent transparent $border-color-dark transparent;
-    }
-
-    input {
-      width: 100%;
-      height: 40px;
-      border: none;
-      border-radius: 5px;
-      outline: none;
-      margin: 5px 0px;
-      padding: 0px 10px;
-      background-color: $input-light;
-      color: $font-dark;
-    }
-
-    textarea {
-      @extend input;
-      height: 300px;
-      resize: none;
-      padding: 10px;
-    }
-
-    button {
-      padding: 10px 15px;
-      border: none;
-      margin: 10px 0px;
-      outline: none;
-      border-radius: 5px;
-      cursor: pointer;
-      background-color: $blue-1-light;
-      transition-duration: 0.5s;
-    }
-
-    button:hover {
-      background-color: $blue-1-light;
-    }
-  }
-}
-// light
 </style>

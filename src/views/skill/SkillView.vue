@@ -1,5 +1,5 @@
 <template>
-  <div :class="`skill-page-${this.$store.state.theme}`">
+  <div class="skill-page">
     <div
       :class="`header-${this.$store.state.current_skill ? 'open' : 'close'}`"
     >
@@ -67,8 +67,7 @@ export default {
 
 <style lang="scss">
 @import "../../sass/varibels";
-// dark
-.skill-page-dark {
+.skill-page {
   width: 40%;
   min-height: 100vh;
   margin: auto;
@@ -96,15 +95,15 @@ export default {
       height: 100%;
 
       h2 {
-        color: $font-light;
+        color: var(--theme-text);
       }
 
       span {
         padding: 3px;
         border-radius: 3px;
-        background-color: $chips-dark-green-body;
-        color: $chips-dark-green-text;
-        border: 1px solid $chips-dark-green-border;
+        background-color: var(--chips-green-body);
+        color: var(--chips-green-text);
+        border: 1px solid var(--chips-green-border);
         font-size: $x-small;
       }
     }
@@ -122,70 +121,8 @@ export default {
     height: auto;
     padding: 5px 10px;
     margin: 5px 0px;
-    color: $font-light;
+    color: var(--theme-text);
     font-size: $small;
   }
 }
-// dark
-
-// light
-.skill-page-light {
-  width: 40%;
-  min-height: 100vh;
-  margin: auto;
-
-  @media (max-width: $phone) {
-    width: 96%;
-    margin: 0px 2%;
-  }
-
-  .header-open {
-    width: 100%;
-    display: flex;
-    justify-content: start;
-    padding-top: 0px;
-    transition-duration: 0.5s;
-    opacity: 1;
-
-    img {
-      width: 100px;
-      height: 100px;
-    }
-
-    .info {
-      width: auto;
-      height: 100%;
-
-      h2 {
-        color: $font-dark;
-      }
-
-      span {
-        padding: 3px;
-        border-radius: 3px;
-        background-color: $chips-light-green-body;
-        color: $chips-light-green-text;
-        border: 1px solid $chips-light-green-border;
-        font-size: $x-small;
-      }
-    }
-  }
-
-  .header-close {
-    @extend .header-open;
-    padding-top: 20px;
-    transition-duration: 0.5s;
-    opacity: 0;
-  }
-
-  p {
-    width: 100%;
-    height: auto;
-    padding: 5px 10px;
-    margin: 5px 0px;
-    color: $font-dark;
-    font-size: $small;
-  }
-}
-// light
 </style>

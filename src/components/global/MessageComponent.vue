@@ -1,6 +1,6 @@
 <template>
   <div
-    :class="`message-${this.$store.state.theme}-${this.$store.state.message.type}-${this.$store.state.message_status}`"
+    :class="`message-${this.$store.state.message.type}-${this.$store.state.message_status}`"
   >
     <p>
       {{ this.$store.state.message.type == "error" ? "🚨" : "✅" }} :
@@ -21,18 +21,18 @@ export default {
 <style lang="scss">
 @import "../../sass/varibels";
 
-// dark
 // error
-.message-dark-error-open {
+.message-error-open {
   max-width: 70%;
+  min-width: 40%;
   height: 60px;
   border-radius: 5px;
   display: flex;
   justify-content: start;
   align-items: center;
   padding: 5px;
-  background-color: $error-message-body;
-  border: 1px solid $error-message-border;
+  background-color: var(--error-message-body);
+  border: 1px solid var(--error-message-border);
   position: fixed;
   bottom: 20px;
   left: 10px;
@@ -48,13 +48,13 @@ export default {
   p {
     width: 90%;
     height: 100%;
-    color: $font-light;
+    color: var(--theme-text);
     font-size: $small;
   }
 
   svg {
     padding: 10px;
-    color: $font-light;
+    color: var(--theme-text);
     cursor: pointer;
     position: absolute;
     right: 5px;
@@ -62,24 +62,25 @@ export default {
   }
 }
 
-.message-dark-error-close {
-  @extend .message-dark-error-open;
+.message-error-close {
+  @extend .message-error-open;
   left: -50%;
   opacity: 0;
 }
 // error
 
 // success
-.message-dark-success-open {
+.message-success-open {
   max-width: 70%;
+  min-width: 40%;
   height: 60px;
   border-radius: 5px;
   display: flex;
   justify-content: start;
   align-items: center;
   padding: 10px;
-  background-color: $success-message-body;
-  border: 1px solid $success-message-border;
+  background-color: var(--success-message-body);
+  border: 1px solid var(--success-message-border);
   position: fixed;
   bottom: 20px;
   left: 10px;
@@ -95,13 +96,13 @@ export default {
   p {
     width: 90%;
     height: 100%;
-    color: $font-light;
+    color: var(--theme-text);
     font-size: $small;
   }
 
   svg {
     padding: 10px;
-    color: $font-light;
+    color: var(--theme-text);
     cursor: pointer;
     position: absolute;
     right: 5px;
@@ -109,105 +110,10 @@ export default {
   }
 }
 
-.message-dark-success-close {
-  @extend .message-dark-success-open;
+.message-success-close {
+  @extend .message-success-open;
   left: -50%;
   opacity: 0;
 }
 // success
-// dark
-
-// light
-// error
-.message-light-error-open {
-  max-width: 70%;
-  height: 60px;
-  border-radius: 5px;
-  display: flex;
-  justify-content: start;
-  align-items: center;
-  padding: 10px;
-  background-color: $error-message-body;
-  border: 1px solid $error-message-border;
-  position: fixed;
-  bottom: 20px;
-  left: 10px;
-  opacity: 1;
-  backdrop-filter: blur(20px);
-  transition-duration: 0.5s;
-
-  @media (max-width: $phone) {
-    width: 90%;
-  }
-
-  p {
-    width: 90%;
-    height: 100%;
-    color: $font-dark;
-    font-size: $small;
-  }
-
-  svg {
-    padding: 10px;
-    color: $font-dark;
-    cursor: pointer;
-    position: absolute;
-    right: 5px;
-    top: 5px;
-  }
-}
-
-.message-light-error-close {
-  @extend .message-light-error-open;
-  left: -50%;
-  opacity: 0;
-}
-// error
-
-// success
-.message-light-success-open {
-  max-width: 70%;
-  height: 60px;
-  border-radius: 5px;
-  display: flex;
-  justify-content: start;
-  align-items: center;
-  padding: 10px;
-  background-color: $success-message-body;
-  border: 1px solid $success-message-border;
-  position: fixed;
-  bottom: 20px;
-  left: 10px;
-  opacity: 1;
-  backdrop-filter: blur(20px);
-  transition-duration: 0.5s;
-
-  @media (max-width: $phone) {
-    width: 90%;
-  }
-
-  p {
-    width: 90%;
-    height: 100%;
-    color: $font-dark;
-    font-size: $small;
-  }
-
-  svg {
-    padding: 10px;
-    color: $font-dark;
-    cursor: pointer;
-    position: absolute;
-    right: 5px;
-    top: 5px;
-  }
-}
-
-.message-light-success-close {
-  @extend .message-light-success-open;
-  left: -50%;
-  opacity: 0;
-}
-// success
-// light
 </style>

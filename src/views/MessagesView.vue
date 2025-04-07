@@ -1,5 +1,5 @@
 <template>
-  <div :class="`message-page-${this.$store.state.theme}`">
+  <div class="message-page">
     <h1>Messages Page</h1>
 
     <div class="container">
@@ -26,9 +26,7 @@ export default {
 
 <style lang="scss">
 @import "../sass/varibels";
-
-// dark
-.message-page-dark {
+.message-page {
   width: 40%;
   height: auto;
   margin: auto;
@@ -41,9 +39,9 @@ export default {
   h1 {
     width: 100%;
     height: auto;
-    color: $font-light;
+    color: var(--theme-text);
     border: 1px solid;
-    border-color: transparent transparent $font-light transparent;
+    border-color: transparent transparent var(--border-color) transparent;
   }
 
   .container {
@@ -52,32 +50,4 @@ export default {
     padding: 5px;
   }
 }
-// dark
-
-// light
-.message-page-light {
-  width: 40%;
-  height: auto;
-  margin: auto;
-
-  @media (max-width: $phone) {
-    width: 96%;
-    margin: 5px 2%;
-  }
-
-  h1 {
-    width: 100%;
-    height: auto;
-    color: $font-dark;
-    border: 1px solid;
-    border-color: transparent transparent $font-dark transparent;
-  }
-
-  .container {
-    width: 100%;
-    height: auto;
-    padding: 5px;
-  }
-}
-// light
 </style>

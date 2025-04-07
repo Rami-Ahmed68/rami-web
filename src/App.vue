@@ -1,5 +1,5 @@
 <template>
-  <div :class="`app-${$store.state.theme}`">
+  <div class="app">
     <NavComponnet v-if="!$route.path.includes('/dashboard')" />
     <ModelComponent v-if="!$route.path.includes('/dashboard')" />
     <transition name="slide">
@@ -27,6 +27,11 @@ export default {
     };
   },
   mounted() {
+    document.documentElement.setAttribute(
+      "data-theme",
+      this.$store.state.theme
+    );
+
     window.addEventListener("scroll", this.handleScroll);
   },
   components: {
@@ -54,53 +59,8 @@ export default {
 <style lang="scss">
 @import "./sass/varibels";
 
-.app-dark {
-  background-color: $dark-theme;
-  width: 100%;
-  min-height: 100vh;
-
-  .slide-enter-active {
-    animation: slideIn 0.5s ease-out;
-    /* مدة وسرعة التأثير */
-  }
-
-  .slide-leave-active {
-    animation: slideOut 0.5s ease-in;
-    /* تأثير معاكس عند إخفاء المحتوى */
-  }
-
-  @keyframes slideIn {
-    from {
-      transform: translateY(40px);
-      /* يبدأ من أسفل قليلاً */
-      opacity: 0;
-      /* يبدأ بتلاشي */
-    }
-
-    to {
-      transform: translateY(0);
-      /* يصل إلى مكانه الطبيعي */
-      opacity: 1;
-      /* يظهر بشكل كامل */
-    }
-  }
-
-  @keyframes slideOut {
-    from {
-      transform: translateY(0);
-      opacity: 1;
-    }
-
-    to {
-      transform: translateY(-40px);
-      /* ينزلق للأعلى قليلاً */
-      opacity: 0;
-    }
-  }
-}
-
-.app-light {
-  background-color: $light-theme;
+.app {
+  background-color: var(--theme-bg);
   width: 100%;
   min-height: 100vh;
 

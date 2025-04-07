@@ -1,5 +1,5 @@
 <template>
-  <div :class="`dash-info-page-${$store.state.theme}`">
+  <div class="dash-info-page">
     <h1>Info page</h1>
 
     <div class="avatar">
@@ -345,15 +345,15 @@ export default {
 <style lang="scss">
 @import "../../sass/_varibels.scss";
 
-.dash-info-page-dark {
+.dash-info-page {
   width: 100%;
   height: 100%;
 
   h1 {
     width: 100%;
     height: auto;
-    border-bottom: 1px solid $border-color-dark;
-    color: $font-light;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--theme-text);
   }
 
   .avatar {
@@ -392,9 +392,9 @@ export default {
 
     button {
       padding: 10px 15px;
-      border: 1px solid $confirm-form-green-border;
-      background-color: $confirm-form-green-body;
-      color: $font-light;
+      border: 1px solid var(--confirm-form-green-border);
+      background-color: var(--confirm-form-green-body);
+      color: var(--theme-text);
       cursor: pointer;
       margin: 10px;
       border-radius: 5px;
@@ -402,7 +402,7 @@ export default {
     }
 
     button:hover {
-      background-color: $confirm-form-green-border;
+      background-color: var(--confirm-form-green-border);
     }
 
     input {
@@ -420,8 +420,8 @@ export default {
     label {
       width: 100%;
       height: auto;
-      border-bottom: 1px solid $border-color-dark;
-      color: $font-light;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--theme-text);
       margin: 5px 0px;
       display: flex;
       justify-content: space-between;
@@ -435,8 +435,8 @@ export default {
       outline: none;
       border-radius: 5px;
       padding: 0px 10px;
-      background-color: $input-dark;
-      color: $font-light;
+      background-color: var(--input-bg);
+      color: var(--theme-text);
     }
 
     textarea {
@@ -447,8 +447,8 @@ export default {
       resize: none;
       border-radius: 5px;
       padding: 10px;
-      background-color: $input-dark;
-      color: $font-light;
+      background-color: var(--input-bg);
+      color: var(--theme-text);
       border: none;
     }
 
@@ -456,7 +456,7 @@ export default {
       width: 100%;
       min-height: 100px;
       border-radius: 5px;
-      background-color: $input-dark;
+      background-color: var(--input-bg);
       display: flex;
       flex-wrap: wrap;
       justify-content: start;
@@ -469,22 +469,22 @@ export default {
         padding: 3px;
         border-radius: 3px;
         margin: 3px;
-        color: $font-light;
-        background-color: #333;
+        color: var(--theme-text);
+        background-color: var(--message-bg);
         cursor: pointer;
 
         svg {
           padding: 5px;
           border-radius: 3px;
-          background-color: $dark-icon-theme-color;
+          background-color: var(--dark-icon-theme-color);
         }
       }
 
       #plus {
         padding: 10px;
         border-radius: 3px;
-        color: $font-light;
-        border: 1px solid $border-color-dark;
+        color: var(--theme-text);
+        border: 1px solid var(--border-color);
         cursor: pointer;
         position: absolute;
         right: 3px;
@@ -497,137 +497,14 @@ export default {
       border-radius: 5px;
       cursor: pointer;
       margin: 10px 0px;
-      background-color: $confirm-form-green-body;
-      border: 1px solid $confirm-form-green-border;
-      color: $font-light;
+      background-color: var(--confirm-form-green-body);
+      border: 1px solid var(--confirm-form-green-border);
+      color: var(--theme-text);
       transition-duration: 0.5s;
     }
 
     button:hover {
-      background-color: $confirm-form-green-border;
-    }
-  }
-}
-
-.dash-info-page-light {
-  width: 100%;
-  height: 100%;
-
-  h1 {
-    width: 100%;
-    height: auto;
-    border-bottom: 1px solid $border-color-light;
-    color: $font-dark;
-  }
-
-  .avatar {
-    max-width: 30%;
-    height: auto;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    margin: 10px auto;
-
-    @media (max-width: $phone) {
-      width: 100%;
-    }
-
-    label {
-      width: auto;
-      height: auto;
-      margin: auto;
-      cursor: pointer;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      img {
-        width: 200px;
-        height: 200px;
-        border-radius: 10px;
-
-        @media (max-width: $phone) {
-          width: 150px;
-          height: 150px;
-        }
-      }
-    }
-
-    button {
-      padding: 10px 15px;
-      border: 1px solid $confirm-form-green-border;
-      background-color: $confirm-form-green-body;
-      color: $font-dark;
-      cursor: pointer;
-      margin: 10px;
-      border-radius: 5px;
-      transition-duration: 0.5s;
-    }
-
-    button:hover {
-      background-color: $confirm-form-green-border;
-    }
-
-    input {
-      display: none;
-    }
-  }
-
-  .form {
-    width: 100%;
-    height: auto;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-
-    label {
-      width: 100%;
-      height: auto;
-      border-bottom: 1px solid $border-color-light;
-      color: $font-dark;
-      margin: 5px 0px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    input {
-      width: 100%;
-      height: 40px;
-      border: none;
-      outline: none;
-      border-radius: 5px;
-      padding: 0px 10px;
-      background-color: $input-light;
-      color: $font-dark;
-    }
-
-    textarea {
-      width: 100%;
-      height: 300px;
-      border-radius: none;
-      outline: none;
-      resize: none;
-      border-radius: 5px;
-      padding: 10px;
-      background-color: $input-light;
-      color: $font-dark;
-    }
-
-    button {
-      padding: 10px 15px;
-      border-radius: 5px;
-      cursor: pointer;
-      margin: 10px 0px;
-      background-color: $confirm-form-green-body;
-      border: 1px solid $confirm-form-green-border;
-      color: $font-dark;
-      transition-duration: 0.5s;
-    }
-
-    button:hover {
-      background-color: $confirm-form-green-border;
+      background-color: var(--confirm-form-green-border);
     }
   }
 }

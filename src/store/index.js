@@ -15,7 +15,8 @@ export default createStore({
     dash_board_links: [
       { title: "Info", path: "/dashboard" },
       { title: "Works", path: "/dashboard/works" },
-      { title: "Skills", path: "skills" },
+      { title: "Create Work", path: "/dashboard/create/work" },
+      { title: "Skills", path: "/dashboard/skills" },
       { title: "Contact", path: "contact" },
       { title: "Cv", path: "cv" },
       { title: "Install App", path: "install" },
@@ -69,7 +70,7 @@ export default createStore({
         get_count:
           "https://rami-web-seriver-v2.onrender.com/api/v1/rami_ahmed/work/get/count",
         change_cover:
-          "https://rami-web-seriver-v2.onrender.com/api/v1/rami_ahmed/cover/change",
+          "https://rami-web-seriver-v2.onrender.com/api/v1/rami_ahmed/work/cover/change",
         change_video:
           "https://rami-web-seriver-v2.onrender.com/api/v1/rami_ahmed/work/video/change",
       },
@@ -108,6 +109,8 @@ export default createStore({
 
       // update it in local storage
       window.localStorage.setItem("rami_theme", state.theme);
+
+      document.documentElement.setAttribute("data-theme", state.theme);
     },
 
     ChangeMenuStatus(state) {

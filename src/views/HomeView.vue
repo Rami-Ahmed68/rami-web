@@ -1,11 +1,11 @@
 <template>
-  <div :class="`home-${this.$store.state.theme}`">
+  <div class="home">
     <div class="container" v-if="this.$store.state.admin_info">
       <h1>Hi, I'm a freelance (web/app) developer based in Syria!</h1>
 
       <div class="header">
         <div class="info">
-          <h2>Rami Ahmed</h2>
+          <h2>{{ this.$store.state.admin_info.name }}</h2>
           <h4>Digital Craftsman ( Artist / Developer / Designer )</h4>
         </div>
         <img :src="this.$store.state.admin_info.avatar" alt="" />
@@ -98,7 +98,6 @@
 
 <script>
 import axios from "axios";
-// @ is an alias to /src
 
 export default {
   name: "HomeView",
@@ -108,33 +107,20 @@ export default {
   },
   methods: {
     async GetAdminInfo() {
-      // start the loader
       this.$store.state.loader_status = "open";
 
       await axios
         .get(this.$store.state.Apis.admin.get_info)
         .then((response) => {
-          // stop the loader
           this.$store.state.loader_status = "close";
-
-          // set the admin's info in to store
           this.$store.state.admin_info = response.data.admin_data;
         })
         .catch((error) => {
-          // stop the loader
           this.$store.state.loader_status = "close";
-
-          // set the messgae's type to error's object in store
           this.$store.state.message.type = "error";
-
-          // set the error messgae to error in store
           this.$store.state.message.message =
             error.response.data.message.english;
-
-          // to open the message
           this.$store.commit("OpenTheMessgae");
-
-          // to close the message after 500ms
           this.$store.commit("CloseTheMessgaeAfter500ms");
         });
     },
@@ -144,11 +130,11 @@ export default {
 
 <style lang="scss">
 @import "../sass/varibels";
-// dark
-.home-dark {
+
+.home {
   width: 100%;
   min-height: 100vh;
-  background-color: $dark-theme;
+  background-color: var(--theme-bg);
   padding: 10px 0px;
 
   .container {
@@ -165,8 +151,8 @@ export default {
       padding: 10px;
       border-radius: 10px;
       margin: 5px 0px;
-      color: $font-light;
-      background-color: $message-dark;
+      color: var(--theme-text);
+      background-color: var(--message-bg);
       font-size: $medium;
       text-align: center;
     }
@@ -178,6 +164,7 @@ export default {
       flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
+
       @media (max-width: $phone) {
         justify-content: center;
       }
@@ -185,7 +172,8 @@ export default {
       .info {
         width: 75%;
         height: 100%;
-        color: $font-light;
+        color: var(--theme-text);
+
         @media (max-width: $phone) {
           width: 100%;
         }
@@ -193,13 +181,13 @@ export default {
         h2 {
           width: 100%;
           height: auto;
-          font-size: $x4-large;
+          font-size: $x3-large;
         }
 
         h4 {
           width: 100%;
           height: auto;
-          font-size: $small;
+          font-size: $medium;
         }
       }
 
@@ -207,7 +195,8 @@ export default {
         width: 100px;
         height: 100px;
         border-radius: 50%;
-        border: 3px solid $dark-icon-theme-color;
+        border: 3px solid var(--icon-theme-color);
+
         @media (max-width: $phone) {
           margin: 10px;
         }
@@ -223,7 +212,7 @@ export default {
         width: auto;
         height: auto;
         text-decoration: underline;
-        color: $font-light;
+        color: var(--theme-text);
         font-size: $large;
       }
 
@@ -231,8 +220,8 @@ export default {
         width: 98%;
         height: auto;
         margin: 3px 1%;
-        color: $font-light;
-        font-size: $medium;
+        color: var(--theme-text);
+        font-size: var(--medium);
         text-align: justify;
         position: relative;
       }
@@ -247,8 +236,8 @@ export default {
         font-size: $small;
         margin: 10px 35%;
         cursor: pointer;
-        background-color: $blue-1-dark;
-        color: $font-dark;
+        background-color: var(--blue);
+        color: var(--button-text);
         transition-duration: 0.5s;
 
         svg {
@@ -257,7 +246,7 @@ export default {
       }
 
       button:hover {
-        background-color: $blue-1-light;
+        background-color: var(--blue-1);
       }
 
       .bio-cont {
@@ -268,8 +257,8 @@ export default {
           width: 98%;
           height: auto;
           margin: 3px 1%;
-          color: $font-light;
-          font-size: $small;
+          color: var(--theme-text);
+          font-size: var(--small);
         }
       }
     }
@@ -279,8 +268,8 @@ export default {
         width: auto;
         height: auto;
         text-decoration: underline;
-        color: $font-light;
-        font-size: $large;
+        color: var(--theme-text);
+        font-size: var(--large);
       }
 
       .links-cont {
@@ -291,23 +280,22 @@ export default {
 
         li {
           margin: 10px 0px;
+
           a {
             width: auto;
             list-style-type: none;
             margin: 10px 0px;
             padding: 5px 10px;
             border-radius: 5px;
-            color: $blue-1-light;
+            color: var(--blue-1);
             text-decoration: none;
             margin: 10px 5px;
             cursor: pointer;
             transition-duration: 0.5s;
-            text-decoration: none;
-            color: $blue-1-dark;
           }
 
           a:hover {
-            background-color: $blue-2-dark;
+            background-color: var(--blue-2);
           }
         }
       }
@@ -323,213 +311,18 @@ export default {
 
       a {
         text-decoration: none;
-        color: $font-dark;
+        color: var(--button-text);
         padding: 10px 20px;
         border-radius: 5px;
         cursor: pointer;
-        background-color: $blue-1-dark;
+        background-color: var(--blue-1);
         transition-duration: 0.5s;
       }
 
       a:hover {
-        background-color: $blue-1-light;
+        background-color: var(--blue-1-hover);
       }
     }
   }
 }
-// dark
-
-// light
-.home-light {
-  width: 100%;
-  min-height: 100vh;
-  background-color: $light-theme;
-  padding: 10px 0px;
-
-  .container {
-    width: 40%;
-    min-height: 100vh;
-    margin: auto;
-    @media (max-width: $phone) {
-      width: 96%;
-      margin: 0px 2%;
-    }
-
-    h1 {
-      padding: 10px;
-      border-radius: 10px;
-      margin: 5px 0px;
-      color: $font-dark;
-      background-color: $message-light;
-      font-size: $medium;
-      text-align: center;
-    }
-
-    .header {
-      width: 100%;
-      height: auto;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      @media (max-width: $phone) {
-        justify-content: center;
-      }
-
-      .info {
-        width: 75%;
-        height: 100%;
-        color: $font-dark;
-
-        @media (max-width: $phone) {
-          width: 100%;
-        }
-
-        h2 {
-          width: 100%;
-          height: auto;
-          font-size: $x4-large;
-        }
-
-        h4 {
-          width: 100%;
-          height: auto;
-          font-size: $small;
-        }
-      }
-
-      img {
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        border: 3px solid $dark-icon-theme-color;
-        @media (max-width: $phone) {
-          margin: 10px;
-        }
-      }
-    }
-
-    .data {
-      width: 100%;
-      height: auto;
-      margin: 20px 0px;
-
-      h3 {
-        width: auto;
-        height: auto;
-        text-decoration: underline;
-        color: $font-dark;
-        font-size: $large;
-      }
-
-      p {
-        width: 98%;
-        height: auto;
-        margin: 3px 1%;
-        color: $font-dark;
-        font-size: $medium;
-        text-align: justify;
-        position: relative;
-      }
-
-      button {
-        border: none;
-        outline: none;
-        width: 30%;
-        height: 40px;
-        text-decoration: none;
-        border-radius: 5px;
-        font-size: $small;
-        margin: 10px 35%;
-        cursor: pointer;
-        background-color: $blue-1-dark;
-        transition-duration: 0.5s;
-        color: $font-light;
-
-        svg {
-          margin: 0px 5px;
-        }
-      }
-
-      button:hover {
-        background-color: $blue-1-light;
-      }
-
-      .bio-cont {
-        width: 100%;
-        height: auto;
-
-        p {
-          width: 98%;
-          height: auto;
-          margin: 3px 1%;
-          color: $font-dark;
-          font-size: $small;
-        }
-      }
-    }
-
-    .on-the-web {
-      h3 {
-        width: auto;
-        height: auto;
-        text-decoration: underline;
-        color: $font-dark;
-        font-size: $large;
-      }
-
-      .links-cont {
-        width: 100%;
-        height: auto;
-        padding: 10px 0px;
-
-        li {
-          margin: 10px 0px;
-          list-style-type: none;
-          a {
-            width: auto;
-            list-style-type: none;
-            margin: 10px 0px;
-            padding: 5px 10px;
-            border-radius: 5px;
-            color: $blue-1-light;
-            text-decoration: none;
-            margin: 10px 5px;
-            cursor: pointer;
-            transition-duration: 0.5s;
-            text-decoration: none;
-          }
-
-          a:hover {
-            background-color: $blue-2-light;
-          }
-        }
-      }
-    }
-
-    .email-button {
-      width: 100%;
-      height: auto;
-      margin: 10px 0px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      a {
-        text-decoration: none;
-        color: $font-light;
-        padding: 10px 20px;
-        border-radius: 5px;
-        cursor: pointer;
-        background-color: $blue-1-dark;
-        transition-duration: 0.5s;
-      }
-
-      a:hover {
-        background-color: $blue-1-light;
-      }
-    }
-  }
-}
-// light
 </style>

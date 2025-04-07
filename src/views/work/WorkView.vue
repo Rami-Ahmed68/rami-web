@@ -1,5 +1,5 @@
 <template>
-  <div :class="`work-page-${this.$store.state.theme}`" v-if="this.current_work">
+  <div class="work-page" v-if="this.current_work">
     <video
       v-if="this.current_work && this.current_work.video"
       class="video"
@@ -140,8 +140,7 @@ export default {
 
 <style lang="scss">
 @import "../../sass/varibels";
-// dark
-.work-page-dark {
+.work-page {
   width: 40%;
   min-height: 100vh;
   margin: auto;
@@ -167,7 +166,7 @@ export default {
     a {
       width: auto;
       text-decoration: none;
-      color: $links-dark;
+      color: var(--link-color);
       font-size: $medium;
     }
 
@@ -176,16 +175,16 @@ export default {
     }
 
     h3 {
-      color: $font-light;
+      color: var(--theme-text);
       margin-left: 10px;
 
       span {
         padding: 3px;
         border-radius: 3px;
         font-size: $x-small;
-        background-color: $chips-dark-green-body;
-        color: $chips-dark-green-text;
-        border: 1px solid $chips-dark-green-border;
+        background-color: var(--chips-green-body);
+        color: var(--chips-green-text);
+        border: 1px solid var(--chips-green-border);
       }
     }
   }
@@ -193,7 +192,7 @@ export default {
   .description {
     width: 100%;
     height: auto;
-    color: $font-light;
+    color: var(--theme-text);
     font-size: $small;
     margin: 5px 0px;
   }
@@ -204,7 +203,7 @@ export default {
     width: 100%;
     height: auto;
     margin: 5px 0px;
-    color: $font-light;
+    color: var(--theme-text);
     display: flex;
     flex-wrap: wrap;
     justify-content: start;
@@ -216,9 +215,9 @@ export default {
       font-size: $small;
       font-weight: 800;
       margin-right: 5px;
-      background-color: $chips-dark-green-body;
-      color: $chips-dark-green-text;
-      border: 1px solid $chips-dark-green-border;
+      background-color: var(--chips-green-body);
+      color: var(--chips-green-text);
+      border: 1px solid var(--chips-green-border);
     }
 
     span {
@@ -227,9 +226,9 @@ export default {
       padding: 2px;
       border-radius: 3px;
       font-size: $small;
-      background-color: $chips-dark-gray-body;
-      border: 1px solid $chips-dark-gray-border;
-      color: $chips-dark-gray-text;
+      background-color: var(chips-gray-body);
+      border: 1px solid var(chips-gray-border);
+      color: var(chips-gray-text);
 
       @media (max-width: $phone) {
         font-size: $small;
@@ -252,13 +251,13 @@ export default {
       font-size: $small;
       font-weight: 800;
       margin-right: 5px;
-      background-color: $chips-dark-green-body;
-      color: $chips-dark-green-text;
-      border: 1px solid $chips-dark-green-border;
+      background-color: var(--chips-green-body);
+      color: var(--chips-green-text);
+      border: 1px solid var(--chips-green-border);
     }
 
     a {
-      color: $links-dark;
+      color: var(--link-color);
       text-decoration: none;
     }
 
@@ -279,146 +278,4 @@ export default {
     }
   }
 }
-// dark
-
-// light
-.work-page-light {
-  width: 40%;
-  min-height: 100vh;
-  margin: auto;
-
-  @media (max-width: $phone) {
-    width: 96%;
-    margin: 0px 2%;
-  }
-
-  .video {
-    width: 100%;
-    height: auto;
-    border-radius: 5px;
-  }
-
-  .head {
-    width: 100%;
-    height: auto;
-    display: flex;
-    justify-content: start;
-    align-items: center;
-
-    a {
-      width: auto;
-      text-decoration: none;
-      color: $links-light;
-      font-size: $medium;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-
-    h3 {
-      color: $font-dark;
-      margin-left: 10px;
-
-      span {
-        padding: 3px;
-        border-radius: 3px;
-        font-size: $x-small;
-        background-color: $chips-light-green-body;
-        color: $chips-light-green-text;
-        border: 1px solid $chips-light-green-border;
-      }
-    }
-  }
-
-  .description {
-    width: 100%;
-    height: auto;
-    color: $font-dark;
-    font-size: $small;
-    margin: 5px 0px;
-  }
-
-  .front-end,
-  .back-end,
-  .type {
-    width: 100%;
-    height: auto;
-    margin: 5px 0px;
-    color: $font-dark;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: start;
-    align-items: center;
-
-    p {
-      padding: 2px;
-      border-radius: 2px;
-      font-size: $small;
-      font-weight: 800;
-      margin-right: 5px;
-      background-color: $chips-light-green-body;
-      color: $chips-light-green-text;
-      border: 1px solid $chips-light-green-border;
-    }
-
-    span {
-      font-size: $medium;
-      margin: 2px;
-      padding: 2px;
-      border-radius: 3px;
-      font-size: $small;
-      background-color: $chips-light-gray-body;
-      border: 1px solid $chips-light-gray-border;
-      color: $chips-light-gray-text;
-
-      @media (max-width: $phone) {
-        font-size: $small;
-      }
-    }
-  }
-
-  .link {
-    width: 100%;
-    height: auto;
-    margin: 5px 0px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: start;
-    align-items: center;
-
-    p {
-      padding: 2px;
-      border-radius: 2px;
-      font-size: $small;
-      font-weight: 800;
-      margin-right: 5px;
-      background-color: $chips-light-green-body;
-      color: $chips-light-green-text;
-      border: 1px solid $chips-light-green-border;
-    }
-
-    a {
-      color: $links-light;
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-  }
-
-  .images {
-    width: 100%;
-    height: auto;
-
-    img {
-      width: 98%;
-      height: auto;
-      margin: 5px 1%;
-      border-radius: 5px;
-    }
-  }
-}
-// light
 </style>

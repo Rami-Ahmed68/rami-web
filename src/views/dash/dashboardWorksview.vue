@@ -1,74 +1,107 @@
 <template>
-  <div :class="`dash-works-${this.$store.state.theme}`">
+  <div class="dash-works">
     <h1>Works</h1>
 
     <div class="works-container">
-      <WorkComponent v-for="work in 5" :key="work" />
+      <WorkComponent
+        v-for="(work, index) in this.geted_works"
+        :key="index"
+        :work_data="work"
+      />
     </div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
 import WorkComponent from "@/components/dash/work/WorkComponent";
 export default {
   data() {
-    return {};
+    return {
+      geted_works: [],
+      page: 1,
+      limit: 10,
+    };
   },
   components: {
     WorkComponent,
   },
-  mounted() {},
-  methods: {},
+  mounted() {
+    this.GetWorks();
+  },
+  methods: {
+    async GetWorks() {
+      // check if the works data array in store is empty or not
+      if (this.geted_works.length == 0) {
+        // start the loader
+        this.$store.state.loader_status = "open";
+      }
+
+      await axios
+        .get(this.$store.state.Apis.works.get_all, {
+          params: {
+            page: this.page,
+            limit: this.limit,
+          },
+        })
+        .then((response) => {
+          // stop the loader
+          this.$store.state.loader_status = "close";
+
+          if (this.geted_works.length > 0) {
+            // set the works of the resposne to geted_works in store
+            this.geted_works = [
+              ...this.geted_works,
+              ...response.data.works_data,
+            ];
+          } else {
+            // set the works of the resposne to geted_works in store
+            this.geted_works = response.data.works_data;
+          }
+        })
+        .catch((error) => {
+          // set the messgae's type to error's object in store
+          this.$store.state.message.type = "error";
+
+          // set the error messgae to error in store
+          this.$store.state.message.message =
+            error.response.data.message.english;
+
+          // to open the message
+          this.$store.commit("OpenTheMessgae");
+
+          // stop the loader
+          this.$store.state.loader_status = "close";
+
+          // to close the message after 500ms
+          this.$store.commit("CloseTheMessgaeAfter5s");
+        });
+    },
+  },
 };
 </script>
 
 <style lang="scss">
 @import "../../sass/_varibels.scss";
-// dark
-.dash-works-dark {
+
+.dash-works {
   width: 100%;
   height: auto;
 
   h1 {
     width: 100%;
     height: auto;
-    border-bottom: 1px solid $border-color-dark;
-    color: $font-light;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--theme-text);
   }
 
-  .container {
+  .works-container {
     width: 100%;
     height: auto;
-    background-color: green;
     display: flex;
     flex-wrap: wrap;
     justify-content: start;
     align-items: center;
   }
 }
-// dark
-
-// light
-.dash-works-light {
-  width: 100%;
-  height: auto;
-
-  h1 {
-    width: 100%;
-    height: auto;
-    border-bottom: 1px solid $border-color-light;
-    color: $font-dark;
-  }
-
-  .container {
-    width: 100%;
-    height: auto;
-    background-color: green;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: start;
-    align-items: center;
-  }
-}
-// light
 </style>

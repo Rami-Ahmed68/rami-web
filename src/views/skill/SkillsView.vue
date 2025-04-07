@@ -1,5 +1,5 @@
 <template>
-  <div :class="`skills-page-${this.$store.state.theme}`">
+  <div class="skills-page">
     <h1>Skills</h1>
 
     <div class="container">
@@ -97,8 +97,7 @@ export default {
 
 <style lang="scss">
 @import "../../sass/varibels";
-// dark
-.skills-page-dark {
+.skills-page {
   width: 40%;
   min-height: 100vh;
   margin: auto;
@@ -112,9 +111,9 @@ export default {
   h1 {
     width: 100%;
     height: auto;
-    color: $font-light;
+    color: var(--theme-text);
     border: 1px solid;
-    border-color: transparent transparent $font-light transparent;
+    border-color: transparent transparent var(--theme-text) transparent;
   }
 
   .container {
@@ -122,32 +121,4 @@ export default {
     height: auto;
   }
 }
-// dark
-
-// light
-.skills-page-light {
-  width: 40%;
-  height: auto;
-  margin: auto;
-  padding-bottom: 5px;
-
-  @media (max-width: $phone) {
-    width: 90%;
-    margin: 0px 5%;
-  }
-
-  h1 {
-    width: 100%;
-    height: auto;
-    color: $font-dark;
-    border: 1px solid;
-    border-color: transparent transparent $font-dark transparent;
-  }
-
-  .container {
-    width: 100%;
-    height: auto;
-  }
-}
-// light
 </style>

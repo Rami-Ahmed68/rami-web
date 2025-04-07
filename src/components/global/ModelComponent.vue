@@ -1,5 +1,5 @@
 <template>
-  <div :class="`${this.$store.state.theme}-model`">
+  <div class="model">
     <div id="three-container">
       <div class="loader" v-if="this.model_loaded"></div>
     </div>
@@ -89,7 +89,7 @@ export default {
 
 <style lang="scss">
 @import "../../sass/_varibels.scss";
-.dark-model {
+.model {
   width: 100%;
   display: flex;
   justify-content: center;
@@ -132,81 +132,7 @@ export default {
         margin-top: 50%;
       }
       margin: 110px auto 0;
-      border: solid 3px $light-theme;
-      border-radius: 50%;
-      border-right-color: transparent;
-      border-bottom-color: transparent;
-      -webkit-transition: all 0.5s ease-in;
-      -webkit-animation-name: rotate;
-      -webkit-animation-duration: 1s;
-      -webkit-animation-iteration-count: infinite;
-      -webkit-animation-timing-function: linear;
-
-      transition: all 0.5s ease-in;
-      animation-name: rotate;
-      animation-duration: 1s;
-      animation-iteration-count: infinite;
-      animation-timing-function: linear;
-    }
-  }
-
-  .model-cont {
-    width: 50%;
-    height: 100%;
-    margin: auto;
-    background-color: orange;
-
-    @media (max-width: $phone) {
-      width: 100%;
-    }
-  }
-}
-
-.light-model {
-  width: 100%;
-  min-height: 300px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  #three-container {
-    background-color: none;
-    width: 100%;
-    height: 300px;
-    overflow: hidden;
-
-    @media (max-width: $phone) {
-      height: 400px;
-    }
-
-    @keyframes rotate {
-      from {
-        transform: rotate(0deg);
-      }
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-    @-webkit-keyframes rotate {
-      from {
-        -webkit-transform: rotate(0deg);
-      }
-      to {
-        -webkit-transform: rotate(360deg);
-      }
-    }
-
-    .loader {
-      width: 100px;
-      height: 100px;
-      @media (max-width: $phone) {
-        width: 70px;
-        height: 70px;
-        margin-top: 50%;
-      }
-      margin: 110px auto 0;
-      border: solid 3px $dark-theme;
+      border: solid 3px var(--border-color);
       border-radius: 50%;
       border-right-color: transparent;
       border-bottom-color: transparent;
@@ -231,11 +157,6 @@ export default {
 
     @media (max-width: $phone) {
       width: 100%;
-    }
-
-    img {
-      width: 100%;
-      height: 100%;
     }
   }
 }

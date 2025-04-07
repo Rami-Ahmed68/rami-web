@@ -1,5 +1,5 @@
 <template>
-  <div :class="`log-in-page-${this.$store.state.theme}`">
+  <div class="log-in-page">
     <div class="form">
       <a href="/">
         <img
@@ -23,7 +23,7 @@
 
       <label for="password">Passowrd Address</label>
       <div class="input-cont">
-        <icon icon="eye" @click="this.show_hidde_password" />
+        <icon :icon="this.icon_type" @click="this.show_hidde_password" />
         <input
           :type="this.password_input_type"
           v-model="this.password"
@@ -44,6 +44,7 @@ export default {
       email_address: "",
       password: "",
       password_input_type: "password",
+      icon_type: "eye",
     };
   },
   methods: {
@@ -51,6 +52,8 @@ export default {
     show_hidde_password() {
       this.password_input_type =
         this.password_input_type == "text" ? "password" : "text";
+
+      this.icon_type = this.icon_type == "eye" ? "eye-slash" : "eye";
     },
 
     // login method
@@ -117,8 +120,7 @@ export default {
 
 <style lang="scss">
 @import "../sass/varibels";
-// dark
-.log-in-page-dark {
+.log-in-page {
   width: 40%;
   height: auto;
   margin: auto;
@@ -134,14 +136,14 @@ export default {
     width: 90%;
     height: auto;
     margin: 0px 5%;
-    background-color: $log-in-dark;
+    background-color: var(--log-in-bg);
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     padding: 10px;
     border-radius: 5px;
-    box-shadow: 0 0 10px $shadow-black;
+    box-shadow: 0 0 10px var(--shadow-color);
 
     img {
       width: 100px;
@@ -152,8 +154,8 @@ export default {
       width: 100%;
       height: auto;
       border: 1px solid;
-      border-color: transparent transparent $font-light transparent;
-      color: $font-light;
+      border-color: transparent transparent var(--theme-text) transparent;
+      color: var(--theme-text);
       margin: 10px 0px;
     }
 
@@ -164,15 +166,15 @@ export default {
       padding: 0px 10px;
       border-radius: 5px;
       outline: none;
-      color: $font-light;
-      background-color: $input-dark;
+      color: var(--theme-text);
+      background-color: var(--input-bg);
     }
 
-    div {
+    .input-cont {
       width: 100%;
       max-height: 40px;
       border-radius: 5px;
-      background-color: $input-dark;
+      background-color: var(--input-bg);
       position: relative;
 
       input {
@@ -182,8 +184,8 @@ export default {
         padding: 0px 10px;
         border: none;
         outline: none;
-        color: $font-light;
-        background-color: $input-dark;
+        color: var(--theme-text);
+        background-color: none;
       }
 
       svg {
@@ -192,14 +194,14 @@ export default {
         top: 2px;
         padding: 10px;
         border-radius: 5px;
-        color: $font-dark;
-        background-color: $blue-1-dark;
+        color: var(--button-color);
+        background-color: var(--blue-1);
         cursor: pointer;
         transition-duration: 0.5s;
       }
 
       svg:hover {
-        background-color: $blue-1-light;
+        background-color: var(--blue-1);
       }
     }
 
@@ -209,119 +211,14 @@ export default {
       border-radius: 5px;
       cursor: pointer;
       margin: 10px 0px;
-      color: $font-dark;
-      background-color: $blue-1-dark;
+      color: var(--button-color);
+      background-color: var(--blue-1);
       transition-duration: 0.5s;
     }
 
     button:hover {
-      background-color: $blue-1-light;
+      background-color: var(--blue-2);
     }
   }
 }
-// dark
-
-// light
-.log-in-page-light {
-  width: 40%;
-  height: auto;
-  margin: auto;
-  padding: 30px 0px;
-
-  @media (max-width: $phone) {
-    width: 96%;
-    height: auto;
-    margin: 10px 2%;
-  }
-
-  .form {
-    width: 90%;
-    height: auto;
-    margin: 0px 5%;
-    background-color: $log-in-light;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px $shadow-black;
-
-    img {
-      width: 100px;
-      height: 100px;
-    }
-
-    label {
-      width: 100%;
-      height: auto;
-      border: 1px solid;
-      border-color: transparent transparent $font-dark transparent;
-      color: $font-dark;
-      margin: 10px 0px;
-    }
-
-    input {
-      width: 100%;
-      height: 40px;
-      border: none;
-      padding: 0px 10px;
-      border-radius: 5px;
-      outline: none;
-      color: $font-dark;
-      background-color: $input-light;
-    }
-
-    div {
-      width: 100%;
-      max-height: 40px;
-      border-radius: 5px;
-      background-color: $input-light;
-      position: relative;
-
-      input {
-        width: 89%;
-        height: 40px;
-        margin-left: 11%;
-        padding: 0px 10px;
-        border: none;
-        outline: none;
-        color: $font-dark;
-        background-color: $input-light;
-      }
-
-      svg {
-        position: absolute;
-        left: 2px;
-        top: 2px;
-        padding: 10px;
-        border-radius: 5px;
-        color: $font-dark;
-        background-color: $blue-1-light;
-        cursor: pointer;
-        transition-duration: 0.5s;
-      }
-
-      svg:hover {
-        background-color: $blue-1-dark;
-      }
-    }
-
-    button {
-      padding: 10px 15px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      margin: 10px 0px;
-      color: $font-dark;
-      background-color: $blue-1-light;
-      transition-duration: 0.5s;
-    }
-
-    button:hover {
-      background-color: $blue-1-dark;
-    }
-  }
-}
-// light
 </style>

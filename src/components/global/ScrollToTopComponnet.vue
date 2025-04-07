@@ -1,7 +1,5 @@
 <template>
-  <div
-    :class="`scroll-to-top-${this.$store.state.theme}-${this.$store.state.scroll_top_status}`"
-  >
+  <div :class="`scroll-to-top-${this.$store.state.scroll_top_status}`">
     <icon icon="arrow-left" />
   </div>
 </template>
@@ -18,17 +16,17 @@ export default {
 
 <style lang="scss">
 @import "../../sass/varibels";
-// dark theme
-.scroll-to-top-dark-open {
+
+.scroll-to-top-open {
   width: 30px;
   height: 30px;
   border-radius: 4px;
-  border: 1px solid $border-color-dark;
-  background-color: $dark-scroll-top;
+  border: 1px solid var(--border-color);
+  background-color: var(--dark-scroll-top);
   display: flex;
   justify-content: center;
   align-items: center;
-  color: $font-light;
+  color: var(--theme-text);
   cursor: pointer;
   opacity: 1;
   position: fixed;
@@ -38,45 +36,13 @@ export default {
 
   svg {
     transform: rotate(90deg);
-    color: $font-light;
+    color: var(--theme-text);
   }
 }
 
-.scroll-to-top-dark-close {
-  @extend .scroll-to-top-dark-open;
+.scroll-to-top-close {
+  @extend .scroll-to-top-open;
   bottom: -20%;
   opacity: 0;
 }
-// dark theme
-
-// light theme
-.scroll-to-top-light-open {
-  width: 30px;
-  height: 30px;
-  border-radius: 4px;
-  border: 1px solid $border-color-light;
-  background-color: $light-scroll-top;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: $font-light;
-  cursor: pointer;
-  opacity: 1;
-  position: fixed;
-  right: 10px;
-  bottom: 10px;
-  transition-duration: 0.5s;
-
-  svg {
-    transform: rotate(90deg);
-    color: $font-dark;
-  }
-}
-
-.scroll-to-top-light-close {
-  @extend .scroll-to-top-light-open;
-  bottom: -20%;
-  opacity: 0;
-}
-// light theme
 </style>
