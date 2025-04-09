@@ -63,30 +63,26 @@ export default {
   background-color: var(--theme-bg);
   width: 100%;
   min-height: 100vh;
+  overflow: hidden;
+  transition-duration: 0.2s;
 
   .slide-enter-active {
     animation: slideIn 0.5s ease-out;
-    /* مدة وسرعة التأثير */
   }
 
   .slide-leave-active {
     animation: slideOut 0.5s ease-in;
-    /* تأثير معاكس عند إخفاء المحتوى */
   }
 
   @keyframes slideIn {
     from {
       transform: translateY(40px);
-      /* يبدأ من أسفل قليلاً */
       opacity: 0;
-      /* يبدأ بتلاشي */
     }
 
     to {
       transform: translateY(0);
-      /* يصل إلى مكانه الطبيعي */
       opacity: 1;
-      /* يظهر بشكل كامل */
     }
   }
 
@@ -98,48 +94,8 @@ export default {
 
     to {
       transform: translateY(-40px);
-      /* ينزلق للأعلى قليلاً */
       opacity: 0;
     }
   }
 }
-
-// .slide-enter-active {
-//   animation: slideIn 0.5s ease-out;
-//   /* مدة وسرعة التأثير */
-// }
-
-// .slide-leave-active {
-//   animation: slideOut 0.5s ease-in;
-//   /* تأثير معاكس عند إخفاء المحتوى */
-// }
-
-// @keyframes slideIn {
-//   from {
-//     transform: translateY(40px);
-//     /* يبدأ من أسفل قليلاً */
-//     opacity: 0;
-//     /* يبدأ بتلاشي */
-//   }
-
-//   to {
-//     transform: translateY(0);
-//     /* يصل إلى مكانه الطبيعي */
-//     opacity: 1;
-//     /* يظهر بشكل كامل */
-//   }
-// }
-
-// @keyframes slideOut {
-//   from {
-//     transform: translateY(0);
-//     opacity: 1;
-//   }
-
-//   to {
-//     transform: translateY(-40px);
-//     /* ينزلق للأعلى قليلاً */
-//     opacity: 0;
-//   }
-// }
 </style>

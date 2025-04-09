@@ -134,7 +134,6 @@ export default {
 .home {
   width: 100%;
   min-height: 100vh;
-  background-color: var(--theme-bg);
   padding: 10px 0px;
 
   .container {

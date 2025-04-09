@@ -17,10 +17,8 @@ export default createStore({
       { title: "Works", path: "/dashboard/works" },
       { title: "Create Work", path: "/dashboard/create/work" },
       { title: "Skills", path: "/dashboard/skills" },
-      { title: "Contact", path: "contact" },
-      { title: "Cv", path: "cv" },
-      { title: "Install App", path: "install" },
-      { title: "Dash Board", path: "/dashboard" },
+      { title: "Create Skill", path: "/dashboard/create/skill" },
+      { title: "Cv", path: "/dashboard/cv" },
     ],
     messages: { title: "Messages", path: "/messages" },
     admin_data: window.localStorage.getItem("rami_admin")
@@ -45,6 +43,10 @@ export default createStore({
     work_id: "",
     messages_array: [],
     message_id_for_delet: "",
+    confirm_delete_work_status: "close",
+    confirm_delete_skill_status: "close",
+    skill_id_for_delete: "",
+    work_id_for_delete: "",
     Apis: {
       auth: {
         log_in: `https://rami-web-seriver-v2.onrender.com/api/v1/rami_ahmed/admin/login`,
@@ -88,7 +90,7 @@ export default createStore({
         get_count:
           "https://rami-web-seriver-v2.onrender.com/api/v1/rami_ahmed/skill/get/count",
         change_icon:
-          "https://rami-web-seriver-v2.onrender.com/api/v1/rami_ahmed/change/icon",
+          "https://rami-web-seriver-v2.onrender.com/api/v1/rami_ahmed/skill/change/icon",
       },
       messages: {
         create:
@@ -134,6 +136,16 @@ export default createStore({
       setTimeout(() => {
         state.message_status = "close";
       }, 5000);
+    },
+
+    OpenOrCloseConfirmDeleteWork(state) {
+      state.confirm_delete_work_status =
+        state.confirm_delete_work_status === "open" ? "close" : "open";
+    },
+
+    OpenOrCloseConfirmDeleteSkill(state) {
+      state.confirm_delete_skill_status =
+        state.confirm_delete_skill_status === "open" ? "close" : "open";
     },
   },
   actions: {

@@ -215,14 +215,16 @@ export default {
   .menu-open,
   .menu-close {
     width: 200px;
-    min-height: 250px;
+    min-height: 200px;
+    max-height: 300px;
     overflow: hidden;
     background-color: var(--menu-bg);
     border-radius: 5px;
     position: absolute;
     top: 90%;
     right: 10px;
-    transition: all 0.5s;
+    transition-duration: 0.5s;
+    opacity: 1;
 
     @media (min-width: $phone) {
       display: none;
@@ -256,8 +258,8 @@ export default {
   }
 
   .menu-close {
-    width: 0;
-    height: 0;
+    width: 0px;
+    max-height: 0px;
     opacity: 0;
   }
 }

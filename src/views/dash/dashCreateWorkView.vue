@@ -184,11 +184,18 @@
         accept="image/*"
         id="images"
         multiple
-        @change="handleVideoChange"
+        @change="handleFileChange"
+      />
+
+      <img
+        v-for="(image, index) in this.selected_images_to_show"
+        :key="index"
+        :src="image"
+        @click="RemoveSelectedImage(index)"
       />
     </div>
 
-    <button @click="UpdateData">Update</button>
+    <button @click="CreateWork">Create Work</button>
   </div>
 </template>
 
@@ -221,10 +228,7 @@ export default {
       selected_video_to_show: "",
     };
   },
-  mounted() {
-    // this.$refs.cover.addEventListener("change", this.handleFileChange);
-    // this.$refs.select_video.addEventListener("change", this.handleVideoChange);
-  },
+  mounted() {},
   methods: {
     deleteVideo() {
       this.selected_video_to_show = "";
@@ -257,11 +261,12 @@ export default {
     },
 
     handleFileChange(event) {
-      if (event.target.id === "cover") {
-        this.readerFiles(event.target.files[0]).then((result) => {
-          this.selected_cover_to_show = result;
+      this.selected_images_to_send = event.target.files;
+
+      for (let i = 0; i < this.selected_images_to_send.length; i++) {
+        this.readerFiles(this.selected_images_to_send[i]).then((result) => {
+          this.selected_images_to_show.push(result);
         });
-        this.selected_cover_to_send = [event.target.files[0]];
       }
     },
 
@@ -282,123 +287,43 @@ export default {
       });
     },
 
-    async UpdateData() {
-      this.$store.state.loader_status = "open";
-
-      const headers = {
-        Authorization: `Bearer ${this.$store.state.admin_data.token}`,
-      };
-
-      let changedData = {
-        admin_id: this.$store.state.admin_data._id,
-        work_id: this.current_work._id,
-      };
-
-      const originalData = this.current_work;
-
-      if (this.title !== originalData.title) changedData.title = this.title;
-      if (this.description !== originalData.description)
-        changedData.description = this.description;
-      changedData.front_end = this.front_end.join("split_here");
-      changedData.back_end = this.back_end.join("split_here");
-      if (this.type !== originalData.type) changedData.type = this.type;
-      if (this.web !== originalData.web) changedData.web = this.web;
-      if (this.android !== originalData.android)
-        changedData.android = this.android;
-      if (this.ios !== originalData.ios) changedData.ios = this.ios;
-      if (this.created_at !== originalData.created_at)
-        changedData.created_at = this.created_at;
-
-      console.log(changedData);
-
-      await axios
-        .put(this.$store.state.Apis.works.update, changedData, {
-          headers,
-          onUploadProgress: (progressEvent) => {
-            this.$store.state.loading_rate = Math.round(
-              (progressEvent.loaded * 100) / progressEvent.total
-            );
-          },
-        })
-        .then((res) => {
-          this.$store.state.loading_rate = 0;
-          this.$store.state.message.type = "success";
-          this.$store.state.message.message = res.data.message.english;
-          this.$store.commit("OpenTheMessgae");
-          this.$store.state.loader_status = "close";
-          this.$store.commit("CloseTheMessgaeAfter5s");
-        })
-        .catch((err) => {
-          this.$store.state.loading_rate = 0;
-          this.$store.state.message.type = "error";
-          this.$store.state.message.message = err.response.data.message.english;
-          this.$store.commit("OpenTheMessgae");
-          this.$store.state.loader_status = "close";
-          this.$store.commit("CloseTheMessgaeAfter5s");
-        });
+    RemoveSelectedImage(index) {
+      this.selected_images_to_show.splice(index, 1);
+      const filesArray = Array.from(this.selected_images_to_send);
+      filesArray.splice(index, 1);
+      this.selected_images_to_send = filesArray;
     },
 
-    async ChangeCover() {
+    async CreateWork() {
       this.$store.state.loader_status = "open";
-
-      const headers = {
-        Authorization: `Bearer ${this.$store.state.admin_data.token}`,
-      };
 
       let formData = new FormData();
 
-      formData.append("admin_id", this.$store.state.admin_data._id);
-      formData.append("work_id", this.current_work._id);
+      const headers = {
+        Authorization: `Bearer ${this.$store.state.admin_data.token}`,
+      };
 
-      for (const file of this.selected_cover_to_send) {
+      formData.append("admin_id", this.$store.state.admin_data._id);
+      formData.append("title", this.title);
+      formData.append("description", this.description);
+      formData.append("front_end", this.front_end.join("split_here"));
+      formData.append("back_end", this.back_end.join("split_here"));
+      formData.append("web_site_link", this.web);
+      formData.append("android_link", this.android);
+      formData.append("ios_link", this.ios);
+      formData.append("type", this.type);
+      formData.append("created_at", this.created_at);
+
+      for (const file of this.selected_images_to_send) {
         formData.append("files", file, file.name);
       }
-
-      await axios
-        .put(this.$store.state.Apis.works.change_cover, formData, {
-          headers,
-          onUploadProgress: (progressEvent) => {
-            this.$store.state.loading_rate = Math.round(
-              (progressEvent.loaded * 100) / progressEvent.total
-            );
-          },
-        })
-        .then((res) => {
-          this.$store.state.loading_rate = 0;
-          this.$store.state.message.type = "success";
-          this.$store.state.message.message = res.data.message.english;
-          this.$store.commit("OpenTheMessgae");
-          this.$store.state.loader_status = "close";
-          this.$store.commit("CloseTheMessgaeAfter5s");
-        })
-        .catch((err) => {
-          this.$store.state.loading_rate = 0;
-          this.$store.state.message.type = "error";
-          this.$store.state.message.message = err.response.data.message.english;
-          this.$store.commit("OpenTheMessgae");
-          this.$store.state.loader_status = "close";
-          this.$store.commit("CloseTheMessgaeAfter5s");
-        });
-    },
-
-    async ChangeVideo() {
-      this.$store.state.loader_status = "open";
-
-      const headers = {
-        Authorization: `Bearer ${this.$store.state.admin_data.token}`,
-      };
-
-      let formData = new FormData();
-
-      formData.append("admin_id", this.$store.state.admin_data._id);
-      formData.append("work_id", this.current_work._id);
 
       for (const file of this.selected_video_to_send) {
         formData.append("files", file, file.name);
       }
 
       await axios
-        .put(this.$store.state.Apis.works.change_video, formData, {
+        .post(this.$store.state.Apis.works.create, formData, {
           headers,
           onUploadProgress: (progressEvent) => {
             this.$store.state.loading_rate = Math.round(
@@ -409,10 +334,24 @@ export default {
         .then((res) => {
           this.$store.state.loading_rate = 0;
           this.$store.state.message.type = "success";
-          this.$store.state.message.message = res.data.message.english;
+          this.$store.state.message.message = res.data.messgae.english;
           this.$store.commit("OpenTheMessgae");
           this.$store.state.loader_status = "close";
           this.$store.commit("CloseTheMessgaeAfter5s");
+
+          this.title = "";
+          this.description = "";
+          this.front_end = [];
+          this.back_end = [];
+          this.web = [];
+          this.android = [];
+          this.ios = [];
+          this.type = [];
+          this.created_at = [];
+          this.selected_images_to_send = [];
+          this.selected_images_to_show = [];
+          this.selected_video_to_send = [];
+          this.selected_video_to_show = [];
         })
         .catch((err) => {
           this.$store.state.loading_rate = 0;
@@ -431,7 +370,8 @@ export default {
 @import "../../sass/varibels";
 .dash-create-work-page {
   width: 100%;
-  min-height: 100vh;
+  height: 100%;
+  overflow-y: scroll;
   margin: auto;
   display: flex;
   flex-wrap: wrap;
@@ -654,5 +594,9 @@ export default {
   button:hover {
     background-color: var(--confirm-form-green-border);
   }
+}
+
+.dash-create-work-page::-webkit-scrollbar {
+  width: 0px;
 }
 </style>

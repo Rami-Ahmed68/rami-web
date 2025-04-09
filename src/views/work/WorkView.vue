@@ -46,27 +46,27 @@
       <span>{{ this.current_work.type }}</span>
     </div>
 
-    <div class="link">
-      <p v-if="this.current_work.web">Web</p>
+    <div class="link" v-if="this.current_work.web_site_link">
+      <p>Web</p>
 
       <a :href="this.current_work.web" target="_blank">{{
-        this.current_work.web.split("/")[2]
+        this.current_work.web_site_link.split("/")[2]
       }}</a>
     </div>
 
-    <div class="link">
-      <p v-if="this.current_work.android">Android</p>
+    <div class="link" v-if="this.current_work.android_link">
+      <p>Android</p>
 
       <a :href="this.current_work.android" target="_blank">{{
-        this.current_work.android.split("/")[2]
+        this.current_work.android_link.split("/")[2]
       }}</a>
     </div>
 
-    <div class="link">
-      <p v-if="this.current_work.ios">Ios</p>
+    <div class="link" v-if="this.current_work.ios_link">
+      <p>Ios</p>
 
       <a :href="this.current_work.ios" target="_blank">{{
-        this.current_work.ios.split("/")[2]
+        this.current_work.ios_link.split("/")[2]
       }}</a>
     </div>
 

@@ -45,7 +45,6 @@ export default {
 .install-page {
   width: 100%;
   height: auto;
-  background-color: var(--theme-bg);
 
   .container {
     width: 40%;

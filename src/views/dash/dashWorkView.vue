@@ -151,20 +151,20 @@
       >
     </div>
 
-    <label for="web"
-      >Web <span>{{ web.length }}</span></label
+    <label for="web_site_link"
+      >Web <span>{{ web_site_link.length }}</span></label
     >
-    <input type="text" id="web" v-model="this.web" />
+    <input type="text" id="web_site_link" v-model="this.web_site_link" />
 
-    <label for="android"
-      >Android <span>{{ android.length }}</span></label
+    <label for="android_link"
+      >Android <span>{{ android_link.length }}</span></label
     >
-    <input type="text" id="android" v-model="this.android" />
+    <input type="text" id="android_link" v-model="this.android_link" />
 
-    <label for="ios"
-      >Ios <span>{{ ios.length }}</span></label
+    <label for="ios_link"
+      >Ios <span>{{ ios_link.length }}</span></label
     >
-    <input type="text" id="ios" v-model="this.ios" />
+    <input type="text" id="ios_link" v-model="this.ios_link" />
 
     <label for="type"
       >Type <span>{{ this.type === "Work" ? "👨🏻‍💻" : "🤝" }}</span></label
@@ -177,7 +177,43 @@
     <label for="created_at">Created At</label>
     <input type="text" id="created_at" v-model="this.created_at" />
 
+    <label
+      >Images🖼️
+      <span>{{
+        this.selected_images_to_send.length + this.current_work.images.length
+      }}</span></label
+    >
+
+    <div class="images-cont">
+      <label for="images">
+        <icon icon="plus" />
+      </label>
+
+      <input
+        type="file"
+        accept="image/*"
+        id="images"
+        multiple
+        @change="handleImagesFileChange"
+      />
+
+      <img
+        v-for="(image, index) in this.selected_images_to_show"
+        :key="index"
+        :src="image"
+        @click="RemoveSelectedImage(index)"
+      />
+
+      <img
+        v-for="(image, index) in this.current_work.images"
+        :key="index"
+        :src="image"
+        @click="RemoveImagePath(image)"
+      />
+    </div>
+
     <button @click="UpdateData">Update</button>
+    <button @click="DeleteWork" class="delete_work">Delete</button>
   </div>
 </template>
 
@@ -197,8 +233,8 @@ export default {
       current_back_end: "",
       type: "",
       web: "",
-      android: "",
-      ios: "",
+      android_link: "",
+      ios_link: "",
       images: [],
       cover: "",
       video: "",
@@ -208,6 +244,7 @@ export default {
       selected_cover_to_show: "",
       selected_video_to_send: [],
       selected_video_to_show: "",
+      images_for_delete: [],
     };
   },
   mounted() {
@@ -239,9 +276,9 @@ export default {
           this.front_end = response.data.work_data.front_end;
           this.back_end = response.data.work_data.back_end;
           this.type = response.data.work_data.type;
-          this.web = response.data.work_data.web;
-          this.android = response.data.work_data.android;
-          this.ios = response.data.work_data.ios;
+          this.web_site_link = response.data.work_data.web_site_link;
+          this.android_link = response.data.work_data.android_link;
+          this.ios_link = response.data.work_data.ios_link;
           this.video = response.data.work_data.video;
           this.cover = response.data.work_data.cover;
           this.images = response.data.work_data.images;
@@ -307,6 +344,16 @@ export default {
       }
     },
 
+    handleImagesFileChange(event) {
+      this.selected_images_to_send = event.target.files;
+
+      for (let i = 0; i < this.selected_images_to_send.length; i++) {
+        this.readerFiles(this.selected_images_to_send[i]).then((result) => {
+          this.selected_images_to_show.push(result);
+        });
+      }
+    },
+
     handleVideoChange(event) {
       if (event.target.id === "video") {
         this.readerFiles(event.target.files[0]).then((result) => {
@@ -324,37 +371,70 @@ export default {
       });
     },
 
+    RemoveSelectedImage(index) {
+      this.selected_images_to_show.splice(index, 1);
+      const filesArray = Array.from(this.selected_images_to_send);
+      filesArray.splice(index, 1);
+      this.selected_images_to_send = filesArray;
+    },
+
+    RemoveImagePath(path) {
+      this.current_work.images = this.current_work.images.filter((ele) => {
+        this.images_for_delete.push(path);
+        return ele != path;
+      });
+    },
+
     async UpdateData() {
       this.$store.state.loader_status = "open";
+
+      let formData = new FormData();
 
       const headers = {
         Authorization: `Bearer ${this.$store.state.admin_data.token}`,
       };
 
-      let changedData = {
-        admin_id: this.$store.state.admin_data._id,
-        work_id: this.current_work._id,
-      };
+      formData.append("admin_id", this.$store.state.admin_data._id);
+      formData.append("work_id", this.current_work._id);
 
-      const originalData = this.current_work;
+      if (this.title !== this.current_work.title)
+        formData.append("title", this.title);
 
-      if (this.title !== originalData.title) changedData.title = this.title;
-      if (this.description !== originalData.description)
-        changedData.description = this.description;
-      changedData.front_end = this.front_end.join("split_here");
-      changedData.back_end = this.back_end.join("split_here");
-      if (this.type !== originalData.type) changedData.type = this.type;
-      if (this.web !== originalData.web) changedData.web = this.web;
-      if (this.android !== originalData.android)
-        changedData.android = this.android;
-      if (this.ios !== originalData.ios) changedData.ios = this.ios;
-      if (this.created_at !== originalData.created_at)
-        changedData.created_at = this.created_at;
+      if (this.description !== this.current_work.description)
+        formData.append("description", this.description);
 
-      console.log(changedData);
+      formData.append("front_end", this.front_end.join("split_here"));
+
+      formData.append("back_end", this.back_end.join("split_here"));
+
+      if (this.type !== this.current_work.type)
+        formData.append("type", this.type);
+
+      if (this.web_site_link !== this.current_work.web_site_link)
+        formData.append("web_site_link", this.web_site_link);
+
+      if (this.android_link !== this.current_work.android_link)
+        formData.append("android_link", this.android_link);
+
+      if (this.ios_link !== this.current_work.ios_link)
+        formData.append("ios_link", this.ios_link);
+
+      if (this.created_at !== this.current_work.created_at)
+        formData.append("created_at", this.created_at);
+
+      if (this.images_for_delete.length > 0) {
+        formData.append(
+          "images_for_delete",
+          this.images_for_delete.join("split_here")
+        );
+      }
+
+      for (const file of this.selected_images_to_send) {
+        formData.append("files", file, file.name);
+      }
 
       await axios
-        .put(this.$store.state.Apis.works.update, changedData, {
+        .put(this.$store.state.Apis.works.update, formData, {
           headers,
           onUploadProgress: (progressEvent) => {
             this.$store.state.loading_rate = Math.round(
@@ -383,11 +463,11 @@ export default {
     async ChangeCover() {
       this.$store.state.loader_status = "open";
 
+      let formData = new FormData();
+
       const headers = {
         Authorization: `Bearer ${this.$store.state.admin_data.token}`,
       };
-
-      let formData = new FormData();
 
       formData.append("admin_id", this.$store.state.admin_data._id);
       formData.append("work_id", this.current_work._id);
@@ -426,11 +506,11 @@ export default {
     async ChangeVideo() {
       this.$store.state.loader_status = "open";
 
+      let formData = new FormData();
+
       const headers = {
         Authorization: `Bearer ${this.$store.state.admin_data.token}`,
       };
-
-      let formData = new FormData();
 
       formData.append("admin_id", this.$store.state.admin_data._id);
       formData.append("work_id", this.current_work._id);
@@ -465,6 +545,12 @@ export default {
           this.$store.commit("CloseTheMessgaeAfter5s");
         });
     },
+
+    async DeleteWork() {
+      this.$store.commit("OpenOrCloseConfirmDeleteWork");
+
+      this.$store.state.work_id_for_delete = this.current_work._id;
+    },
   },
 };
 </script>
@@ -473,12 +559,13 @@ export default {
 @import "../../sass/varibels";
 .dash-work-page {
   width: 100%;
-  min-height: 100vh;
+  height: 100%;
   margin: auto;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  overflow-y: scroll;
 
   @media (max-width: $phone) {
     width: 96%;
@@ -486,6 +573,9 @@ export default {
   }
 
   .video-cont {
+    width: 100%;
+    min-height: 300px;
+    max-height: 500px;
     position: relative;
 
     .buttons-cont {
@@ -635,10 +725,53 @@ export default {
     }
   }
 
-  button {
-    padding: 10px 15px;
+  .images-cont {
+    width: 100%;
+    min-height: 100px;
+    margin: 5px 0px;
     border-radius: 5px;
-    margin: 10px 0px;
+    background-color: var(--input-bg);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+    align-items: center;
+    padding: 5px;
+    position: relative;
+
+    label {
+      width: auto;
+      height: auto;
+      border: 1px solid var(--border-color);
+      position: absolute;
+      right: 3px;
+      top: 3px;
+      border-radius: 3px;
+
+      svg {
+        padding: 10px;
+        color: var(--theme-text);
+        cursor: pointer;
+      }
+    }
+
+    input {
+      display: none;
+    }
+
+    img {
+      max-width: 200px;
+      height: auto;
+      margin: 5px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+  }
+
+  button {
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    margin: 3px 0px;
     border: none;
     outline: none;
     color: var(--theme-text);
@@ -651,5 +784,27 @@ export default {
   button:hover {
     background-color: var(--confirm-form-green-border);
   }
+
+  .delete_work {
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    margin: 3px 0px;
+    border: none;
+    outline: none;
+    color: var(--theme-text);
+    cursor: pointer;
+    background-color: var(--confirm-form-red-body);
+    border: 1px solid var(--confirm-form-red-border);
+    transition-duration: 0.5s;
+  }
+
+  .delete_work:hover {
+    background-color: var(--confirm-form-red-border);
+  }
+}
+
+.dash-work-page::-webkit-scrollbar {
+  width: 0px;
 }
 </style>

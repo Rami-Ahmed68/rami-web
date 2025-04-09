@@ -6,10 +6,14 @@
         <router-view />
       </transition>
     </div>
+    <ConfirmDeleteWorkComponentVue />
+    <ConfirmDeleteSkillComponentVue />
   </div>
 </template>
 
 <script>
+import ConfirmDeleteWorkComponentVue from "@/components/dash/forms/ConfirmDeleteWorkComponent.vue";
+import ConfirmDeleteSkillComponentVue from "@/components/dash/forms/ConfirmDeleteSkillComponent.vue";
 import SidBarComponent from "@/components/dash/SidBarComponent.vue";
 export default {
   data() {
@@ -17,6 +21,8 @@ export default {
   },
   components: {
     SidBarComponent,
+    ConfirmDeleteWorkComponentVue,
+    ConfirmDeleteSkillComponentVue,
   },
   mounted() {
     // check if the user is loged in or not
@@ -38,6 +44,7 @@ export default {
   margin: auto;
   background-color: var(--theme-bg);
   display: flex;
+  overflow: hidden;
 
   @media (max-width: $phone) {
     width: 96%;
@@ -50,7 +57,7 @@ export default {
     background-color: var(--dash-theme-bg);
     border-radius: 5px;
     margin: 10px 5px 5px 5px;
-    overflow-y: scroll;
+    // overflow-y: scroll;
     padding: 5px 10px;
     transition-duration: 0.5s;
 
@@ -92,8 +99,8 @@ export default {
     }
   }
 
-  .section::-webkit-scrollbar {
-    width: 0px;
-  }
+  // .section::-webkit-scrollbar {
+  //   width: 0px;
+  // }
 }
 </style>

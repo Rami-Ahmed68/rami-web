@@ -348,6 +348,7 @@ export default {
 .dash-info-page {
   width: 100%;
   height: 100%;
+  overflow-y: scroll;
 
   h1 {
     width: 100%;
@@ -507,5 +508,9 @@ export default {
       background-color: var(--confirm-form-green-border);
     }
   }
+}
+
+.dash-info-page::-webkit-scrollbar {
+  width: 0px;
 }
 </style>

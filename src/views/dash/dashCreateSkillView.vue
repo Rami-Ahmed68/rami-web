@@ -1,12 +1,11 @@
 <template>
-  <div class="dash-skill" v-if="current_skill">
+  <div class="dash-create-skill">
     <div class="icon-cont">
       <img
-        :src="icon"
+        :src="selected_icon_to_show"
         alt="skill-icon"
-        v-if="selected_icon_to_send.length == 0"
+        v-if="selected_icon_to_show.length > 0"
       />
-      <img :src="selected_icon_to_show" alt="skill-icon" v-else />
 
       <label for="icon">+🖼️</label>
 
@@ -25,18 +24,31 @@
     <label for="title"
       >Title <span>{{ title.length }}</span></label
     >
-    <input type="text" id="title" v-model="title" />
+    <input
+      type="text"
+      id="title"
+      v-model="title"
+      placeholder="Type the Title here 📝 ..."
+    />
 
     <label for="description"
       >Description <span>{{ description.length }}</span></label
     >
-    <textarea id="description" v-model="description"></textarea>
+    <textarea
+      id="description"
+      v-model="description"
+      placeholder="Type the description here 🧾 ..."
+    ></textarea>
 
     <label for="created_at">Created At</label>
-    <input type="text" id="created_at" v-model="created_at" />
+    <input
+      type="text"
+      id="created_at"
+      v-model="created_at"
+      placeholder="Type the date of creating the project here 📅..."
+    />
 
-    <button class="update" @click="UpdateSkill">Update</button>
-    <button class="delete" @click="Delete">Delete</button>
+    <button class="create" @click="CreateSkill">Create</button>
   </div>
 </template>
 
@@ -52,38 +64,8 @@ export default {
       selected_icon_to_send: [],
     };
   },
-  mounted() {
-    this.GetSkill();
-  },
+  mounted() {},
   methods: {
-    async GetSkill() {
-      this.$store.state.loader_status = "open";
-
-      await axios
-        .get(this.$store.state.Apis.skills.get_one, {
-          params: {
-            skill_title: this.$route.params.title,
-          },
-        })
-        .then((res) => {
-          this.$store.state.loader_status = "close";
-          this.current_skill = res.data.skill_data;
-          this.title = res.data.skill_data.title;
-          this.description = res.data.skill_data.description;
-          this.created_at = res.data.skill_data.created_at;
-          this.icon = res.data.skill_data.icon;
-        })
-        .catch((err) => {
-          this.$store.state.loader_status = "close";
-
-          this.$store.state.message.type = "error";
-          this.$store.state.message.message = err.response.data.message.english;
-          this.$store.commit("OpenTheMessgae");
-          this.$store.state.loader_status = "close";
-          this.$store.commit("CloseTheMessgaeAfter5s");
-        });
-    },
-
     handleFileChange(event) {
       this.readerFiles(event.target.files[0]).then((result) => {
         this.selected_icon_to_show = result;
@@ -99,23 +81,26 @@ export default {
       });
     },
 
-    async UpdateSkill() {
+    async CreateSkill() {
       this.$store.state.loader_status = "open";
+
+      let formData = new FormData();
 
       const headers = {
         Authorization: `Bearer ${this.$store.state.admin_data.token}`,
       };
 
-      let data = {
-        admin_id: this.$store.state.admin_data._id,
-        skill_id: this.current_skill._id,
-        title: this.title,
-        description: this.description,
-        created_at: this.created_at,
-      };
+      formData.append("admin_id", this.$store.state.admin_data._id);
+      formData.append("title", this.title);
+      formData.append("description", this.description);
+      formData.append("created_at", this.created_at);
+
+      for (const file of this.selected_icon_to_send) {
+        formData.append("files", file, file.name);
+      }
 
       await axios
-        .put(this.$store.state.Apis.skills.update, data, {
+        .post(this.$store.state.Apis.skills.create, formData, {
           headers,
           onUploadProgress: (progressEvent) => {
             this.$store.state.loading_rate = Math.round(
@@ -144,48 +129,6 @@ export default {
           this.$store.commit("CloseTheMessgaeAfter5s");
         });
     },
-
-    async ChangeIcon() {
-      this.$store.state.loader_status = "open";
-
-      let formData = new FormData();
-
-      const headers = {
-        Authorization: `Bearer ${this.$store.state.admin_data.token}`,
-      };
-
-      formData.append("admin_id", this.$store.state.admin_data._id);
-
-      formData.append("skill_id", this.current_skill._id);
-
-      for (const file of this.selected_icon_to_send) {
-        formData.append("files", file, file.name);
-      }
-
-      await axios
-        .put(this.$store.state.Apis.skills.change_icon, formData, { headers })
-        .then((res) => {
-          this.$store.state.loading_rate = 0;
-          this.$store.state.message.type = "success";
-          this.$store.state.message.message = res.data.message.english;
-          this.$store.commit("OpenTheMessgae");
-          this.$store.state.loader_status = "close";
-          this.$store.commit("CloseTheMessgaeAfter5s");
-        })
-        .catch((err) => {
-          this.$store.state.loading_rate = 0;
-          this.$store.state.message.type = "error";
-          this.$store.state.message.message = err.response.data.message.english;
-          this.$store.commit("OpenTheMessgae");
-          this.$store.state.loader_status = "close";
-          this.$store.commit("CloseTheMessgaeAfter5s");
-        });
-    },
-
-    Delete() {
-      this.$store.commit("OpenOrCloseConfirmDeleteSkill");
-      this.$store.state.skill_id_for_delete = this.current_skill._id;
-    },
   },
 };
 </script>
@@ -193,15 +136,15 @@ export default {
 <style lang="scss">
 @import "../../sass/varibels";
 
-.dash-skill {
+.dash-create-skill {
   width: 100%;
   height: 100%;
+  overflow-y: scroll;
   margin: auto;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  overflow-y: scroll;
 
   .icon-cont {
     width: 100%;
@@ -287,7 +230,7 @@ export default {
     background-color: var(--input-bg);
   }
 
-  .update {
+  .create {
     width: 100%;
     height: 40px;
     border-radius: 5px;
@@ -301,7 +244,7 @@ export default {
     transition-duration: 0.5s;
   }
 
-  .update:hover {
+  .create:hover {
     background-color: var(--confirm-form-green-border);
   }
 
@@ -324,7 +267,7 @@ export default {
   }
 }
 
-.dash-skill::-webkit-scrollbar {
+.dash-create-skill::-webkit-scrollbar {
   width: 0px;
 }
 </style>

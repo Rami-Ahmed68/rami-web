@@ -16,7 +16,9 @@ import dashWorkView from "@/views/dash/dashWorkView.vue";
 import dashSkillsView from "@/views/dash/dashSkillsView.vue";
 import dashSkillView from "@/views/dash/dashSkillView.vue";
 import dashCreateWorkView from "@/views/dash/dashCreateWorkView.vue";
-// import NotFoundView from "@/views/NotFoundView.vue";
+import dashCreateSkillView from "@/views/dash/dashCreateSkillView.vue";
+import dashCvView from "@/views/dash/dashCvView.vue";
+import NotFoundView from "@/views/NotFoundView.vue";
 
 const routes = [
   {
@@ -159,18 +161,28 @@ const routes = [
         name: "dashboard-skill",
         component: dashSkillView,
       },
+      {
+        path: "create/skill",
+        name: "dashboard-create-skill",
+        component: dashCreateSkillView,
+      },
+      {
+        path: "cv",
+        name: "dashboard-cv",
+        component: dashCvView,
+      },
     ],
   },
-  // {
-  //   path: "/:pathMatch(.*)*",
-  //   name: "notfound",
-  //   component: NotFoundView,
-  //   meta: {
-  //     title: "❌ Rami Ahmed | Page Not Found",
-  //     keywords:
-  //       "404 error, MEVN stack developer, Kuwait Qatar Saudi Arabia UAE Oman web solutions",
-  //   },
-  // },
+  {
+    path: "/:pathMatch(.*)*",
+    name: "notfound",
+    component: NotFoundView,
+    meta: {
+      title: "❌ Rami Ahmed | Page Not Found",
+      keywords:
+        "404 error, MEVN stack developer, Kuwait Qatar Saudi Arabia UAE Oman web solutions",
+    },
+  },
 ];
 
 const router = createRouter({
