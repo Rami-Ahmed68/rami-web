@@ -6,7 +6,7 @@
       <div class="info">
         <h3>{{ this.skill_data.title }}</h3>
 
-        <p>Lorem ipsum dolor, sit amet ...</p>
+        <p>{{ this.skill_data.description.slice(0, 60) }}...</p>
       </div>
 
       <span><icon icon="eye" />{{ skill_data.views }}</span>

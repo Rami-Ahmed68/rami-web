@@ -43,13 +43,18 @@ export default {
       }
 
       await axios
-        .get(this.$store.state.Apis.skills.get_all)
+        .get(this.$store.state.Apis.skills.get_all, {
+          params: {
+            page: this.page,
+            limit: this.limit,
+          },
+        })
         .then((response) => {
           // stop the loader
           this.$store.state.loader_status = "close";
 
           // set the skills of the resposne to geted_skills in store
-          if (this.geted_skills.length == 0) {
+          if (this.geted_skills.length > 0) {
             this.geted_skills = [
               ...this.geted_skills,
               ...response.data.skills_data,
